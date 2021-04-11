@@ -79,6 +79,6 @@ var userC = wallet(1500, 200) // 1300
 
 -----
 
-參考文章：
+## 參考文章
 * [重新認識 JavaScript: Day 19 閉包 Closure](https://ithelp.ithome.com.tw/articles/10193009)
 * [快速上手JavaScript的閉包Closure](https://yixuntseng-bruce.medium.com/%E4%BA%94%E5%88%86%E9%90%98%E5%AD%B8%E5%89%8D%E7%AB%AF-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8Bjavascript%E7%9A%84%E9%96%89%E5%8C%85closure-c54321434e9f)

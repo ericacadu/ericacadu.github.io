@@ -24,7 +24,7 @@ function promise(num) {
 -----
 
 以下整理一些 Promise 方法：
-#### Promise.resolve 和 Promise.reject
+## Promise.resolve 和 Promise.reject
 `Promise.resolve` 和 `Promise.reject` 都是直接定義 `Promise` 物件已完成的狀態，會產生一個新的 `Promise` 物件。
 ```javascript
 const result = Promise.resolve('result')
@@ -44,10 +44,10 @@ result.then(res => {
 })
 ```
 
-#### Promise.race
+## Promise.race
 `Promise.race` 會透過陣列執行多個 `Promise`，但僅會回傳第一個結果，無論結果為成功或失敗。
 
-#### Promise.all
+## Promise.all
 `Promise.all` 會透過陣列傳入多個 `Promise` 函式，在「**全部執行完後**」回傳陣列局果，並且順序與一開始傳入一致，適合「**多支API一起執行**」，確保全部完成後才進行其他工作。
 ```javascript
 Promise.all([promise(1), promise(2), promise(3)])
@@ -56,7 +56,7 @@ Promise.all([promise(1), promise(2), promise(3)])
     })
 ```
 
-### Fetch
+## Fetch
 `Fetch` 會使用 ES6 的 Promise 作回應（then、catch），回傳的資料為 `ReadableStream` 物件，需要使用不同資料類型的應對方法，才能正確取得資料。
 
 `ReadableStream` 的資料類型有：`text()`、`json()`、`formData()`、`blob()`、`arrayBuffer()`
@@ -78,7 +78,7 @@ fetch(url)
 
 -----
 
-參考文章：
+## 參考文章
 * [JavaScript Promise 全介紹](https://wcc723.github.io/development/2020/02/16/all-new-promise/)
 * [淺談JavaScript ES6入門Part2-類別、物件與建構式](https://medium.com/@brianwu291/learn-basic-javascript-es6-part2-d8fe175107c3)
 * [從Promise開始的JavaScript異步生活](https://eyesofkids.gitbooks.io/javascript-start-es6-promise/content/)

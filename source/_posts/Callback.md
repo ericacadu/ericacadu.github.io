@@ -89,6 +89,7 @@ funcA(funcB)
 
 -----
 
-參考文章：[重新認識 JavaScript: Day 18 Callback Function 與 IIFE](https://ithelp.ithome.com.tw/articles/10192739)
+## 參考文章
+* [重新認識 JavaScript: Day 18 Callback Function 與 IIFE](https://ithelp.ithome.com.tw/articles/10192739)
 
 

@@ -5,7 +5,6 @@ categories:
 tags:
   - JavsScript
   - Promise
-  - Fetch
 abbrlink: 1110903207
 date: 2021-04-11 19:39:10
 ---

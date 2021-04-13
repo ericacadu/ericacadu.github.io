@@ -72,7 +72,7 @@ index_generator:
 # Category & Tag
 default_category: uncategorized
 category_map:
-  JS核心五分鐘: jscore5min
+  JS核心五分鐘: jscore
 tag_map:
 
 # Metadata elements

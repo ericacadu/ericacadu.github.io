@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ url_for(theme.css) }}/noscript.css">
   </noscript>
 </head>
-
+{{- next_js('hexo_resize_image.js') }}
 <body itemscope itemtype="http://schema.org/WebPage"{% if theme.motion.enable %} class="use-motion"{% endif %}>
   <div class="headband"></div>
 

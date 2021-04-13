@@ -44,7 +44,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: true
+post_asset_folder: false
 relative_link: false
 future: true
 highlight:
@@ -73,6 +73,7 @@ index_generator:
 default_category: uncategorized
 category_map:
   JS核心五分鐘: jscore
+  筆記: note
 tag_map:
 
 # Metadata elements

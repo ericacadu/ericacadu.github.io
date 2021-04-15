@@ -3,8 +3,7 @@ title: 閉包 Closure
 categories:
   - JS核心五分鐘
 tags:
-  - JavsScript
-  - Closure
+  - JavaScript
 abbrlink: 1553745186
 date: 2021-04-11 19:37:35
 ---

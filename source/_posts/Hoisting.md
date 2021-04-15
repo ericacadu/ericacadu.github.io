@@ -5,8 +5,7 @@ date: 2021-04-11 18:17:22
 categories:
 - JS核心五分鐘
 tags:
-- JavsScript
-- Hoisting
+- JavaScript
 ---
 在 JavaScript 中，把宣告的 **變數** 和 **函式** 拉升到最上層，在被呼叫執行之前先存進記憶體，這個現象就叫做 「提升（hoisting）」。
 

@@ -3,8 +3,7 @@ title: Promise 方法
 categories:
   - JS核心五分鐘
 tags:
-  - JavsScript
-  - Promise
+  - JavaScript
 abbrlink: 1110903207
 date: 2021-04-11 19:39:10
 ---

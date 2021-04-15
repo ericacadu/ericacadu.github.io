@@ -3,7 +3,7 @@ title: This
 categories:
   - JS核心五分鐘
 tags:
-  - JavsScript
+  - JavaScript
 abbrlink: 1591487769
 date: 2021-04-12 11:33:43
 ---

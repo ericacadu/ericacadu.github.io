@@ -3,8 +3,7 @@ title: Callback
 categories:
   - JS核心五分鐘
 tags:
-  - JavsScript
-  - Callback
+  - JavaScript
 abbrlink: 2156861040
 date: 2021-04-11 19:37:47
 ---

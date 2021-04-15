@@ -3,7 +3,7 @@ title: var、let、const
 categories:
   - JS核心五分鐘
 tags:
-  - JavsScript
+  - JavaScript
 abbrlink: 659913096
 date: 2021-04-11 19:23:04
 ---

@@ -17,7 +17,7 @@ JavaScript 是一種單執行緒的程式語言，也就是一次只能做一件
 ![Image](https://i.imgur.com/SORNjlE.png?70)
 
 因此如果堆疊太多執行環境，或某個堆疊執行過久，就有可能影響整個執行環境的運行，這種狀況稱為「**阻塞**」(Blocking)。
-以下方範例來說，如果在函式內不斷呼叫自己，就會呈現一個無止盡的 callback hell 波動拳，`foo(foo(foo(...))))`，這個時候瀏覽器會了避免阻塞太久，就會先暫停執行並且跳出錯誤提示 `Uncaught RangeError: Maximum call stack size exceeded`
+以下方範例來說，如果在函式內不斷呼叫自己，就會呈現一個無止盡的 callback hell 波動拳，`foo(foo(foo(...))))`，這個時候瀏覽器為了避免阻塞太久，就會先暫停執行並且跳出錯誤提示 `Uncaught RangeError: Maximum call stack size exceeded`
 ```javascript
 function foo () {
     foo()

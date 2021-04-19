@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Callback</title>
+    <url>/jscore/20210411/2156861040/</url>
+    <content><![CDATA[<h2 id="Callback-Function"><a href="#Callback-Function" class="headerlink" title="Callback Function"></a>Callback Function</h2><p>Callback Function 和一般函式沒有什麼不同，差別在於被呼叫執行的時機。<br>JavaScript 是一個「<strong>事件驅動</strong>」的程式語言，也就是說每段程式都必須滿足一定的驅動條件，才會啟動執行程式。</p>
+<span id="more"></span>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;This is a function&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 如果沒有呼叫 fn，就不會執行函式</span></span><br></pre></td></tr></table></figure>
+<p>所謂的「Callback Function」其實就是「<strong>把函式當作參數，透過另外一個函式呼叫</strong>」。<br>可以解釋成：希望在某個 <strong>地點</strong>，透過某個 <strong>動作</strong>，執行某個 <strong>程式</strong>，來達成結果。</p>
+<blockquote>
+<p>地點.addEventListener(‘動作’, 參數)</p>
+</blockquote>
+<p>我們可以用一段匿名函式的方式把函式帶入參數：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&#x27;This is callback function.&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>也可以用具名函式的方式帶入：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">active</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&#x27;This is callback function.&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&#x27;click&#x27;</span>, active)</span><br></pre></td></tr></table></figure>
+<h2 id="控制多個函式間執行的順序"><a href="#控制多個函式間執行的順序" class="headerlink" title="控制多個函式間執行的順序"></a>控制多個函式間執行的順序</h2><p>Callback Function 還有另外一個功能，就是「<strong>控制多個函式間執行的順序</strong>」。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">funcA</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;A&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">funcB</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;B&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">funcA()</span><br><span class="line">funcB()</span><br></pre></td></tr></table></figure>
+
+<p>範例中定義兩個函式，並且分別啟動 <code>funcA</code> 和 <code>funcB</code>，此時兩個函式都會被立刻執行。<br>如果這時用非同步程式加上一段等待時間：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">funcA</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">window</span>.setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;A&#x27;</span>)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">funcB</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">window</span>.setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;B&#x27;</span>)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line">funcA()</span><br><span class="line">funcB()</span><br></pre></td></tr></table></figure>
+<p>這樣就沒辦法確定 <code>funcA</code> 和 <code>funcB</code> 誰會先出現。<br>類似這種情況，為了確保執行順序，就會透過 Callback 的方式來處理。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">funcA</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">window</span>.setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;A&#x27;</span>)</span><br><span class="line">        callback()</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">funcB</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">window</span>.setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;B&#x27;</span>)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 將 funcB 作為參數帶入 funcA</span></span><br><span class="line">funcA(funcB)</span><br></pre></td></tr></table></figure>
+<p>如此一來就能確保，無論 <code>funcA</code> 的等待時間有多長，<code>funcB</code> 都會在 <code>funcA</code> 結束後才接著執行。<br>但是如果程式之間相依程度過深，就會造成傳說中的 <strong>波動拳</strong>，也就是「<strong>Callback Hell</strong>」，讓程式難以維護。<br><img src="https://i.imgur.com/L5NnPh5.png"></p>
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10192739">重新認識 JavaScript: Day 18 Callback Function 與 IIFE</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Event Loop</title>
+    <url>/jscore/20210416/712608437/</url>
+    <content><![CDATA[<h2 id="執行堆疊-Call-Stack"><a href="#執行堆疊-Call-Stack" class="headerlink" title="執行堆疊 Call Stack"></a>執行堆疊 Call Stack</h2><p>JavaScript 是一種單執行緒的程式語言，也就是一次只能做一件事情，程式碼也是一行一行執行。<br>當呼叫函式時會產生執行環境，如果函式執行環境內還有其他函式被呼叫，就會產生另外一個執行環境，形成「<strong>執行堆疊</strong>」(Call Stack)，在上層執行環境結束之前，下層包含全域的執行環境內的程式碼就會被暫停。</p>
+<span id="more"></span>
+
+<p>而堆疊的函式會以「後進先出」順序執行，當最上層的函式最後被堆疊上去，就會被最先執行，執行完後就會被移出堆疊環境，接著才繼續執行下一層函式。<br><img src="https://i.imgur.com/SORNjlE.png?70" alt="Image"></p>
+<p>因此如果堆疊太多執行環境，或某個堆疊執行過久，就有可能影響整個執行環境的運行，這種狀況稱為「<strong>阻塞</strong>」(Blocking)。<br>以下方範例來說，如果在函式內不斷呼叫自己，就會呈現一個無止盡的 callback hell 波動拳，<code>foo(foo(foo(...))))</code>，這個時候瀏覽器為了避免阻塞太久，就會先暫停執行並且跳出錯誤提示 <code>Uncaught RangeError: Maximum call stack size exceeded</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    foo()</span><br><span class="line">&#125;</span><br><span class="line">foo()</span><br></pre></td></tr></table></figure>
+
+<h2 id="事件佇列-Event-Queue"><a href="#事件佇列-Event-Queue" class="headerlink" title="事件佇列 Event Queue"></a>事件佇列 Event Queue</h2><p>JavaScript 一次只能執行一件事情，我們可以同時執行很多件事情，是因為瀏覽器不只提供執行環境，還提供很多「<strong>WebAPI</strong>」可以使用。<br>為了避免阻塞發生，瀏覽器會先把非同步事件透過 WebAPI 先放到「<strong>事件佇列</strong>」中，等到堆疊的程式碼都執行結束後，才會把事件佇列裡的任務再放進 stack 裡執行。</p>
+<ul>
+<li>同步：一次一件事情，依序執行</li>
+<li>非同步：很多件事情同時開始，不同時間結束</li>
+</ul>
+<p><img src="https://i.imgur.com/ECdJoKe.png?70" alt="Image"></p>
+<h2 id="Event-Loop"><a href="#Event-Loop" class="headerlink" title="Event Loop"></a>Event Loop</h2><p>那究竟什麼是 Event Loop 呢？<br>可以把 Event Loop 想像成是運行整個執行環境流程的執行程式，他負責檢查 stack 裡的事件是否被清空，如果是空的，就會到 Event Queue 檢查任務，再放到 Stack 裡去執行。</p>
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://medium.com/itsems-frontend/javascript-event-loop-event-queue-call-stack-74a02fed5625">Javascript 的事件循環 (Event Loop)、事件佇列 (Event Queue)、事件堆疊 (Call Stack)：排隊</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10221944">JS 原力覺醒 Day13 - Event Queue &amp; Event Loop 、Event Table</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hoisting</title>
+    <url>/jscore/20210411/4175334150/</url>
+    <content><![CDATA[<p>在 JavaScript 中，把宣告的 <strong>變數</strong> 和 <strong>函式</strong> 拉升到最上層，在被呼叫執行之前先存進記憶體，這個現象就叫做 「提升（hoisting）」。</p>
+<span id="more"></span>
+
+<hr>
+<p>一般來說，我們都會事先宣告變數，接著才會執行。<br>如果沒有宣告就執行的話，會得到 <code>ReferenceError: a is not defined</code> 的錯誤，因為 JavaScript 找不到這個名為 <code>a</code> 的變數。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// &#x27;a is not defined&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>假設一段程式在執行後接著宣告變數，依照上面敘述答案應該是 <code>a is not defined</code>，但是結果卻是 <code>undefined</code> ，Why ?</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a</span><br></pre></td></tr></table></figure>
+<p>JavaScript 的運行分為「創造階段」和「執行階段」。<br>在創造環境時，會將宣告的變數拉升到最上面，這個現象就叫做提升。<br>雖然理解上是移動到最上面，實際上位置並沒有改變，也可以說是靠「想像」把變數移動到最上面，而移動的行為就是把變數存進記憶體裡。<br>要特別注意變數宣告和賦值不同，雖然提升了宣告，但賦值卻會留在原地「依序」等待被執行。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a)</span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 創造階段：</span></span><br><span class="line"><span class="keyword">var</span> a</span><br><span class="line"></span><br><span class="line"><span class="comment">// 執行階段：</span></span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// undefined</span></span><br><span class="line">a = <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>除了變數宣告外，「函式陳述式」也會被提升到創造階段，並且優先載入。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;apple&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br></pre></td></tr></table></figure>
+<p>拆解：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 創造階段：函式優先</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;apple&#x27;</span>)</span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 執行階段：</span></span><br><span class="line">fn() <span class="comment">// 第一次執行：orange</span></span><br><span class="line">fn() <span class="comment">// 第二次執行：orange</span></span><br></pre></td></tr></table></figure>
+<p>如果是「函式表達式」又是另外一種狀況：在執行階段，才會把函式內容指派給變數。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;小明&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br></pre></td></tr></table></figure>
+<p>拆解：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 創造階段：函式優先</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;apple&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fn</span><br><span class="line"></span><br><span class="line"><span class="comment">// 執行階段：</span></span><br><span class="line">fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;apple&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn() <span class="comment">// 第一次執行：apple</span></span><br><span class="line">fn() <span class="comment">// 第二次執行：apple</span></span><br></pre></td></tr></table></figure>
+<h2 id="為什麼需要-Hoisting"><a href="#為什麼需要-Hoisting" class="headerlink" title="為什麼需要 Hoisting?"></a>為什麼需要 Hoisting?</h2><p>Hoistion 最初的設計是為了實現函式互相傳遞，畢竟在開發時會不只有一個函式，如果每個函式都要事先宣告的話，不僅繁瑣而且不好使用，如果有 Hoisting 的話就可以在任何地方呼叫函示。</p>
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://blog.techbridge.cc/2018/11/10/javascript-hoisting/">我知道你懂 hoisting，可是你了解到多深？</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Promise 方法</title>
+    <url>/jscore/20210411/1110903207/</url>
+    <content><![CDATA[<p><code>Promise</code> 是用來解決 AJAX 非同步問題，優化非同步程式的 ES6 語法，會回傳「<strong>接受</strong>」或「<strong>拒絕</strong>」的結果。</p>
+<blockquote>
+<p>AJAX 是 JavaScript 與 XML 技術的縮寫，網頁不用重新整理，就能即時透過瀏覽器跟伺服器溝通、撈取資料。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function promise(num) &#123;</span><br><span class="line">  return new Promise((resolve, reject) &#x3D;&gt; &#123;</span><br><span class="line">    num ? resolve(num) : reject(&#39;失敗&#39;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+
+<hr>
+<p>以下整理一些 Promise 方法：</p>
+<h2 id="Promise-resolve-和-Promise-reject"><a href="#Promise-resolve-和-Promise-reject" class="headerlink" title="Promise.resolve 和 Promise.reject"></a>Promise.resolve 和 Promise.reject</h2><p><code>Promise.resolve</code> 和 <code>Promise.reject</code> 都是直接定義 <code>Promise</code> 物件已完成的狀態，會產生一個新的 <code>Promise</code> 物件。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> result = <span class="built_in">Promise</span>.resolve(<span class="string">&#x27;result&#x27;</span>)</span><br><span class="line">result.then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res, <span class="string">&#x27;success&#x27;</span>) <span class="comment">// 成功部分可以正確接收結果</span></span><br><span class="line">&#125;).catch(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res, <span class="string">&#x27;fail&#x27;</span>) <span class="comment">// 失敗部分不會取得結果</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> result = <span class="built_in">Promise</span>.reject(<span class="string">&#x27;result&#x27;</span>)</span><br><span class="line">result.then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res, <span class="string">&#x27;success&#x27;</span>)</span><br><span class="line">&#125;).catch(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res, <span class="string">&#x27;fail&#x27;</span>) <span class="comment">// 只會取得失敗結果</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Promise-race"><a href="#Promise-race" class="headerlink" title="Promise.race"></a>Promise.race</h2><p><code>Promise.race</code> 會透過陣列執行多個 <code>Promise</code>，但僅會回傳第一個結果，無論結果為成功或失敗。</p>
+<h2 id="Promise-all"><a href="#Promise-all" class="headerlink" title="Promise.all"></a>Promise.all</h2><p><code>Promise.all</code> 會透過陣列傳入多個 <code>Promise</code> 函式，在「<strong>全部執行完後</strong>」回傳陣列局果，並且順序與一開始傳入一致，適合「<strong>多支API一起執行</strong>」，確保全部完成後才進行其他工作。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.all([promise(<span class="number">1</span>), promise(<span class="number">2</span>), promise(<span class="number">3</span>)])</span><br><span class="line">    .then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(res) <span class="comment">// [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;]</span></span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Fetch"><a href="#Fetch" class="headerlink" title="Fetch"></a>Fetch</h2><p><code>Fetch</code> 會使用 ES6 的 Promise 作回應（then、catch），回傳的資料為 <code>ReadableStream</code> 物件，需要使用不同資料類型的應對方法，才能正確取得資料。</p>
+<p><code>ReadableStream</code> 的資料類型有：<code>text()</code>、<code>json()</code>、<code>formData()</code>、<code>blob()</code>、<code>arrayBuffer()</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> url = <span class="string">&#x27;https://raw.githubusercontent.com/hexschool/hexschoolNewbieJS/master/data.json&#x27;</span></span><br><span class="line"></span><br><span class="line">fetch(url)</span><br><span class="line">    .then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> res.json() <span class="comment">// 先轉成 json 格式</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(res) <span class="comment">// 再接收轉換後的資料</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(res)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://wcc723.github.io/development/2020/02/16/all-new-promise/">JavaScript Promise 全介紹</a></li>
+<li><a href="https://medium.com/@brianwu291/learn-basic-javascript-es6-part2-d8fe175107c3">淺談JavaScript ES6入門Part2-類別、物件與建構式</a></li>
+<li><a href="https://eyesofkids.gitbooks.io/javascript-start-es6-promise/content/">從Promise開始的JavaScript異步生活</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10194388">ES6 Fetch 遠端資料方法</a></li>
+<li><a href="https://www.oxxostudio.tw/articles/201908/js-fetch.html">JavaScript Fetch API 使用教學</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>This</title>
+    <url>/jscore/20210412/1591487769/</url>
+    <content><![CDATA[<h2 id="this-是什麼"><a href="#this-是什麼" class="headerlink" title="this 是什麼"></a>this 是什麼</h2><p>this 是 JavaScript 的一個關鍵字，函式執行時自動生成的一個內部物件，用來呼叫自身擁有的屬性或值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    <span class="keyword">debugger</span></span><br><span class="line">&#125;</span><br><span class="line">fn() <span class="comment">// window</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/kIAxMWk.png" alt="Image"></p>
+<span id="more"></span>
+<hr>
+<h2 id="this-指向"><a href="#this-指向" class="headerlink" title="this 指向"></a>this 指向</h2><p><code>this</code> 的值跟「作用域」或「程式碼位置」在哪裡 <font color="red">完全無關</font>，只跟「<font color="red"><strong>如何呼叫</strong></font>」有關。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;全域&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">&#125;</span><br><span class="line">func() <span class="comment">// 全域</span></span><br></pre></td></tr></table></figure>
+<h2 id="影響函式-this-的調用方式"><a href="#影響函式-this-的調用方式" class="headerlink" title="影響函式 this 的調用方式"></a>影響函式 this 的調用方式</h2><ul>
+<li>作為物件方法</li>
+<li>簡易呼叫 simple call (不建議使用 this)</li>
+<li>bind、apply、call 方法</li>
+<li>new</li>
+<li>DOM 事件處理器（用 <code>console.dir()</code> 取代 <code>console.log()</code>）</li>
+<li>箭頭函式</li>
+</ul>
+<h2 id="物件方法"><a href="#物件方法" class="headerlink" title="物件方法"></a>物件方法</h2><p>不管函式如何被定義，只管如何被執行，以下範例為例：<br>執行 <code>obj.func()</code>，因為在物件底下被呼叫，所以 <code>this</code> 指向物件。<br>如果另外宣告 <code>var newFunc = obj.func</code>，再執行 <code>newFunc()</code>，因為在全域底下被執行，所以 <code>this</code> 指向全域。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;全域&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    scope: <span class="string">&#x27;物件&#x27;</span>,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.func() <span class="comment">// 物件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> newFunc = obj.func</span><br><span class="line">newFunc() <span class="comment">// 全域</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="簡易呼叫-Simple-Call"><a href="#簡易呼叫-Simple-Call" class="headerlink" title="簡易呼叫 Simple Call"></a>簡易呼叫 Simple Call</h2><p>用 simple call 的方式調用時，如果沒有另外定義 <code>this</code>，此時 <code>this</code> 指的就是全域。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;全域&#x27;</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">    scope: <span class="string">&#x27;物件&#x27;</span>,</span><br><span class="line">    func () &#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">func2</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">        &#125;</span><br><span class="line">        func2() <span class="comment">// simple call // 全域</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.func() <span class="comment">// 全域</span></span><br></pre></td></tr></table></figure>
+<p>雖然 simple call 的 <code>this</code> 是指向全域，但並不是在 <code>window</code> 的物件下去執行函式。<br>所以如果使用立即函式的話，<code>window.func()</code> 就會出現錯誤。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;window&#x27;</span>;</span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">func</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">window</span>.func()</span><br><span class="line">    <span class="comment">// window.func is not a function</span></span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+<p>另外 simple call 還有其他形式，像是閉包、callback function 等都是屬於 simple call。</p>
+<h3 id="閉包-Closure"><a href="#閉包-Closure" class="headerlink" title="閉包 Closure"></a>閉包 Closure</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;window&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">closureFunc</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> newFunc = closureFunc()</span><br><span class="line">newFunc() <span class="comment">// window</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="callback"><a href="#callback" class="headerlink" title="callback"></a>callback</h3><p>將一個函式以參數的方式帶入另一個函式，並在另一個函式內執行。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;window&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> callback()</span><br><span class="line">&#125;</span><br><span class="line">func(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">&#125;) <span class="comment">// window</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a>forEach</h3><p><code>forEach</code> 也是 callback function 的一種，所以也是屬於 simple call。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;window&#x27;</span></span><br><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">a.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// window window window</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="setTimeout"><a href="#setTimeout" class="headerlink" title="setTimeout"></a>setTimeout</h3><p><code>setTimeout</code> 也是 callback function 的一種，所以也是屬於 simple call。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;window&#x27;</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    scope: <span class="string">&#x27;local&#x27;</span>,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">        &#125;, <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.func() <span class="comment">// window</span></span><br></pre></td></tr></table></figure>
+<h2 id="強制綁定-this"><a href="#強制綁定-this" class="headerlink" title="強制綁定 this"></a>強制綁定 this</h2><p>雖然 this 有自己的預設值，但仍然可以用一些方法改變 this 的值。<br>綁定方式有三種：<code>call()</code>、<code>apply()</code>、<code>bind()</code><br><code>call()</code> 和 <code>apply()</code> 很類似，差別在於 <code>call()</code> 是「依序」傳入參數， <code>apply()</code> 是傳入陣列。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="meta">&#x27;use strict&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span> (<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>, a, b)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func(<span class="number">1</span>, <span class="number">2</span>) <span class="comment">// 1, 2</span></span><br><span class="line">func.call(<span class="literal">undefined</span>, <span class="number">1</span>, <span class="number">2</span>) <span class="comment">// undefined, 1, 2</span></span><br><span class="line">func.apply(<span class="literal">undefined</span>, [<span class="number">1</span>, <span class="number">2</span>]) <span class="comment">// undefined, 1, 2</span></span><br></pre></td></tr></table></figure>
+<p>由以上範例可以得知 <code>call()</code> 和 <code>apply()</code> 的第一個參數指的就是 this 的值。<br>所以如果把 <code>undefined</code> 改成其他內容，this 的值就會被替換掉。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="meta">&#x27;use strict&#x27;</span></span><br><span class="line">func.call(<span class="string">&#x27;call&#x27;</span>, <span class="number">1</span>, <span class="number">2</span>) <span class="comment">// call, 1, 2</span></span><br><span class="line">func.apply(<span class="string">&#x27;apply&#x27;</span>, [<span class="number">1</span>, <span class="number">2</span>]) <span class="comment">// apply, 1, 2</span></span><br></pre></td></tr></table></figure>
+
+<p><code>call()</code> 和 <code>apply()</code> 都可以立刻執行，但是 <code>bind()</code> 不會，並須在調用時才會「依序」執行。<br>而且一旦 <code>bind()</code> 之後，this 的值就不會再改變。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="meta">&#x27;use strict&#x27;</span></span><br><span class="line"><span class="keyword">var</span> func2 = func.bind(<span class="string">&#x27;bind&#x27;</span>, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">func2() <span class="comment">// bind, 1, 2</span></span><br><span class="line">func2.call(<span class="string">&#x27;call&#x27;</span>, <span class="number">1</span>, <span class="number">2</span>) <span class="comment">// bind, 1, 2</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在非嚴格模式下，如果參數為 <code>null</code>、<code>undefined</code>，this 會自動轉成全域物件，this 會被指向 window，並且帶入的值會以建構式的方式呈現。<br>但是如果在嚴格模式下，就會保持原本的參數類型，this 的本質其實是 undefined，所以盡量不要用 simple call 的方式調用 this。</p>
+</blockquote>
+<h2 id="箭頭函式"><a href="#箭頭函式" class="headerlink" title="箭頭函式"></a>箭頭函式</h2><p>箭頭函式沒有自己的 <code>this</code>，<code>this</code> 會指向外層的作用域。<br>以傳統函式的 <code>setTimeout</code> 為例，當執行 <code>setTimeout</code> 時，因為是 <code>callback</code>函式的關係，所以 <code>this</code> 會指向全域。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;全域&#x27;</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    scope: <span class="string">&#x27;物件&#x27;</span>,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">        &#125;, <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.func() <span class="comment">// 全域</span></span><br></pre></td></tr></table></figure>
+<p>如果改成箭頭函式的話，<code>this</code> 會被限制在作用域內，所以會指向物件。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;全域&#x27;</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    scope: <span class="string">&#x27;物件&#x27;</span>,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">        &#125;, <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.func() <span class="comment">// 物件</span></span><br></pre></td></tr></table></figure>
+<p><strong>＊陷阱</strong><br>箭頭函式的 <code>this</code> 要看外層是否有函式，如果沒有，則 <code>this</code> 指向全域。<br>以下範例 <code>callName()</code> 外層沒有函式，所以會指向全域。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">&#x27;全域&#x27;</span></span><br><span class="line"><span class="keyword">const</span> person = &#123;</span><br><span class="line">  name: <span class="string">&#x27;小明&#x27;</span>,</span><br><span class="line">  callName: <span class="function">() =&gt;</span> &#123; </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.name)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line">person.callName() <span class="comment">// 全域</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://kuro.tw/posts/2017/10/17/What-s-THIS-in-JavaScript-%E4%B8%AD/">What’s THIS in JavaScript ?</a></li>
+<li><a href="https://blog.techbridge.cc/2019/02/23/javascript-this/">淺談 JavaScript 頭號難題 this：絕對不完整，但保證好懂</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>var、let、const</title>
+    <url>/jscore/20210411/659913096/</url>
+    <content><![CDATA[<h2 id="var"><a href="#var" class="headerlink" title="var"></a>var</h2><p><code>var</code> 的宣告屬於 <strong>全域變數</strong>，代表 <strong>全域物件的屬性</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>假設一個 <code>for</code> 迴圈用 <code>var</code> 宣告 <code>i</code>，在全域還是可以取得 <code>i</code> 值。<br>如果想要限制 <code>i</code> 的作用域的話，可以使用立即函式，避免外層取到 <code>for</code> 迴圈裡面的值，最直接的方式就是使用 <code>let</code> 宣告。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line">&#125;)()</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// i is not defined</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// i is not defined</span></span><br></pre></td></tr></table></figure>
+<p>在 JavaScript 中，<code>var</code> 的作用域是函式作用域，但在函式內的區域變數也可能被視為全域變數，傳統用 <code>var</code> 宣告變數可能會汙染全域，如果使用 <code>let</code>、<code>const</code> 就可以避免這種情形。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.a) <span class="comment">// 10</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="let"><a href="#let" class="headerlink" title="let"></a>let</h2><p><code>let</code> 的作用域屬於區塊內({} 大括號)，和 <code>const</code> 最大差異就是可以重新賦值，而 <code>const</code> 不行。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">0</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> a = <span class="number">1</span> <span class="comment">// 因為 let 的作用域是區塊內，所以不算重複宣告</span></span><br><span class="line">    a = <span class="number">2</span></span><br><span class="line">    <span class="built_in">console</span>.log(a) <span class="comment">// 2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">0</span>) <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+<p>舉個非同步 <code>for</code> 迴圈的例子，假設想要讓 <code>setTimeout</code> 依序執行並印出結果，如果用 <code>var</code> 宣告的話，因為 <code>var</code> 是全域變數，所以只會取出最後一次執行的結果。<br>而 <code>setTimeout</code> 是非同步程式，會先放到「事件佇列」裡面，等到所有程式碼執行完畢後才會執行。<br>如果想要達到預期結果，只要用 <code>let</code> 宣告就可以依序執行並取得正確數值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`這是第 <span class="subst">$&#123;i&#125;</span> 次執行結果`</span>)</span><br><span class="line">    &#125;, <span class="number">0</span>)</span><br><span class="line">&#125; <span class="comment">// 這是第 3 次執行結果</span></span><br><span class="line">---</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`這是第 <span class="subst">$&#123;i + <span class="number">1</span>&#125;</span> 次執行結果`</span>)</span><br><span class="line">    &#125;, <span class="number">0</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 這是第 0 次執行結果</span></span><br><span class="line"><span class="comment">// 這是第 1 次執行結果</span></span><br><span class="line"><span class="comment">// 這是第 2 次執行結果</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="const"><a href="#const" class="headerlink" title="const"></a>const</h2><p><code>const</code> 是宣告一個常數，用 <code>const</code> 宣告的變數沒辦法再被調整。<br>雖然變數沒辦法被調整，但如果是物件的話，因為物件屬於傳參考特性，只要不直接替換掉物件，可以修改內容屬性值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> person = &#123;</span><br><span class="line">    name: <span class="string">&#x27;小明&#x27;</span>,</span><br><span class="line">    money: <span class="number">500</span></span><br><span class="line">&#125;</span><br><span class="line">person.name = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(person.name) <span class="comment">// 大明</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line">person = &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(person) <span class="comment">// Assignment to constant variable.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Hoisting-與-暫時性死區"><a href="#Hoisting-與-暫時性死區" class="headerlink" title="Hoisting 與 暫時性死區"></a>Hoisting 與 暫時性死區</h2><p>JavaScript 中有 hoisting 的現象，先來比較一下這三種的狀況：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// b is not defined</span></span><br><span class="line"><span class="keyword">let</span> b = <span class="number">2</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="built_in">console</span>.log(c) <span class="comment">// Cannot access &#x27;c&#x27; before initialization</span></span><br><span class="line"><span class="keyword">const</span> c = <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>var: <code>undefined</code>，有 hoisting</li>
+<li>let: <code>not defined</code>，沒有 hoisting</li>
+<li>const: 宣告前無法使用，沒有 hoisting</li>
+</ol>
+<p>看起來沒什麼問題，接著猜測一下面範例結果：</p>
+<ul>
+<li>(1) 如果 <code>let</code> 沒有提升的話，就會往外層查找取得 <strong>小明</strong> 的值</li>
+<li>(2) 如果 <code>let</code> 有提升的話，就會出現其他狀況</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> Ming = <span class="string">&#x27;小明&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(Ming)</span><br><span class="line">    <span class="keyword">let</span> Ming = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>結果是(2)： <code>Cannot access &#39;Ming&#39; before initialization</code><br><code>let</code> 在提升的過程中會產生一個「暫時性死區」Temporal Dead Zone(TDZ)。<br>在這個區域內是無法存取變數，也就不會賦予 <code>undefined</code> 的值，如果試圖取值就會跳出錯誤提示。<br>所以 <code>let</code> 雖然有類似提升 <strong>創造 - 執行階段</strong> 的概念，但是和 <code>var</code> 的 hoisting 概念並不相同。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> Ming = <span class="string">&#x27;小明&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 創造</span></span><br><span class="line">    <span class="keyword">let</span> Ming <span class="comment">// 暫時性死區 TDZ</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 執行</span></span><br><span class="line">    <span class="built_in">console</span>.log(Ming)</span><br><span class="line">    <span class="keyword">let</span> Ming = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="重點整理"><a href="#重點整理" class="headerlink" title="重點整理"></a>重點整理</h2><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">作用範圍</th>
+<th align="center">重複宣告</th>
+<th align="center">重新賦值</th>
+<th align="center">Hoisting</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">var</td>
+<td align="center">全域</td>
+<td align="center">v</td>
+<td align="center">v</td>
+<td align="center">v</td>
+</tr>
+<tr>
+<td align="center">let</td>
+<td align="center">區塊</td>
+<td align="center">x</td>
+<td align="center">v</td>
+<td align="center">v</td>
+</tr>
+<tr>
+<td align="center">const</td>
+<td align="center">區塊</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>事件傳遞機制</title>
+    <url>/note/20210419/2117635506/</url>
+    <content><![CDATA[<h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><p>DOM 全名為 Document Object Model 中文翻譯為 文件物件模型。<br>其實就是把 HTML 文件內的標籤、文字、圖片等等都定義成物件，而這些物件會形成一個樹狀結構，並且可以利用 JavaScript 來對 HTML 文件進操作和互動。<br><img src="https://i.imgur.com/3R0iZSd.png?70" alt="Image"></p>
+<span id="more"></span>
+<hr>
+<h2 id="DOM-節點-node"><a href="#DOM-節點-node" class="headerlink" title="DOM 節點 (node)"></a>DOM 節點 (node)</h2><p>在 DOM 中，節點可以分成四種：<br><strong>Document</strong><br>HTML 檔的開端，所有的一切都會從 Document 開始往下進行<br><strong>Element</strong><br>文件內的各個標籤，像是 <code>&lt;div&gt;</code>、<code>&lt;p&gt;</code> 等等各種 HTML Tag 都是被歸類在 Element 裡面<br><strong>Text</strong><br>各個標籤內的文字內容<br><strong>Attribute</strong><br>各個標籤內的相關屬性，像是 class、href 等等</p>
+<h2 id="捕獲與冒泡"><a href="#捕獲與冒泡" class="headerlink" title="捕獲與冒泡"></a>捕獲與冒泡</h2><p>JavaScript 是事件驅動的程式語言，也就是說，當 user 對網頁做了指定動作，才會觸發程式執行動作。<br>前面提到 DOM 會以物件形式定義 HTML 內的元件，這些物件會連結形成一個樹狀節構，而為了操控這些物件節點，需要透過 DOM 裡面的事件傳遞機制。<br>當我們要獲得一個 DOM 的 click 事件時，會這樣寫：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;.btn&#x27;</span>)</span><br><span class="line">btn.addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e )</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>裡面的 <code>e</code> 包含許多關於這次事件的相關參數，其中一個參數 <code>eventPhase</code> 表示這個事件在哪一個階段（Phase）觸發。<br>事件傳遞機制總共分為三大階段：</p>
+<ul>
+<li><p><strong>捕獲階段 (Capture Phase)</strong><br>在捕獲階段，DOM 的事件會從根節點 (window) 開始往下尋找目標 (target)，這個過程稱為捕獲階段 (CAPTURING_PHASE)。</p>
+</li>
+<li><p><strong>目標階段 (Target Phase)</strong><br>在找到目標的時候，就會是目標階段 (AT_TARGET)。</p>
+</li>
+<li><p><strong>冒泡階段 (Bubbling Phase)</strong><br>從子結點一路回傳到根節點，這個階段就稱作冒泡階段 (BUBBLING_PHASE)。</p>
+</li>
+</ul>
+<blockquote>
+<p>// PhaseType<br>const unsigned short      CAPTURING_PHASE                = 1;<br>const unsigned short      AT_TARGET                      = 2;<br>const unsigned short      BUBBLING_PHASE                 = 3;</p>
+</blockquote>
+<p><img src="https://i.imgur.com/q2XcwDc.png?60" alt="Image"></p>
+<p>用以下範例說明，在一般情況下，當點擊了 <code>a</code> 連結，因為傳遞機制的關係，其實會連同外層的<code>&lt;li&gt;</code>、<code>&lt;ul&gt;</code> 也一起被觸發。<br>從最外層的 <code>&lt;ul&gt;</code> 開始往下捕獲，然後找到目標 <code>&lt;a&gt;</code>，接著再冒泡回到 <code>&lt;ul&gt;</code>。</p>
+<iframe height="500" style="width: 100%;" scrolling="no" title="捕獲與冒泡" src="https://codepen.io/ericadu/embed/oNBPpop?height=463&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/ericadu/pen/oNBPpop'>捕獲與冒泡</a> by Erica
+  (<a href='https://codepen.io/ericadu'>@ericadu</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+
+<h2 id="停止事件傳遞-stopPropagation"><a href="#停止事件傳遞-stopPropagation" class="headerlink" title="停止事件傳遞 stopPropagation"></a>停止事件傳遞 stopPropagation</h2><p>在開發程式的過程中，可以加上 <code>e.stopPropagation()</code> 來停止冒泡事件。</p>
+<iframe height="500" style="width: 100%;" scrolling="no" title="捕獲與冒泡 stopPropagation" src="https://codepen.io/ericadu/embed/RwKYywj?height=499&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/ericadu/pen/RwKYywj'>捕獲與冒泡 stopPropagation</a> by Erica
+  (<a href='https://codepen.io/ericadu'>@ericadu</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+<p>用以上範例說明，我在 <code>&lt;a&gt;</code> 連結裡加入 <code>e.stopPropagation()</code>，點擊按鈕後會沒有反應，再對 <code>&lt;li&gt;</code> 點擊時會顯示前一個動作回傳的內容。<br>從回傳結果可以發現，當點擊 <code>&lt;a&gt;</code> 連結時，因為停止冒泡的關係，所以事件傳遞只到找到目標就停止，並沒有繼續回傳事件。而第二次點擊的 <code>&lt;li&gt;</code> 沒有加上 <code>e.stopPropagation()</code>，所以會繼續冒泡，完成整個傳遞過程。<br><img src="https://i.imgur.com/swBsYBT.png?40" alt="Image"></p>
+<h2 id="取消預設行為-preventDefault"><a href="#取消預設行為-preventDefault" class="headerlink" title="取消預設行為 preventDefault"></a>取消預設行為 preventDefault</h2><p><code>stopPropagation()</code> 常和 <code>preventDefault()</code> 搞混，但其實兩者沒什麼關係。<br><code>preventDefault()</code> 也是 <code>e</code> 的點擊事件參數之一，功能是取消瀏覽器的預設行為。<br>舉例來說，如果想要點擊 <code>&lt;a&gt;</code> 連結又不想讓預設的超連結轉跳到別的網頁，就可以加上 <code>e.preventDefault()</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">link.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">  e.preventDefault()</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10202689">Day03-深入理解網頁架構：DOM</a></li>
+<li><a href="https://medium.com/itsems-frontend/javascript-event-bubbling-capturing-794cd2d01e61">Javascript 中的 DOM 事件傳遞機制：捕獲與冒泡 (capturing and bubbling)</a> </li>
+</ul>
+]]></content>
+      <categories>
+        <category>筆記</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>函式與作用域</title>
+    <url>/jscore/20210411/1442787642/</url>
+    <content><![CDATA[<p>函式屬於物件的一種，分為「<strong>具名函式</strong>」和「<strong>匿名函式</strong>」，包含程式碼片段，可帶入參數，並可被呼叫。</p>
+<span id="more"></span>
+<hr>
+<h2 id="具名函式-Named-Function"><a href="#具名函式-Named-Function" class="headerlink" title="具名函式 Named Function"></a>具名函式 Named Function</h2><p>具名函式顧名思義必須要有函式名稱。<br>而具名函式能夠在函式內被調用，但是函式中的具名函式無法在函式以外被調用。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;inner&#x27;</span>)</span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callSayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  sayHello() <span class="comment">// 具名函式能夠在函式內被調用</span></span><br><span class="line">&#125;</span><br><span class="line">callSayHello() <span class="comment">// Hello!</span></span><br><span class="line">inner() <span class="comment">// inner is not defined 無法被調用</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="匿名函式-Anonymous-Function"><a href="#匿名函式-Anonymous-Function" class="headerlink" title="匿名函式 Anonymous Function"></a>匿名函式 Anonymous Function</h2><p>函式名稱是可以被忽略的，也就是匿名函式，通常會用表達式來宣告匿名函式，另外立即函式（IIFE）也是屬於匿名函式。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> sayHello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">  ;(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;Hey!&#x27;</span>)</span><br><span class="line">  &#125;)()</span><br><span class="line">&#125;</span><br><span class="line">sayHello()</span><br><span class="line"><span class="comment">// Hello!</span></span><br><span class="line"><span class="comment">// Hey!</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="陳述式與表達式"><a href="#陳述式與表達式" class="headerlink" title="陳述式與表達式"></a>陳述式與表達式</h2><ul>
+<li>陳述式：Statement</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式陳述式、具名函式</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>表達式：Expression（運算式、表示式）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式表達式、匿名函式</span></span><br><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="函式作用域-Function-Scope"><a href="#函式作用域-Function-Scope" class="headerlink" title="函式作用域 Function Scope"></a>函式作用域 Function Scope</h2><p>函式有屬於自己的作用域，在 ES6 之前，「<strong>JavaScript 切分變數有效範圍的最小單位是 function</strong>」，所以在這個範圍內的變數只屬於這個函式，一旦離開函式範圍，記憶體就會被釋放掉。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">6</span></span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// a = 3</span></span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// b is not defined</span></span><br></pre></td></tr></table></figure>
+<p>如果在函式裡面沒有重新宣告變數，那 function 就會向外一層一層找。<br>function 可以從內層讀取外層宣告的變數，但是外層沒辦法讀取內層宣告的變數，這種行為稱作「<strong>範圍鏈（Scope Chain）</strong>」。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> msg = <span class="string">&#x27;global&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">outer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> msg = <span class="string">&#x27;local&#x27;</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> msg</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> inner</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> innerFunc = outer()</span><br><span class="line"><span class="keyword">var</span> result = innerFunc()</span><br><span class="line"><span class="built_in">console</span>.log(result) <span class="comment">// local</span></span><br></pre></td></tr></table></figure>
+<p>範例中加了一段 <code>var innerFunc = outer()</code> ，呼叫 <code>outer</code> 回傳的 <code>inner</code> 結果，取得原本從外層無法讀取的 <code>inner</code>，看似好像把 <code>inner</code> 獨立出來，msg 向外查找所以結果是的外層 <code>global</code> 。<br>但有個重要觀念：<strong>範圍鏈是在函式被定義當下決定的，不是被呼叫的時候。</strong><br>所以在「<strong>定義函式之後，呼叫函式之前</strong>」範圍鏈就已經被建立，<code>msg</code> 為 <code>inner</code> 外層的 <code>local</code>。</p>
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10191549">重新認識 JavaScript: Day 10 函式 Functions 的基本概念</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>同步 Sync 與非同步 Async</title>
+    <url>/jscore/20210411/3360846865/</url>
+    <content><![CDATA[<h2 id="同步與非同步的差異"><a href="#同步與非同步的差異" class="headerlink" title="同步與非同步的差異"></a>同步與非同步的差異</h2><p>在學習同步與非同步的概念時很容易混淆，「<strong>同步</strong>」光看字面上的意思，可能會誤解成「所有動作同時進行」，而其實正好相反。</p>
+<span id="more"></span>
+<p>就以去夜市點餐來說明，如果今天想買的東西有：雞排、QQ球、珍奶。</p>
+<ul>
+<li><p>同步 (sync)：先去買雞排 -&gt; 再去買QQ球 -&gt; 然後再買珍奶。<br>像這樣「先完成 A 才能做 B、C、D …」的運作方式我們就會把它稱作「<strong>同步</strong>」。</p>
+</li>
+<li><p>非同步 (async)：再找兩個朋友幫忙，每人去一個攤位買一樣東西，就可以同時買好雞排、QQ球、珍奶。</p>
+</li>
+</ul>
+<p>所以同步的概念其實比較像是「<strong>一步一步來處理</strong>」的意思。<br>非同步則是，我不用等待 A 做完才做 B、C，而是這三個事情可以同時發送出去。</p>
+<h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p><strong>Promise</strong>  是 ES6 新增的建構函式，用來優化非同步的語法，增加可讀性。<br>Promise 字面上翻譯就是「約定、承諾」，可以想像成 A 和 B 約定要做某件事情，接著回報處理結果，而這個結果只能是「<strong>完成</strong>」或「<strong>拒絕</strong>」。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">asyncFunction</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, rejecte</span>) =&gt;</span> &#123;</span><br><span class="line">        value ? resolve(<span class="string">&#x27;處理完成的結果&#x27;</span>) : reject(<span class="string">&#x27;被拒絕的原因&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="為什麼需要-Promise？"><a href="#為什麼需要-Promise？" class="headerlink" title="為什麼需要 Promise？"></a>為什麼需要 Promise？</h3><p>JavaScript 是單執行緒（同步）的程式語言，一次只能處理一件事情，所以遇到非同步的事件時，就會先把程式碼放到「<strong>事件佇列</strong>」，等到所有事件處理完後才會執行非同步事件。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;開始&#x27;</span>) <span class="comment">// 執行順序 1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;非同步事件&#x27;</span>) <span class="comment">// 執行順序 3</span></span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;程式碼結束&#x27;</span>) <span class="comment">// 執行順序 2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="狀態"><a href="#狀態" class="headerlink" title="狀態"></a>狀態</h3><p>Promise 在處理非同步的事件的過程中，包含不同的進度狀態</p>
+<ul>
+<li>Pending：尚未得到結果</li>
+<li>Resolved：事件已經執行完畢且成功操作，回傳 <code>resolve</code> 的結果</li>
+<li>Rejected：事件已經執行完畢但操作失敗，回傳 <code>reject</code> 的結果<br><img src="https://i.imgur.com/I79SHF4.png" alt="Image"></li>
+</ul>
+<h3 id="接收回傳"><a href="#接收回傳" class="headerlink" title="接收回傳"></a>接收回傳</h3><p>Promise 可以用 <code>then</code> 和 <code>catch</code> 來接收並回傳結果：<br><code>then</code> 可以同時接收成功、失敗結果，而 <code>catch</code> 只接收失敗結果</p>
+<ul>
+<li><strong>使用 catch 接收失敗：</strong><br>在任何階段遇到 <code>reject</code> 時，都會直接跳到 <code>catch</code>，之後的 <code>then</code> 都不會執行<br>雖然 <code>catch</code> 依然可以使用 <code>return</code> 繼續串接，但很少這樣使用</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">promise(<span class="number">1</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success) <span class="comment">// resolve 接收成功 // &#x27;1&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">0</span>)    <span class="comment">// return promise(0) -&gt; reject 跳到 catch</span></span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;       <span class="comment">// 因為上面出現 reject 所以跳過</span></span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">3</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    .catch( <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)    <span class="comment">// reject 接收失敗 // &#x27;失敗&#x27;</span></span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>使用 then 接收失敗：</strong><br><code>then</code> 中的兩個函式必定執行其中一個，可以用此方式確保所有的鏈接都能夠被執行</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">promise(<span class="number">0</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">1</span>)</span><br><span class="line">    &#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)     <span class="comment">// reject 接收失敗 // &#x27;失敗&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">2</span>)     <span class="comment">// return promise(2)</span></span><br><span class="line">    &#125;)</span><br><span class="line"> </span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success) <span class="comment">// resolve 接收成功 // &#x27;2&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">0</span>)    <span class="comment">// return promise(0)</span></span><br><span class="line">    &#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)</span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">4</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">    &#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)     <span class="comment">// reject 接收失敗 // &#x27;失敗&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h3><ul>
+<li>最後可以使用 <code>finally</code> 來確認工作結束</li>
+<li><code>finally</code> 不帶有任何參數，適合用來確認 Ajax 已經讀取完成</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">promise(<span class="number">1</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">    &#125;).finally(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;done&#x27;</span>)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10194569/">重新認識 JavaScript: Day 26 同步與非同步</a></li>
+<li><a href="https://www.oxxostudio.tw/articles/201706/javascript-promise-settimeout.html">JavaScript 同步延遲 ( Promise + setTimeout )</a></li>
+<li><a href="https://wcc723.github.io/development/2020/02/16/all-new-promise/">JavaScript Promise 全介紹</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>浮點數相加</title>
+    <url>/note/20210414/981755103/</url>
+    <content><![CDATA[<h2 id="浮點數"><a href="#浮點數" class="headerlink" title="浮點數"></a>浮點數</h2><p>在日常生活中，如果要計算 0.1 + 0.2，我們能夠直覺的答出 0.3 這個答案。<br>但是在 JavaScript 中，計算結果卻不如預期，用 <code>console.log(0.1 + 0.2 === 0.3)</code> 回傳的結果竟會得到 <code>false</code>。<br>其實這和電腦的「<a href="https://www.h-schmidt.net/FloatConverter/IEEE754.html">IEEE754 二進制浮點運算</a>」計算方式有關，當我們宣告一段浮點數陣列，展開後會發現，有些浮點數會有些微誤差，以致於在進行計算時會出錯。<br>所以得到的結果自然是 <code>0.1 + 0.2 !== 0.3</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="built_in">Array</span>.from(<span class="built_in">Array</span>(<span class="number">10</span>).keys())</span><br><span class="line"><span class="keyword">var</span> result = num.map(<span class="function"><span class="params">item</span> =&gt;</span> item * <span class="number">0.1</span>)</span><br><span class="line"><span class="built_in">console</span>.log(result)</span><br><span class="line"><span class="comment">// 0, 0.1, 0.2, 0.30000000000000004, 0.4, 0.5, </span></span><br><span class="line"><span class="comment">// 0.6000000000000001, 0.7000000000000001, 0.8, 0.9</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<hr>
+<p>該如何解決浮點數問題呢？可以使用以下兩種方法：</p>
+<ul>
+<li>Number.toFixed()</li>
+<li>Number.toPrecision()</li>
+</ul>
+<h2 id="Number-toFixed"><a href="#Number-toFixed" class="headerlink" title="Number.toFixed"></a>Number.toFixed</h2><p><code>Number.toFixed()</code> 可以對數字進行四捨五入到指定的第 N 位數。</p>
+<blockquote>
+<p><code>toFixed()</code> 方法回傳的型別是「<strong>字串</strong>」，需要另外再轉換為數字型別。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">10.12345</span></span><br><span class="line">num.toFixed(<span class="number">2</span>) <span class="comment">// &quot;10.12&quot;</span></span><br><span class="line">num.toFixed(<span class="number">4</span>) <span class="comment">// &quot;10.1235&quot;</span></span><br></pre></td></tr></table></figure>
+<p>同樣方法用在浮點數上可以改成：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="built_in">Array</span>.from(<span class="built_in">Array</span>(<span class="number">10</span>).keys())</span><br><span class="line"><span class="keyword">var</span> result = num.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="built_in">Number</span>((item * <span class="number">0.1</span>).toFixed(<span class="number">1</span>)))</span><br><span class="line"><span class="built_in">console</span>.log(result)</span><br><span class="line"><span class="comment">// [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]</span></span><br></pre></td></tr></table></figure>
+<p>如果想去除小數點後為 0 的尾數，則可以用 <code>parseFloat()</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0.990</span></span><br><span class="line"><span class="built_in">parseFloat</span>(num) <span class="comment">// 0.99</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Number-toPrecision"><a href="#Number-toPrecision" class="headerlink" title="Number.toPrecision"></a>Number.toPrecision</h2><p><code>Number.toPrecision()</code> 方法可以指定想要顯示的浮點數範圍，範圍在 1～21，並且回傳「字串」。<br><code>toPrecision()</code> 方法有以下幾種狀況：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 數字是浮點數，就會補 0</span></span><br><span class="line"><span class="keyword">var</span> num1 = <span class="number">0.12</span></span><br><span class="line">num1.toPrecision(<span class="number">5</span>) <span class="comment">// &quot;0.12000&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 數字是浮點數，但位數不足，一樣會四捨五入</span></span><br><span class="line"><span class="keyword">var</span> num2 = <span class="number">12.345</span></span><br><span class="line">num2.toPrecision(<span class="number">4</span>) <span class="comment">// &quot;12.35&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 數字是整數，但是位數不足，會轉換成指數寫法</span></span><br><span class="line"><span class="keyword">var</span> num3 = <span class="number">1234</span></span><br><span class="line">num3.toPrecision(<span class="number">3</span>) <span class="comment">// &quot;1.23e+3&quot;</span></span><br></pre></td></tr></table></figure>
+<p>所以如果想要解決浮點數相加的問題，可以改成這樣：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">parseFloat</span>((<span class="number">0.1</span> + <span class="number">0.2</span>).toPrecision(<span class="number">12</span>)) <span class="comment">// &quot;0.3&quot;</span></span><br><span class="line"><span class="built_in">parseFloat</span>((<span class="number">0.6</span> + <span class="number">0.7</span>).toPrecision(<span class="number">12</span>)) <span class="comment">// &quot;1.3&quot;</span></span><br></pre></td></tr></table></figure>
+<p>至於為什麼參數要帶 12，因為 12 位數可以避免大部分浮點數的問題。</p>
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://tso1158687.github.io/blog/2018/12/17/javascript-float-trap/">javascript浮點數的陷阱</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>筆記</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>物件傳參考</title>
+    <url>/jscore/20210413/1596758899/</url>
+    <content><![CDATA[<p>JavaScript 中，資料的傳遞分為兩種方式：<br><strong>- 傳值</strong>：Call by value 或 Pass by value<br><strong>- 傳址（傳參考）</strong>：Call by reference 或 Pass by reference</p>
+<span id="more"></span>
+
+<hr>
+<h2 id="傳值"><a href="#傳值" class="headerlink" title="傳值"></a>傳值</h2><p>JavaScript 中除了物件型別以外都是基本型別，基本型別就是單純的值。<br>而基本型別是透過「<strong>傳值</strong>」的方式傳遞資料：</p>
+<ul>
+<li>Boolean：布林</li>
+<li>Null：空值</li>
+<li>Undefined：未定義</li>
+<li>Number：數字</li>
+<li>String：字串</li>
+</ul>
+<p>假設今天 <code>a</code> 的值是 10，<code>b</code> 又等於 <code>a</code>，如果把 <code>a</code> 重新賦值 100，那 <code>b</code> 的結果會是什麼呢？</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">10</span></span><br><span class="line"><span class="keyword">var</span> b = a</span><br><span class="line">a = <span class="number">100</span></span><br><span class="line"><span class="built_in">console</span>.log(b)</span><br></pre></td></tr></table></figure>
+<p>答案是：10。</p>
+<p>在電腦裡的世界，可以想像成一個個空間，有「記憶體位置」的空間，也有「儲存值」的空間。<br>為了方便取用，才有變數的存在，再用變數連結（指向）這些記憶體位置。<br>而宣告變數賦值，就是把變數的值存進電腦裡專門存值的空間。<br>所以在傳值的概念裡，兩個變數分別儲存在不同空間，就算其中變數 <code>a</code> 重新賦值，也不會影響原本複製過去的變數 <code>b</code>。<br><img src="https://i.imgur.com/zt6x1G5.png?50" alt="Image"></p>
+<h2 id="傳址"><a href="#傳址" class="headerlink" title="傳址"></a>傳址</h2><p>除了基本型別外，其他型別都算物件型別。<br>物件的定義需要包含 <code>key</code> 和 <code>value</code>，會以「<strong>傳址（傳參考）</strong>」的方式傳遞資料：</p>
+<ul>
+<li>Object：物件</li>
+<li>Array：陣列</li>
+<li>Function：函式</li>
+</ul>
+<p>以下方範例為例，變數 <code>a</code>、<code>b</code> 分別是什麼呢？</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123; <span class="attr">x</span>: <span class="number">1</span> &#125;</span><br><span class="line"><span class="keyword">var</span> b = a</span><br><span class="line">b.x = <span class="number">2</span></span><br><span class="line">a.y = <span class="number">3</span></span><br><span class="line"><span class="built_in">console</span>.log(a, b)</span><br></pre></td></tr></table></figure>
+<p>答案是：<code>a = &#123; x: 2, y: 3 &#125;</code>，<code>b = &#123; x: 2, y: 3 &#125;</code></p>
+<p>因為物件是「傳址」，所以並不會重新賦值，當然也就不會準備新的儲存空間，只會指向原本的位置。當變數的值改變時，原本位置的值也會跟著改變。</p>
+<p><img src="https://i.imgur.com/sjbIC8J.png?50" alt="Image"></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123; <span class="attr">x</span>: <span class="number">1</span> &#125; <span class="comment">// 儲存值 (1)</span></span><br><span class="line"><span class="keyword">var</span> b = a <span class="comment">// b 指向 a - 位置 (1)</span></span><br><span class="line">b.x = <span class="number">2</span> <span class="comment">// 對 a 的位置賦值</span></span><br><span class="line">a.y = <span class="number">3</span> <span class="comment">// a 的指向位置不變，對自己賦值</span></span><br><span class="line"><span class="built_in">console</span>.log(a, b)</span><br><span class="line"><span class="comment">// a = &#123; x: 2, y: 3 &#125;, b = &#123; x: 2, y: 3 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>再以下方範例為例：<br>如果用等號再對變數 <code>b</code> 重新賦值，再宣告一個變數 <code>c</code> 指向 <code>b</code>。<br>請問變數 <code>a</code>、<code>b</code>、<code>c</code> 分別是什麼呢？</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123; <span class="attr">x</span>: <span class="number">1</span> &#125;</span><br><span class="line"><span class="keyword">var</span> b = &#123; <span class="attr">x</span>: <span class="number">2</span> &#125;</span><br><span class="line"><span class="keyword">var</span> c = b</span><br><span class="line">b = a</span><br><span class="line">a.y = <span class="number">3</span></span><br><span class="line"><span class="built_in">console</span>.log(a, b, c)</span><br></pre></td></tr></table></figure>
+<p>答案是：<code>a = &#123; x: 1, y: 3 &#125;</code>，<code>b = &#123; x: 1, y: 3 &#125;</code>，<code>c = &#123; x: 2 &#125;</code><br>雖然有準備新的空間給變數 <code>b</code>，並且讓 <code>c</code> 指向 <code>b</code>，但是後來又把 <code>b</code> 指向 <code>a</code>，<code>c</code> 指向的是 <code>b</code> 原本的記憶體位置，所以當變數 <code>a</code> 的內容改變，<code>b</code> 的值也會一起改變。<br><img src="https://i.imgur.com/rAFkarQ.png?50" alt="Image"></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123; <span class="attr">x</span>: <span class="number">1</span> &#125; <span class="comment">// 儲存值 (1)</span></span><br><span class="line"><span class="keyword">var</span> b = &#123; <span class="attr">x</span>: <span class="number">2</span> &#125; <span class="comment">// 儲存值 (2)</span></span><br><span class="line"><span class="keyword">var</span> c = b <span class="comment">// c 指向 b - 位置 (2)</span></span><br><span class="line">b = a <span class="comment">// b 指向 a - 位置 (1)</span></span><br><span class="line">a.y = <span class="number">3</span> <span class="comment">// a 的指向位置不變，對自己賦值</span></span><br><span class="line"><span class="built_in">console</span>.log(a, b, c)</span><br><span class="line"><span class="comment">// a = &#123; x: 1, y: 3 , b = &#123; x: 1, y: 3 &#125;, c = &#123; x: 2 &#125;</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10191057">重新認識 JavaScript: Day 05 JavaScript 是「傳值」或「傳址」？</a></li>
+<li><a href="https://medium.com/itsems-frontend/javascript-pass-by-value-reference-sharing-5d6095ae030b"> Javascript中的傳值 by value 與傳址 by reference</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>閉包 Closure</title>
+    <url>/jscore/20210411/1553745186/</url>
+    <content><![CDATA[<p>讓函式擁有自己的變數，使執行環境不會互相干擾。</p>
+<hr>
+<p>我們都知道閉包，但什麼是必包？主要功能是什麼呢？<br>先從字面上拆解，Closure 可以拆成 <code>Close</code> 和 <code>-ure</code> 字尾，<code>-ure</code> 接在動作的字根後面，表示動作本身、動作造成的結果、或是執行動作的人事物。<br>所以閉包本身就是一個關閉的動作，把程式碼片段關閉在一個函式內，限制作用域，建立自己的環境與外界隔絕。</p>
+<span id="more"></span>
+
+<h2 id="限制作用域"><a href="#限制作用域" class="headerlink" title="限制作用域"></a>限制作用域</h2><p>用一個錢包範例先來比較一下差異：<br>假設每個錢包都有1000元，大明花了300元，小明花了500元，計算每個人錢包裡的餘額</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> balance = <span class="number">1000</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wallet</span> (<span class="params">cost</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> balance = balance - cost</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> MING = wallet(<span class="number">300</span>)</span><br><span class="line"><span class="keyword">var</span> ming = wallet(<span class="number">500</span>)</span><br><span class="line"><span class="built_in">console</span>.log(MING, ming) <span class="comment">// 700 200</span></span><br></pre></td></tr></table></figure>
+<p>快速計算一下，大明錢包裡應該要有700元，小明應該還剩500元，但是結果小明卻是剩下200元，難道大明偷拿小明錢包裡的錢嗎？<br>一切都是誤會呀！因為現在沒有限制作用域，目前還是兩個人共用同一個錢包的狀態，如果想要讓他們他們各自花各自的錢，就要給他們一人一個錢包。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> balanceA = <span class="number">1000</span></span><br><span class="line"><span class="keyword">var</span> balanceB = <span class="number">1000</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">walletA</span> (<span class="params">cost</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> balanceA = balanceA - cost</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">walletB</span> (<span class="params">cost</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> balanceB = balanceB - cost</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> MING = walletA(<span class="number">300</span>)</span><br><span class="line"><span class="keyword">var</span> ming = walletB(<span class="number">500</span>)</span><br><span class="line"><span class="built_in">console</span>.log(MING, ming) <span class="comment">// 700 500</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="函式工廠"><a href="#函式工廠" class="headerlink" title="函式工廠"></a>函式工廠</h2><p>如果今天想要再計算別的錢包，就要再重複寫一次，這樣就會變成一樣的事情重複寫，不但看起來很複雜，也很沒有效率。這個時候就可以加入閉包限制作用域，建立一個「<strong>函式工廠</strong>」。<br><strong>讓每個功能相同的 function，對應到每個獨立的環境變數，且互不相干擾。</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wallet</span>(<span class="params">cost</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> balance = <span class="number">1000</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">counter</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    balance = balance - cost</span><br><span class="line">    <span class="built_in">console</span>.log(balance)</span><br><span class="line">  &#125;</span><br><span class="line">  counter()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> userA = wallet(<span class="number">300</span>) <span class="comment">// 700</span></span><br><span class="line"><span class="keyword">var</span> userB = wallet(<span class="number">500</span>) <span class="comment">// 500</span></span><br><span class="line"><span class="keyword">var</span> userC = wallet(<span class="number">200</span>) <span class="comment">// 800</span></span><br></pre></td></tr></table></figure>
+<p>這時候就可以讓每個人都可以獨立計算錢包餘額，也可以加入變數，一開始分別放入不同金額，管理各自的錢包。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wallet</span>(<span class="params">initBalance, cost</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> balance = initBalance</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">counter</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    balance = balance - cost</span><br><span class="line">    <span class="built_in">console</span>.log(balance)</span><br><span class="line">  &#125;</span><br><span class="line">  counter()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> userA = wallet(<span class="number">1000</span>, <span class="number">300</span>) <span class="comment">// 700</span></span><br><span class="line"><span class="keyword">var</span> userB = wallet(<span class="number">2000</span>, <span class="number">500</span>) <span class="comment">// 1500</span></span><br><span class="line"><span class="keyword">var</span> userC = wallet(<span class="number">1500</span>, <span class="number">200</span>) <span class="comment">// 1300</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10193009">重新認識 JavaScript: Day 19 閉包 Closure</a></li>
+<li><a href="https://yixuntseng-bruce.medium.com/%E4%BA%94%E5%88%86%E9%90%98%E5%AD%B8%E5%89%8D%E7%AB%AF-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8Bjavascript%E7%9A%84%E9%96%89%E5%8C%85closure-c54321434e9f">快速上手JavaScript的閉包Closure</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>淺層複製與深層複製</title>
+    <url>/jscore/20210414/4242308893/</url>
+    <content><![CDATA[<p>之前提到物件型別有傳參考的特性，但是如果想要另外修改資料，就會連帶影響原始資料內容，JavaScript 提供幾種複製方式來解決這個問題。</p>
+<span id="more"></span>
+<hr>
+<h2 id="淺層複製-Shallow-Copy"><a href="#淺層複製-Shallow-Copy" class="headerlink" title="淺層複製 Shallow Copy"></a>淺層複製 Shallow Copy</h2><p>淺層複製只能複製物件的第一層，如果修改第二層資料的話，還是會影響原始資料。</p>
+<h3 id="for-in-loop"><a href="#for-in-loop" class="headerlink" title="for-in loop"></a>for-in loop</h3><p>以下範例可以發現，用 <code>for-in</code> 迴圈複製後的新物件會和原始資料不同。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> ( <span class="keyword">let</span> key <span class="keyword">in</span> data ) &#123;</span><br><span class="line">    target[key] = data[key]</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(target !== data) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>但是接著修改新物件後，修改第一層的內容沒有問題，不會影響原始資料，但是修改第二層後，就會連同原始物件一起修改。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">target.title = <span class="string">&#x27;Second Level&#x27;</span> </span><br><span class="line">target.info.tag = <span class="string">&#x27;copy&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(target, data)</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/BbbyV3N.png?55" alt="Image"></p>
+<h3 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign"></a>Object.assign</h3><p><code>Object.assign()</code> 可以用來複製物件本身的屬性到另外一個目標物件上。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> origin = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = <span class="built_in">Object</span>.assign(&#123;&#125;, origin)</span><br><span class="line"><span class="built_in">console</span>.log(origin, target)</span><br><span class="line"><span class="comment">// origin = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br><span class="line"><span class="comment">// target = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 <font color="#ff7575"><strong>目標物件</strong></font> 與 <font color="#6897bb"><strong>原始物件</strong></font> 的屬性名稱相同，<font color="#6897bb"><strong>原始物件</strong></font> 的屬性會覆蓋 <font color="#ff7575"><strong>目標物件</strong></font>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> origin = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123; <span class="attr">a</span>: <span class="number">4</span>, <span class="attr">b</span>: <span class="number">5</span>, <span class="attr">x</span>: <span class="number">0</span> &#125;</span><br><span class="line"><span class="built_in">Object</span>.assign(target, origin)</span><br><span class="line"><span class="built_in">console</span>.log(origin, target)</span><br><span class="line"><span class="comment">// origin = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br><span class="line"><span class="comment">// target = &#123;a: 1, b: 2, x: 0, c: 3&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ES6-展開語法"><a href="#ES6-展開語法" class="headerlink" title="ES6 展開語法"></a>ES6 展開語法</h3><p>除了以上兩種方法，也可以用 ES6 的展開語法達到相同效果。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123;...data&#125;</span><br><span class="line">target.a = <span class="number">999</span></span><br><span class="line"><span class="built_in">console</span>.log(target)</span><br><span class="line"><span class="comment">// target = &#123; a: 999, b: 2, c: 3 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="深層複製-Deep-Copy"><a href="#深層複製-Deep-Copy" class="headerlink" title="深層複製 Deep Copy"></a>深層複製 Deep Copy</h2><p>淺層複製只能複製第一層資料，深層複製則是可以將資料完整複製，讓整份新複製的資料都能往下層修改，並且不會影響原始資料。</p>
+<h3 id="JSON-stringify"><a href="#JSON-stringify" class="headerlink" title="JSON.stringify"></a>JSON.stringify</h3><p><code>JSON.stringify()</code> 可以將物件轉成「字串」後回傳。<br>重新轉成字串後再用 <code>JSON.parse()</code> 轉回 JavaScript 物件，如此就能達到深層複製的效果。<br>原理是將物件先轉成「純值」，再透過 <code>JSON.parse()</code> 轉回物件，此時的物件就會有一個新的記憶體空間，並且讓變數指向到新的位置。</p>
+<blockquote>
+<ul>
+<li>如果物件中有 <code>undefined</code>、<code>function</code> ，因為無法轉成純值，所以會直接消失。</li>
+<li><code>NaN</code> 則會變成 Null。</li>
+</ul>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> target = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(data))</span><br><span class="line">target.title = <span class="string">&#x27;Second Level&#x27;</span> </span><br><span class="line">target.info.tag = <span class="string">&#x27;copy&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(target, data)</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/Zi6OaFe.png?55" alt="Image"></p>
+<h3 id="jQuery-extend"><a href="#jQuery-extend" class="headerlink" title="jQuery.extend"></a>jQuery.extend</h3><p>如果要解決 <code>undefined</code>、<code>function</code> 和 <code>NaN</code> 的複製問題，可以用 jQuery 的 <code>$.extend</code> 方法，就能做到完整的深層複製。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;data.func&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    un: <span class="literal">undefined</span>,</span><br><span class="line">    nan: <span class="literal">NaN</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> shallow = $.extend(&#123;&#125;, data) <span class="comment">// 淺層複製</span></span><br><span class="line"><span class="keyword">var</span> deep = $.extend(<span class="literal">true</span>, &#123;&#125;, data) <span class="comment">// 深層複製</span></span><br><span class="line"><span class="built_in">console</span>.log(deep)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://hsiangfeng.github.io/javascript/20200905/1375484447/">JavaScript 核心觀念(30)-物件-淺層複製及深層複製</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>關注點分離：Todolist</title>
+    <url>/demo/20210415/642765602/</url>
+    <content><![CDATA[<h2 id="關注點分離"><a href="#關注點分離" class="headerlink" title="關注點分離"></a>關注點分離</h2><p>關注點分離（Separation of Concerns，SoC）就是將程式碼依照各種「目的」、「功能」進行分類和整理，讓每個區塊專注於各自負責的工作，彼此分工合作。<br>這麼做的優點是可以將程式碼進行切割，依照需求各自獨立處理，並讓程式碼單純化。<br>為了更清楚理解關注點分離應用，來實作一個簡單的 Todolist。</p>
+<span id="more"></span>
+
+<hr>
+<h2 id="實作-Todolist"><a href="#實作-Todolist" class="headerlink" title="實作 Todolist"></a>實作 Todolist</h2><p>① 首先可以先規劃可能需要用到的功能，並用物件的方式宣告</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> component = &#123;</span><br><span class="line">    data: [],           <span class="comment">// 儲存資料</span></span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;&#125;,        <span class="comment">// 渲染畫面</span></span><br><span class="line">    <span class="function"><span class="title">addData</span>(<span class="params"></span>)</span> &#123;&#125;,       <span class="comment">// 加入資料</span></span><br><span class="line">    <span class="function"><span class="title">removeData</span>(<span class="params"></span>)</span> &#123;&#125;,    <span class="comment">// 刪除單筆資料</span></span><br><span class="line">    <span class="function"><span class="title">init</span>(<span class="params"></span>)</span> &#123;&#125;           <span class="comment">// 執行</span></span><br><span class="line">&#125;</span><br><span class="line">component.init()</span><br></pre></td></tr></table></figure>
+
+<p>② 先放測試資料，將資料先渲染到畫面上</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> component = &#123;</span><br><span class="line">    data: [</span><br><span class="line">      <span class="string">&#x27;第一段文字&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;第二段文字&#x27;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> list = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.list-group&#x27;</span>)</span><br><span class="line">      <span class="keyword">const</span> content = <span class="built_in">this</span>.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="string">`</span></span><br><span class="line"><span class="string">        &lt;li class=&quot;list-group-item&quot;&gt;</span></span><br><span class="line"><span class="string">          <span class="subst">$&#123;item&#125;</span></span></span><br><span class="line"><span class="string">          &lt;button type=&quot;button&quot; data-index=&quot;<span class="subst">$&#123;i&#125;</span>&quot;</span></span><br><span class="line"><span class="string">          class=&quot;btn btn-info btn-sm ml-3&quot;&gt;刪除&lt;/button&gt;</span></span><br><span class="line"><span class="string">        &lt;/li&gt;</span></span><br><span class="line"><span class="string">      `</span>).join(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">      list.innerHTML = content</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="title">init</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.render()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">component.init()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/DCkpQbr.png?60" alt="Image"></p>
+<p class="desc">確認一下畫面有正確渲染出來</p>
+
+<p>③ 接著輸入單筆資料</p>
+<ul>
+<li>點擊「送出」按鈕時取得輸入框的值</li>
+<li>新增到 <code>data</code> 陣列中</li>
+<li>重新渲染畫面</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> component = &#123;</span><br><span class="line">    data: [</span><br><span class="line">      ...</span><br><span class="line">    ],</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">addData</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> text = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.input-group input&#x27;</span>)</span><br><span class="line">      <span class="keyword">const</span> addBtn = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.input-group button&#x27;</span>)</span><br><span class="line">      addBtn.addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> newText = text.value</span><br><span class="line">        text.value = <span class="string">&#x27;&#x27;</span> <span class="comment">// 清空輸入框</span></span><br><span class="line">        <span class="built_in">this</span>.data.push(newText)</span><br><span class="line">        <span class="built_in">this</span>.render() <span class="comment">// 重新渲染畫面</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="title">init</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.render()</span><br><span class="line">      <span class="built_in">this</span>.addData() <span class="comment">// 先註冊並等待點擊後執行</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">component.init()</span><br></pre></td></tr></table></figure>
+
+<p>④ 最後加上刪除資料<br>因為刪除按鈕會在渲染後才會印在畫面上，所以按鈕的宣告和執行都要寫在渲染後，不然會出現 <code>not defined</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> component = &#123;</span><br><span class="line">    data: [</span><br><span class="line">      ...</span><br><span class="line">    ],</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      ...</span><br><span class="line">      <span class="comment">// 刪除執行要寫在渲染後</span></span><br><span class="line">      <span class="keyword">const</span> btns = <span class="built_in">document</span>.querySelectorAll(<span class="string">&#x27;.list-group button&#x27;</span>)</span><br><span class="line">      btns.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">        item.addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">const</span> id = e.target.dataset.index</span><br><span class="line">          <span class="built_in">this</span>.removeData(id)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">addData</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">removeData</span>(<span class="params">id</span>)</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.data.splice(id, <span class="number">1</span>)</span><br><span class="line">      <span class="built_in">this</span>.render()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">init</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.render()</span><br><span class="line">      <span class="built_in">this</span>.addData()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">component.init()</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><iframe height="400" style="width: 100%;" scrolling="no" title="關注點分離：Todolist" src="https://codepen.io/ericadu/embed/XWpqwQr?height=400&theme-id=dark&default-tab=js,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/ericadu/pen/XWpqwQr'>關注點分離：Todolist</a> by Erica
+  (<a href='https://codepen.io/ericadu'>@ericadu</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>]]></content>
+      <categories>
+        <category>實作</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>Todolist</tag>
+      </tags>
+  </entry>
+</search>

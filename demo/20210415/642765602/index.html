@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;example.com&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Pisces&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script>
+<meta name="description" content="關注點分離關注點分離（Separation of Concerns，SoC）就是將程式碼依照各種「目的」、「功能」進行分類和整理，讓每個區塊專注於各自負責的工作，彼此分工合作。這麼做的優點是可以將程式碼進行切割，依照需求各自獨立處理，並讓程式碼單純化。為了更清楚理解關注點分離應用，來實作一個簡單的 Todolist。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="關注點分離：Todolist">
+<meta property="og:url" content="http://example.com/demo/20210415/642765602/index.html">
+<meta property="og:site_name" content="艾瑞卡卡">
+<meta property="og:description" content="關注點分離關注點分離（Separation of Concerns，SoC）就是將程式碼依照各種「目的」、「功能」進行分類和整理，讓每個區塊專注於各自負責的工作，彼此分工合作。這麼做的優點是可以將程式碼進行切割，依照需求各自獨立處理，並讓程式碼單純化。為了更清楚理解關注點分離應用，來實作一個簡單的 Todolist。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/DCkpQbr.png?60">
+<meta property="article:published_time" content="2021-04-15T08:49:38.000Z">
+<meta property="article:modified_time" content="2021-04-18T12:38:07.525Z">
+<meta property="article:author" content="Erica">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Todolist">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/DCkpQbr.png?60">
+
+
+<link rel="canonical" href="http://example.com/demo/20210415/642765602/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;example.com&#x2F;demo&#x2F;20210415&#x2F;642765602&#x2F;&quot;,&quot;path&quot;:&quot;demo&#x2F;20210415&#x2F;642765602&#x2F;&quot;,&quot;title&quot;:&quot;關注點分離：Todolist&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>關注點分離：Todolist | 艾瑞卡卡</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head><script src="/js/hexo_resize_image.js"></script>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">艾瑞卡卡</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%9C%E6%B3%A8%E9%BB%9E%E5%88%86%E9%9B%A2"><span class="nav-number">1.</span> <span class="nav-text">關注點分離</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%A6%E4%BD%9C-Todolist"><span class="nav-number">2.</span> <span class="nav-text">實作 Todolist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo"><span class="nav-number">3.</span> <span class="nav-text">Demo</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Erica"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Erica</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/demo/20210415/642765602/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Erica">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="艾瑞卡卡">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          關注點分離：Todolist
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-15 16:49:38" itemprop="dateCreated datePublished" datetime="2021-04-15T16:49:38+08:00">2021-04-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/demo/" itemprop="url" rel="index"><span itemprop="name">實作</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="關注點分離"><a href="#關注點分離" class="headerlink" title="關注點分離"></a>關注點分離</h2><p>關注點分離（Separation of Concerns，SoC）就是將程式碼依照各種「目的」、「功能」進行分類和整理，讓每個區塊專注於各自負責的工作，彼此分工合作。<br>這麼做的優點是可以將程式碼進行切割，依照需求各自獨立處理，並讓程式碼單純化。<br>為了更清楚理解關注點分離應用，來實作一個簡單的 Todolist。</p>
+<span id="more"></span>
+
+<hr>
+<h2 id="實作-Todolist"><a href="#實作-Todolist" class="headerlink" title="實作 Todolist"></a>實作 Todolist</h2><p>① 首先可以先規劃可能需要用到的功能，並用物件的方式宣告</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> component = &#123;</span><br><span class="line">    data: [],           <span class="comment">// 儲存資料</span></span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;&#125;,        <span class="comment">// 渲染畫面</span></span><br><span class="line">    <span class="function"><span class="title">addData</span>(<span class="params"></span>)</span> &#123;&#125;,       <span class="comment">// 加入資料</span></span><br><span class="line">    <span class="function"><span class="title">removeData</span>(<span class="params"></span>)</span> &#123;&#125;,    <span class="comment">// 刪除單筆資料</span></span><br><span class="line">    <span class="function"><span class="title">init</span>(<span class="params"></span>)</span> &#123;&#125;           <span class="comment">// 執行</span></span><br><span class="line">&#125;</span><br><span class="line">component.init()</span><br></pre></td></tr></table></figure>
+
+<p>② 先放測試資料，將資料先渲染到畫面上</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> component = &#123;</span><br><span class="line">    data: [</span><br><span class="line">      <span class="string">&#x27;第一段文字&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;第二段文字&#x27;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> list = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.list-group&#x27;</span>)</span><br><span class="line">      <span class="keyword">const</span> content = <span class="built_in">this</span>.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="string">`</span></span><br><span class="line"><span class="string">        &lt;li class=&quot;list-group-item&quot;&gt;</span></span><br><span class="line"><span class="string">          <span class="subst">$&#123;item&#125;</span></span></span><br><span class="line"><span class="string">          &lt;button type=&quot;button&quot; data-index=&quot;<span class="subst">$&#123;i&#125;</span>&quot;</span></span><br><span class="line"><span class="string">          class=&quot;btn btn-info btn-sm ml-3&quot;&gt;刪除&lt;/button&gt;</span></span><br><span class="line"><span class="string">        &lt;/li&gt;</span></span><br><span class="line"><span class="string">      `</span>).join(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">      list.innerHTML = content</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="title">init</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.render()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">component.init()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/DCkpQbr.png?60" alt="Image"></p>
+<p class="desc">確認一下畫面有正確渲染出來</p>
+
+<p>③ 接著輸入單筆資料</p>
+<ul>
+<li>點擊「送出」按鈕時取得輸入框的值</li>
+<li>新增到 <code>data</code> 陣列中</li>
+<li>重新渲染畫面</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> component = &#123;</span><br><span class="line">    data: [</span><br><span class="line">      ...</span><br><span class="line">    ],</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">addData</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> text = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.input-group input&#x27;</span>)</span><br><span class="line">      <span class="keyword">const</span> addBtn = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.input-group button&#x27;</span>)</span><br><span class="line">      addBtn.addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> newText = text.value</span><br><span class="line">        text.value = <span class="string">&#x27;&#x27;</span> <span class="comment">// 清空輸入框</span></span><br><span class="line">        <span class="built_in">this</span>.data.push(newText)</span><br><span class="line">        <span class="built_in">this</span>.render() <span class="comment">// 重新渲染畫面</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="title">init</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.render()</span><br><span class="line">      <span class="built_in">this</span>.addData() <span class="comment">// 先註冊並等待點擊後執行</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">component.init()</span><br></pre></td></tr></table></figure>
+
+<p>④ 最後加上刪除資料<br>因為刪除按鈕會在渲染後才會印在畫面上，所以按鈕的宣告和執行都要寫在渲染後，不然會出現 <code>not defined</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> component = &#123;</span><br><span class="line">    data: [</span><br><span class="line">      ...</span><br><span class="line">    ],</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      ...</span><br><span class="line">      <span class="comment">// 刪除執行要寫在渲染後</span></span><br><span class="line">      <span class="keyword">const</span> btns = <span class="built_in">document</span>.querySelectorAll(<span class="string">&#x27;.list-group button&#x27;</span>)</span><br><span class="line">      btns.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">        item.addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">const</span> id = e.target.dataset.index</span><br><span class="line">          <span class="built_in">this</span>.removeData(id)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">addData</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">removeData</span>(<span class="params">id</span>)</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.data.splice(id, <span class="number">1</span>)</span><br><span class="line">      <span class="built_in">this</span>.render()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">init</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.render()</span><br><span class="line">      <span class="built_in">this</span>.addData()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">component.init()</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><iframe height="400" style="width: 100%;" scrolling="no" title="關注點分離：Todolist" src="https://codepen.io/ericadu/embed/XWpqwQr?height=400&theme-id=dark&default-tab=js,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a target="_blank" rel="noopener" href='https://codepen.io/ericadu/pen/XWpqwQr'>關注點分離：Todolist</a> by Erica
+  (<a target="_blank" rel="noopener" href='https://codepen.io/ericadu'>@ericadu</a>) on <a target="_blank" rel="noopener" href='https://codepen.io'>CodePen</a>.
+</iframe>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/Todolist/" rel="tag"># Todolist</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/jscore/20210414/4242308893/" rel="prev" title="淺層複製與深層複製">
+                  <i class="fa fa-chevron-left"></i> 淺層複製與深層複製
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/jscore/20210416/712608437/" rel="next" title="Event Loop">
+                  Event Loop <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Erica - 轉載文章請附上原文連結</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

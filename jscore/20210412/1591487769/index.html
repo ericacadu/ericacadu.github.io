@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;example.com&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Pisces&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script>
+<meta name="description" content="this 是什麼this 是 JavaScript 的一個關鍵字，函式執行時自動生成的一個內部物件，用來呼叫自身擁有的屬性或值。 12345function fn () &amp;#123;    console.log(this)    debugger&amp;#125;fn() &#x2F;&#x2F; window">
+<meta property="og:type" content="article">
+<meta property="og:title" content="This">
+<meta property="og:url" content="http://example.com/jscore/20210412/1591487769/index.html">
+<meta property="og:site_name" content="艾瑞卡卡">
+<meta property="og:description" content="this 是什麼this 是 JavaScript 的一個關鍵字，函式執行時自動生成的一個內部物件，用來呼叫自身擁有的屬性或值。 12345function fn () &amp;#123;    console.log(this)    debugger&amp;#125;fn() &#x2F;&#x2F; window">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/kIAxMWk.png">
+<meta property="article:published_time" content="2021-04-12T03:33:43.000Z">
+<meta property="article:modified_time" content="2021-04-18T12:38:07.523Z">
+<meta property="article:author" content="Erica">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/kIAxMWk.png">
+
+
+<link rel="canonical" href="http://example.com/jscore/20210412/1591487769/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;example.com&#x2F;jscore&#x2F;20210412&#x2F;1591487769&#x2F;&quot;,&quot;path&quot;:&quot;jscore&#x2F;20210412&#x2F;1591487769&#x2F;&quot;,&quot;title&quot;:&quot;This&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>This | 艾瑞卡卡</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head><script src="/js/hexo_resize_image.js"></script>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">艾瑞卡卡</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#this-%E6%98%AF%E4%BB%80%E9%BA%BC"><span class="nav-number">1.</span> <span class="nav-text">this 是什麼</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this-%E6%8C%87%E5%90%91"><span class="nav-number">2.</span> <span class="nav-text">this 指向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%B1%E9%9F%BF%E5%87%BD%E5%BC%8F-this-%E7%9A%84%E8%AA%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">影響函式 this 的調用方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E4%BB%B6%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">物件方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B0%A1%E6%98%93%E5%91%BC%E5%8F%AB-Simple-Call"><span class="nav-number">5.</span> <span class="nav-text">簡易呼叫 Simple Call</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%96%89%E5%8C%85-Closure"><span class="nav-number">5.1.</span> <span class="nav-text">閉包 Closure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#callback"><span class="nav-number">5.2.</span> <span class="nav-text">callback</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#forEach"><span class="nav-number">5.3.</span> <span class="nav-text">forEach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setTimeout"><span class="nav-number">5.4.</span> <span class="nav-text">setTimeout</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%B7%E5%88%B6%E7%B6%81%E5%AE%9A-this"><span class="nav-number">6.</span> <span class="nav-text">強制綁定 this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%AD%E9%A0%AD%E5%87%BD%E5%BC%8F"><span class="nav-number">7.</span> <span class="nav-text">箭頭函式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">8.</span> <span class="nav-text">參考文章</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Erica"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Erica</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/jscore/20210412/1591487769/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Erica">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="艾瑞卡卡">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          This
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-12 11:33:43" itemprop="dateCreated datePublished" datetime="2021-04-12T11:33:43+08:00">2021-04-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/jscore/" itemprop="url" rel="index"><span itemprop="name">JS核心五分鐘</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="this-是什麼"><a href="#this-是什麼" class="headerlink" title="this 是什麼"></a>this 是什麼</h2><p>this 是 JavaScript 的一個關鍵字，函式執行時自動生成的一個內部物件，用來呼叫自身擁有的屬性或值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    <span class="keyword">debugger</span></span><br><span class="line">&#125;</span><br><span class="line">fn() <span class="comment">// window</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/kIAxMWk.png" alt="Image"></p>
+<span id="more"></span>
+<hr>
+<h2 id="this-指向"><a href="#this-指向" class="headerlink" title="this 指向"></a>this 指向</h2><p><code>this</code> 的值跟「作用域」或「程式碼位置」在哪裡 <font color="red">完全無關</font>，只跟「<font color="red"><strong>如何呼叫</strong></font>」有關。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;全域&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">&#125;</span><br><span class="line">func() <span class="comment">// 全域</span></span><br></pre></td></tr></table></figure>
+<h2 id="影響函式-this-的調用方式"><a href="#影響函式-this-的調用方式" class="headerlink" title="影響函式 this 的調用方式"></a>影響函式 this 的調用方式</h2><ul>
+<li>作為物件方法</li>
+<li>簡易呼叫 simple call (不建議使用 this)</li>
+<li>bind、apply、call 方法</li>
+<li>new</li>
+<li>DOM 事件處理器（用 <code>console.dir()</code> 取代 <code>console.log()</code>）</li>
+<li>箭頭函式</li>
+</ul>
+<h2 id="物件方法"><a href="#物件方法" class="headerlink" title="物件方法"></a>物件方法</h2><p>不管函式如何被定義，只管如何被執行，以下範例為例：<br>執行 <code>obj.func()</code>，因為在物件底下被呼叫，所以 <code>this</code> 指向物件。<br>如果另外宣告 <code>var newFunc = obj.func</code>，再執行 <code>newFunc()</code>，因為在全域底下被執行，所以 <code>this</code> 指向全域。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;全域&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    scope: <span class="string">&#x27;物件&#x27;</span>,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.func() <span class="comment">// 物件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> newFunc = obj.func</span><br><span class="line">newFunc() <span class="comment">// 全域</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="簡易呼叫-Simple-Call"><a href="#簡易呼叫-Simple-Call" class="headerlink" title="簡易呼叫 Simple Call"></a>簡易呼叫 Simple Call</h2><p>用 simple call 的方式調用時，如果沒有另外定義 <code>this</code>，此時 <code>this</code> 指的就是全域。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;全域&#x27;</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">    scope: <span class="string">&#x27;物件&#x27;</span>,</span><br><span class="line">    func () &#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">func2</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">        &#125;</span><br><span class="line">        func2() <span class="comment">// simple call // 全域</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.func() <span class="comment">// 全域</span></span><br></pre></td></tr></table></figure>
+<p>雖然 simple call 的 <code>this</code> 是指向全域，但並不是在 <code>window</code> 的物件下去執行函式。<br>所以如果使用立即函式的話，<code>window.func()</code> 就會出現錯誤。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;window&#x27;</span>;</span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">func</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">window</span>.func()</span><br><span class="line">    <span class="comment">// window.func is not a function</span></span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+<p>另外 simple call 還有其他形式，像是閉包、callback function 等都是屬於 simple call。</p>
+<h3 id="閉包-Closure"><a href="#閉包-Closure" class="headerlink" title="閉包 Closure"></a>閉包 Closure</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;window&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">closureFunc</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> newFunc = closureFunc()</span><br><span class="line">newFunc() <span class="comment">// window</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="callback"><a href="#callback" class="headerlink" title="callback"></a>callback</h3><p>將一個函式以參數的方式帶入另一個函式，並在另一個函式內執行。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;window&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> callback()</span><br><span class="line">&#125;</span><br><span class="line">func(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">&#125;) <span class="comment">// window</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a>forEach</h3><p><code>forEach</code> 也是 callback function 的一種，所以也是屬於 simple call。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;window&#x27;</span></span><br><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">a.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// window window window</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="setTimeout"><a href="#setTimeout" class="headerlink" title="setTimeout"></a>setTimeout</h3><p><code>setTimeout</code> 也是 callback function 的一種，所以也是屬於 simple call。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;window&#x27;</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    scope: <span class="string">&#x27;local&#x27;</span>,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">        &#125;, <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.func() <span class="comment">// window</span></span><br></pre></td></tr></table></figure>
+<h2 id="強制綁定-this"><a href="#強制綁定-this" class="headerlink" title="強制綁定 this"></a>強制綁定 this</h2><p>雖然 this 有自己的預設值，但仍然可以用一些方法改變 this 的值。<br>綁定方式有三種：<code>call()</code>、<code>apply()</code>、<code>bind()</code><br><code>call()</code> 和 <code>apply()</code> 很類似，差別在於 <code>call()</code> 是「依序」傳入參數， <code>apply()</code> 是傳入陣列。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&#x27;use strict&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span> (<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>, a, b)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func(<span class="number">1</span>, <span class="number">2</span>) <span class="comment">// 1, 2</span></span><br><span class="line">func.call(<span class="literal">undefined</span>, <span class="number">1</span>, <span class="number">2</span>) <span class="comment">// undefined, 1, 2</span></span><br><span class="line">func.apply(<span class="literal">undefined</span>, [<span class="number">1</span>, <span class="number">2</span>]) <span class="comment">// undefined, 1, 2</span></span><br></pre></td></tr></table></figure>
+<p>由以上範例可以得知 <code>call()</code> 和 <code>apply()</code> 的第一個參數指的就是 this 的值。<br>所以如果把 <code>undefined</code> 改成其他內容，this 的值就會被替換掉。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&#x27;use strict&#x27;</span></span><br><span class="line">func.call(<span class="string">&#x27;call&#x27;</span>, <span class="number">1</span>, <span class="number">2</span>) <span class="comment">// call, 1, 2</span></span><br><span class="line">func.apply(<span class="string">&#x27;apply&#x27;</span>, [<span class="number">1</span>, <span class="number">2</span>]) <span class="comment">// apply, 1, 2</span></span><br></pre></td></tr></table></figure>
+
+<p><code>call()</code> 和 <code>apply()</code> 都可以立刻執行，但是 <code>bind()</code> 不會，並須在調用時才會「依序」執行。<br>而且一旦 <code>bind()</code> 之後，this 的值就不會再改變。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&#x27;use strict&#x27;</span></span><br><span class="line"><span class="keyword">var</span> func2 = func.bind(<span class="string">&#x27;bind&#x27;</span>, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">func2() <span class="comment">// bind, 1, 2</span></span><br><span class="line">func2.call(<span class="string">&#x27;call&#x27;</span>, <span class="number">1</span>, <span class="number">2</span>) <span class="comment">// bind, 1, 2</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在非嚴格模式下，如果參數為 <code>null</code>、<code>undefined</code>，this 會自動轉成全域物件，this 會被指向 window，並且帶入的值會以建構式的方式呈現。<br>但是如果在嚴格模式下，就會保持原本的參數類型，this 的本質其實是 undefined，所以盡量不要用 simple call 的方式調用 this。</p>
+</blockquote>
+<h2 id="箭頭函式"><a href="#箭頭函式" class="headerlink" title="箭頭函式"></a>箭頭函式</h2><p>箭頭函式沒有自己的 <code>this</code>，<code>this</code> 會指向外層的作用域。<br>以傳統函式的 <code>setTimeout</code> 為例，當執行 <code>setTimeout</code> 時，因為是 <code>callback</code>函式的關係，所以 <code>this</code> 會指向全域。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;全域&#x27;</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    scope: <span class="string">&#x27;物件&#x27;</span>,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">        &#125;, <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.func() <span class="comment">// 全域</span></span><br></pre></td></tr></table></figure>
+<p>如果改成箭頭函式的話，<code>this</code> 會被限制在作用域內，所以會指向物件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;全域&#x27;</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    scope: <span class="string">&#x27;物件&#x27;</span>,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">        &#125;, <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.func() <span class="comment">// 物件</span></span><br></pre></td></tr></table></figure>
+<p><strong>＊陷阱</strong><br>箭頭函式的 <code>this</code> 要看外層是否有函式，如果沒有，則 <code>this</code> 指向全域。<br>以下範例 <code>callName()</code> 外層沒有函式，所以會指向全域。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">&#x27;全域&#x27;</span></span><br><span class="line"><span class="keyword">const</span> person = &#123;</span><br><span class="line">  name: <span class="string">&#x27;小明&#x27;</span>,</span><br><span class="line">  callName: <span class="function">() =&gt;</span> &#123; </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.name)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line">person.callName() <span class="comment">// 全域</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://kuro.tw/posts/2017/10/17/What-s-THIS-in-JavaScript-%E4%B8%AD/">What’s THIS in JavaScript ?</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.techbridge.cc/2019/02/23/javascript-this/">淺談 JavaScript 頭號難題 this：絕對不完整，但保證好懂</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/jscore/20210411/1110903207/" rel="prev" title="Promise 方法">
+                  <i class="fa fa-chevron-left"></i> Promise 方法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/jscore/20210413/1596758899/" rel="next" title="物件傳參考">
+                  物件傳參考 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Erica - 轉載文章請附上原文連結</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

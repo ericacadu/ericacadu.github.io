@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;example.com&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Pisces&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script>
+<meta name="description" content="varvar 的宣告屬於 全域變數，代表 全域物件的屬性。 12for (var i&#x3D;0; i&lt;3; i++) &amp;#123;&amp;#125;console.log(i) &#x2F;&#x2F; 3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="var、let、const">
+<meta property="og:url" content="http://example.com/jscore/20210411/659913096/index.html">
+<meta property="og:site_name" content="艾瑞卡卡">
+<meta property="og:description" content="varvar 的宣告屬於 全域變數，代表 全域物件的屬性。 12for (var i&#x3D;0; i&lt;3; i++) &amp;#123;&amp;#125;console.log(i) &#x2F;&#x2F; 3">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-11T11:23:04.000Z">
+<meta property="article:modified_time" content="2021-04-18T12:38:07.524Z">
+<meta property="article:author" content="Erica">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/jscore/20210411/659913096/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;example.com&#x2F;jscore&#x2F;20210411&#x2F;659913096&#x2F;&quot;,&quot;path&quot;:&quot;jscore&#x2F;20210411&#x2F;659913096&#x2F;&quot;,&quot;title&quot;:&quot;var、let、const&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>var、let、const | 艾瑞卡卡</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head><script src="/js/hexo_resize_image.js"></script>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">艾瑞卡卡</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#var"><span class="nav-number">1.</span> <span class="nav-text">var</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#let"><span class="nav-number">2.</span> <span class="nav-text">let</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const"><span class="nav-number">3.</span> <span class="nav-text">const</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hoisting-%E8%88%87-%E6%9A%AB%E6%99%82%E6%80%A7%E6%AD%BB%E5%8D%80"><span class="nav-number">4.</span> <span class="nav-text">Hoisting 與 暫時性死區</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E9%BB%9E%E6%95%B4%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">重點整理</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Erica"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Erica</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/jscore/20210411/659913096/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Erica">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="艾瑞卡卡">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          var、let、const
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-11 19:23:04" itemprop="dateCreated datePublished" datetime="2021-04-11T19:23:04+08:00">2021-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/jscore/" itemprop="url" rel="index"><span itemprop="name">JS核心五分鐘</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="var"><a href="#var" class="headerlink" title="var"></a>var</h2><p><code>var</code> 的宣告屬於 <strong>全域變數</strong>，代表 <strong>全域物件的屬性</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>假設一個 <code>for</code> 迴圈用 <code>var</code> 宣告 <code>i</code>，在全域還是可以取得 <code>i</code> 值。<br>如果想要限制 <code>i</code> 的作用域的話，可以使用立即函式，避免外層取到 <code>for</code> 迴圈裡面的值，最直接的方式就是使用 <code>let</code> 宣告。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line">&#125;)()</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// i is not defined</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// i is not defined</span></span><br></pre></td></tr></table></figure>
+<p>在 JavaScript 中，<code>var</code> 的作用域是函式作用域，但在函式內的區域變數也可能被視為全域變數，傳統用 <code>var</code> 宣告變數可能會汙染全域，如果使用 <code>let</code>、<code>const</code> 就可以避免這種情形。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.a) <span class="comment">// 10</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="let"><a href="#let" class="headerlink" title="let"></a>let</h2><p><code>let</code> 的作用域屬於區塊內({} 大括號)，和 <code>const</code> 最大差異就是可以重新賦值，而 <code>const</code> 不行。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">0</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> a = <span class="number">1</span> <span class="comment">// 因為 let 的作用域是區塊內，所以不算重複宣告</span></span><br><span class="line">    a = <span class="number">2</span></span><br><span class="line">    <span class="built_in">console</span>.log(a) <span class="comment">// 2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">0</span>) <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+<p>舉個非同步 <code>for</code> 迴圈的例子，假設想要讓 <code>setTimeout</code> 依序執行並印出結果，如果用 <code>var</code> 宣告的話，因為 <code>var</code> 是全域變數，所以只會取出最後一次執行的結果。<br>而 <code>setTimeout</code> 是非同步程式，會先放到「事件佇列」裡面，等到所有程式碼執行完畢後才會執行。<br>如果想要達到預期結果，只要用 <code>let</code> 宣告就可以依序執行並取得正確數值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`這是第 <span class="subst">$&#123;i&#125;</span> 次執行結果`</span>)</span><br><span class="line">    &#125;, <span class="number">0</span>)</span><br><span class="line">&#125; <span class="comment">// 這是第 3 次執行結果</span></span><br><span class="line">---</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`這是第 <span class="subst">$&#123;i + <span class="number">1</span>&#125;</span> 次執行結果`</span>)</span><br><span class="line">    &#125;, <span class="number">0</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 這是第 0 次執行結果</span></span><br><span class="line"><span class="comment">// 這是第 1 次執行結果</span></span><br><span class="line"><span class="comment">// 這是第 2 次執行結果</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="const"><a href="#const" class="headerlink" title="const"></a>const</h2><p><code>const</code> 是宣告一個常數，用 <code>const</code> 宣告的變數沒辦法再被調整。<br>雖然變數沒辦法被調整，但如果是物件的話，因為物件屬於傳參考特性，只要不直接替換掉物件，可以修改內容屬性值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> person = &#123;</span><br><span class="line">    name: <span class="string">&#x27;小明&#x27;</span>,</span><br><span class="line">    money: <span class="number">500</span></span><br><span class="line">&#125;</span><br><span class="line">person.name = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(person.name) <span class="comment">// 大明</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line">person = &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(person) <span class="comment">// Assignment to constant variable.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Hoisting-與-暫時性死區"><a href="#Hoisting-與-暫時性死區" class="headerlink" title="Hoisting 與 暫時性死區"></a>Hoisting 與 暫時性死區</h2><p>JavaScript 中有 hoisting 的現象，先來比較一下這三種的狀況：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// b is not defined</span></span><br><span class="line"><span class="keyword">let</span> b = <span class="number">2</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="built_in">console</span>.log(c) <span class="comment">// Cannot access &#x27;c&#x27; before initialization</span></span><br><span class="line"><span class="keyword">const</span> c = <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>var: <code>undefined</code>，有 hoisting</li>
+<li>let: <code>not defined</code>，沒有 hoisting</li>
+<li>const: 宣告前無法使用，沒有 hoisting</li>
+</ol>
+<p>看起來沒什麼問題，接著猜測一下面範例結果：</p>
+<ul>
+<li>(1) 如果 <code>let</code> 沒有提升的話，就會往外層查找取得 <strong>小明</strong> 的值</li>
+<li>(2) 如果 <code>let</code> 有提升的話，就會出現其他狀況</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> Ming = <span class="string">&#x27;小明&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(Ming)</span><br><span class="line">    <span class="keyword">let</span> Ming = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>結果是(2)： <code>Cannot access &#39;Ming&#39; before initialization</code><br><code>let</code> 在提升的過程中會產生一個「暫時性死區」Temporal Dead Zone(TDZ)。<br>在這個區域內是無法存取變數，也就不會賦予 <code>undefined</code> 的值，如果試圖取值就會跳出錯誤提示。<br>所以 <code>let</code> 雖然有類似提升 <strong>創造 - 執行階段</strong> 的概念，但是和 <code>var</code> 的 hoisting 概念並不相同。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> Ming = <span class="string">&#x27;小明&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 創造</span></span><br><span class="line">    <span class="keyword">let</span> Ming <span class="comment">// 暫時性死區 TDZ</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 執行</span></span><br><span class="line">    <span class="built_in">console</span>.log(Ming)</span><br><span class="line">    <span class="keyword">let</span> Ming = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="重點整理"><a href="#重點整理" class="headerlink" title="重點整理"></a>重點整理</h2><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">作用範圍</th>
+<th align="center">重複宣告</th>
+<th align="center">重新賦值</th>
+<th align="center">Hoisting</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">var</td>
+<td align="center">全域</td>
+<td align="center">v</td>
+<td align="center">v</td>
+<td align="center">v</td>
+</tr>
+<tr>
+<td align="center">let</td>
+<td align="center">區塊</td>
+<td align="center">x</td>
+<td align="center">v</td>
+<td align="center">v</td>
+</tr>
+<tr>
+<td align="center">const</td>
+<td align="center">區塊</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/jscore/20210411/4175334150/" rel="prev" title="Hoisting">
+                  <i class="fa fa-chevron-left"></i> Hoisting
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/jscore/20210411/1442787642/" rel="next" title="函式與作用域">
+                  函式與作用域 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Erica - 轉載文章請附上原文連結</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

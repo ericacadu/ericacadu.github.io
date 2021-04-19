@@ -28,17 +28,14 @@ function hexo_resize_image()
                     var n_height = img.naturalHeight;
                     if (width.length > 0)
                     {
-                        height = n_height*width/n_width;
+                        height = n_height*width/n_width + 'px';
                     }
                     if (height.length > 0)
                     {
-                        width = n_width*height/n_height;
+                        width = n_width*height/n_height + 'px';
                     }
                 }
-                image.setAttribute("width", width + "px");
-                image.setAttribute("height", height + "px");
                 set_image_size(img, width, height);
-                
             }
             continue;
         }

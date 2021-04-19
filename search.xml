@@ -294,7 +294,7 @@
 </li>
 <li><p><strong>目標階段 (Target Phase)</strong><br>在找到目標的時候，就會是目標階段 (AT_TARGET)。</p>
 </li>
-<li><p><strong>冒泡階段 (Bubbling Phase)</strong><br>從子結點一路回傳到根節點，這個階段就稱作冒泡階段 (BUBBLING_PHASE)。</p>
+<li><p><strong>冒泡階段 (Bubbling Phase)</strong><br>從子節點一路回傳到根節點，這個階段就稱作冒泡階段 (BUBBLING_PHASE)。</p>
 </li>
 </ul>
 <blockquote>

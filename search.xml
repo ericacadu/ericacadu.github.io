@@ -632,4 +632,44 @@
         <tag>Todolist</tag>
       </tags>
   </entry>
+  <entry>
+    <title>九九乘法表 - JS 地下城</title>
+    <url>/js-underground/20210420/2028242470/</url>
+    <content><![CDATA[<h2 id="切版需求"><a href="#切版需求" class="headerlink" title="切版需求"></a>切版需求</h2><ul>
+<li>需使用 JS for 迴圈技巧，裡頭數字不能直接寫在 HTML 上，需使用 JS 印出。</li>
+<li>需使用 HTML、CSS、JS 技術</li>
+<li>介面需與設計稿一致：<a href="https://xd.adobe.com/spec/256981fc-ef65-4d9b-773c-45d8ef0353c6-5358/screen/50fba855-bde7-4771-b73c-3fd839418cf0/specs/">UI 線上設計稿</a></li>
+</ul>
+<span id="more"></span>
+
+<hr>
+<h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><p>HTML 的部分使用 Pug 撰寫，這邊就不再多贅述，從 Sass 樣式開始說明。</p>
+<h2 id="Sass"><a href="#Sass" class="headerlink" title="Sass"></a>Sass</h2><p>在切版之前，首先要定義好會用到的共用變數，例如顏色、字體等等，加快撰寫速度。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$primary: #2EB738</span><br><span class="line">$second: #D8D8D8</span><br><span class="line">$light: #FFFFFF</span><br><span class="line">$bgColor: #F0F0F0</span><br><span class="line"></span><br><span class="line">$fs-xl: 5em</span><br><span class="line">$fs-l: 2em</span><br><span class="line">$fs-m: 24px</span><br><span class="line">$fs-s: 0.8em</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/0x9i804.png?300x" alt="Image"></p>
+<p>觀察設計稿，在左上方第一格的四個角，分別都用 <code>x</code> 作為裝飾。<br>為了減少 HTML 結構的複雜度，通常裝飾性質的元素會盡量避免直接寫在 HTML 上，類似這種裝飾可以用偽元素 <code>::before</code>、<code>::after</code> 和 <code>text-shadow</code> 搭配使用。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">li</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="attribute">border-top</span>: <span class="number">1px</span> solid $primary</span><br><span class="line">  border-bottom: <span class="number">1px</span> solid $primary</span><br><span class="line">  position: relative</span><br><span class="line">  &amp;::before, &amp;::after</span><br><span class="line">    content: <span class="string">&#x27;x&#x27;</span></span><br><span class="line">    display: block</span><br><span class="line">    font-size: $fs-s</span><br><span class="line">    font-weight: <span class="number">300</span></span><br><span class="line">    position: absolute</span><br><span class="line">    left: -<span class="number">11%</span></span><br><span class="line">    text-shadow: <span class="number">14em</span> <span class="number">0</span> <span class="number">0</span> $primary</span><br><span class="line">    transform: <span class="built_in">translateY</span>(-<span class="number">0.7em</span>) <span class="built_in">scale</span>(<span class="number">1.1</span>, <span class="number">0.9</span>)</span><br><span class="line">  &amp;::before</span><br><span class="line">    top: <span class="number">0</span></span><br><span class="line">  &amp;::after</span><br><span class="line">    top: <span class="number">100%</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>在切版需求裡有提到，這邊需要使用 JS 迴圈的方式，將內容渲染在網頁上。<br>所以可以先思考一下，會用到哪些迴圈：</p>
+<ul>
+<li>大的索引數字</li>
+<li>內容列表</li>
+</ul>
+<p>首先要將大的索引數字渲染出來：<br>先建立一個 <code>&lt;ul&gt;</code> 元素當作容器，並透過 <code>appendChild()</code> 加進 DOM 節點。<br>接著建立索引元素 <code>&lt;li&gt;</code>，把數字 <code>i</code> 放進去後一併加進剛才建立的 <code>&lt;ul&gt;</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> container = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.container .wrapper&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">2</span>; i&lt;=<span class="number">9</span>; i++) &#123;</span><br><span class="line">	<span class="keyword">let</span> table = <span class="built_in">document</span>.createElement(<span class="string">&#x27;ul&#x27;</span>)</span><br><span class="line">	table.setAttribute(<span class="string">&#x27;class&#x27;</span>, <span class="string">&#x27;list&#x27;</span>)</span><br><span class="line">	container.appendChild(table)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> index = <span class="built_in">document</span>.createElement(<span class="string">&#x27;li&#x27;</span>)</span><br><span class="line">	index.setAttribute(<span class="string">&#x27;class&#x27;</span>, <span class="string">&#x27;index&#x27;</span>)</span><br><span class="line">	index.textContent = i</span><br><span class="line">	table.appendChild(index)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/g0Ukoxp.png?70" alt="Image"></p>
+<p>接著在迴圈裡面加入第二層迴圈，這次的迴圈是計算內容，所以初始值是從 1 開始。<br>建立要存放內容的 <code>&lt;li&gt;</code> 後，把要顯示的變數放進去，最後再加進容器 <code>&lt;ul&gt;</code> 就完成了。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> container = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.container .wrapper&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">2</span>; i&lt;=<span class="number">9</span>; i++) &#123;</span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> k=<span class="number">1</span>; k&lt;=<span class="number">9</span>; k++) &#123;</span><br><span class="line">		<span class="keyword">let</span> item = <span class="built_in">document</span>.createElement(<span class="string">&#x27;li&#x27;</span>)</span><br><span class="line">		item.textContent = <span class="string">`<span class="subst">$&#123;i&#125;</span> x <span class="subst">$&#123;k&#125;</span> = <span class="subst">$&#123;i*k&#125;</span>`</span></span><br><span class="line">		table.appendChild(item)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/vJFcelW.png?70" alt="Image"></p>
+<hr>
+<h2 id="完成作品"><a href="#完成作品" class="headerlink" title="完成作品"></a>完成作品</h2><p><a href="https://codepen.io/ericadu/pen/yLgRNbM">Coedpen</a></p>
+]]></content>
+      <categories>
+        <category>JS 地下城</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
 </search>

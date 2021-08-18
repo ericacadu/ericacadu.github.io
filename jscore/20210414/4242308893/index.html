@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.4.0">
 
@@ -16,10 +16,9 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;example.com&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Pisces&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 <meta name="description" content="之前提到物件型別有傳參考的特性，但是如果想要另外修改資料，就會連帶影響原始資料內容，JavaScript 提供幾種複製方式來解決這個問題。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="淺層複製與深層複製">
@@ -28,9 +27,8 @@
 <meta property="og:description" content="之前提到物件型別有傳參考的特性，但是如果想要另外修改資料，就會連帶影響原始資料內容，JavaScript 提供幾種複製方式來解決這個問題。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.imgur.com/BbbyV3N.png?55">
-<meta property="og:image" content="https://i.imgur.com/Zi6OaFe.png?55">
 <meta property="article:published_time" content="2021-04-14T03:04:11.000Z">
-<meta property="article:modified_time" content="2021-04-18T12:38:07.524Z">
+<meta property="article:modified_time" content="2021-08-18T14:29:29.870Z">
 <meta property="article:author" content="Erica">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -41,10 +39,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;example.com&#x2F;jscore&#x2F;20210414&#x2F;4242308893&#x2F;&quot;,&quot;path&quot;:&quot;jscore&#x2F;20210414&#x2F;4242308893&#x2F;&quot;,&quot;title&quot;:&quot;淺層複製與深層複製&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/jscore/20210414/4242308893/","path":"jscore/20210414/4242308893/","title":"淺層複製與深層複製"}</script>
 
-<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>淺層複製與深層複製 | 艾瑞卡卡</title><script src="/js/config.js"></script>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>淺層複製與深層複製 | 艾瑞卡卡</title>
   
 
 
@@ -53,8 +51,9 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head><script src="/js/hexo_resize_image.js"></script>
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
   <div class="headband"></div>
 
   <main class="main">
@@ -152,7 +151,8 @@
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="Erica"
       src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">Erica</p>
@@ -161,22 +161,19 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">16</span>
+        <a href="/archives/">
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">5</span>
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">3</span>
+          <a href="/tags/">
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -184,6 +181,7 @@
 
 
 
+          </div>
         </div>
       </div>
         <div class="back-to-top animated" role="button" aria-label="Back to top">
@@ -199,6 +197,8 @@
 
     
   <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/ericacadu" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -242,6 +242,13 @@
 
       <time title="Created: 2021-04-14 11:04:11" itemprop="dateCreated datePublished" datetime="2021-04-14T11:04:11+08:00">2021-04-14</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-08-18 22:29:29" itemprop="dateModified" datetime="2021-08-18T22:29:29+08:00">2021-08-18</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -283,14 +290,12 @@
 <hr>
 <h2 id="深層複製-Deep-Copy"><a href="#深層複製-Deep-Copy" class="headerlink" title="深層複製 Deep Copy"></a>深層複製 Deep Copy</h2><p>淺層複製只能複製第一層資料，深層複製則是可以將資料完整複製，讓整份新複製的資料都能往下層修改，並且不會影響原始資料。</p>
 <h3 id="JSON-stringify"><a href="#JSON-stringify" class="headerlink" title="JSON.stringify"></a>JSON.stringify</h3><p><code>JSON.stringify()</code> 可以將物件轉成「字串」後回傳。<br>重新轉成字串後再用 <code>JSON.parse()</code> 轉回 JavaScript 物件，如此就能達到深層複製的效果。<br>原理是將物件先轉成「純值」，再透過 <code>JSON.parse()</code> 轉回物件，此時的物件就會有一個新的記憶體空間，並且讓變數指向到新的位置。</p>
-<blockquote>
-<ul>
-<li>如果物件中有 <code>undefined</code>、<code>function</code> ，因為無法轉成純值，所以會直接消失。</li>
-<li><code>NaN</code> 則會變成 Null。</li>
-</ul>
-</blockquote>
+<div class="alert alert-danger">
+如果物件中有 <b>undefined、function</b>，因為無法轉成純值，所以會直接消失，<b>NaN 則會變成 Null</b>
+</div>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> target = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(data))</span><br><span class="line">target.title = <span class="string">&#x27;Second Level&#x27;</span> </span><br><span class="line">target.info.tag = <span class="string">&#x27;copy&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(target, data)</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/Zi6OaFe.png?55" alt="Image"></p>
+![Image](https://i.imgur.com/Zi6OaFe.png?55)
+
 <h3 id="jQuery-extend"><a href="#jQuery-extend" class="headerlink" title="jQuery.extend"></a>jQuery.extend</h3><p>如果要解決 <code>undefined</code>、<code>function</code> 和 <code>NaN</code> 的複製問題，可以用 jQuery 的 <code>$.extend</code> 方法，就能做到完整的深層複製。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;data.func&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    un: <span class="literal">undefined</span>,</span><br><span class="line">    nan: <span class="literal">NaN</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> shallow = $.extend(&#123;&#125;, data) <span class="comment">// 淺層複製</span></span><br><span class="line"><span class="keyword">var</span> deep = $.extend(<span class="literal">true</span>, &#123;&#125;, data) <span class="comment">// 深層複製</span></span><br><span class="line"><span class="built_in">console</span>.log(deep)</span><br></pre></td></tr></table></figure>
 
@@ -332,7 +337,7 @@
 
 
 
-<script src="/js/comments.js"></script>
+
 </div>
   </main>
 
@@ -353,13 +358,11 @@
   </footer>
 
   
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
 
   
 <script src="/js/third-party/search/local-search.js"></script>
-
-
 
 
 

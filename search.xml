@@ -673,7 +673,7 @@
       </tags>
   </entry>
   <entry>
-    <title>【踩雷】Hexo 的 highlight 問題</title>
+    <title>Hexo 的 highlight 問題</title>
     <url>/hexo/20210818/3505035943/</url>
     <content><![CDATA[<p>最近需要更新 Blog 文章時開啟 hexo 出現這段警告</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.</span><br><span class="line">Deprecated as of 10.7.0. Please use highlight(code, options) instead.</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;highlightjs&#x2F;highlight.js&#x2F;issues&#x2F;2277</span><br></pre></td></tr></table></figure>

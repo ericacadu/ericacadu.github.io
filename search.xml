@@ -678,12 +678,12 @@
     <content><![CDATA[<p>最近需要更新 Blog 文章時開啟 hexo 出現這段警告</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.</span><br><span class="line">Deprecated as of 10.7.0. Please use highlight(code, options) instead.</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;highlightjs&#x2F;highlight.js&#x2F;issues&#x2F;2277</span><br></pre></td></tr></table></figure>
 <p>記錄一下解決方法：</p>
-<ul>
+<ol>
 <li>開啟檔案 <code>node_modules/hexo-util/lib/highlight.js</code></li>
 <li>找到這段程式碼 <code>let result = hljs.highlight(lang, lines.shift());</code></li>
-<li>替換成這段就可以囉～<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">let result &#x3D; hljs.highlight(lines.shift(), &#123;</span><br><span class="line">    language: lang,</span><br><span class="line">    ignoreIllegals: false</span><br><span class="line">&#125;, result.top);</span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
+<li>替換成這段就可以囉～</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">let result &#x3D; hljs.highlight(lines.shift(), &#123;</span><br><span class="line">    language: lang,</span><br><span class="line">    ignoreIllegals: false</span><br><span class="line">&#125;, result.top);</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Hexo</category>
       </categories>

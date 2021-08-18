@@ -76,6 +76,7 @@ category_map:
   筆記: note
   實作: demo
   JS 地下城: js-underground
+  Hexo: hexo
 tag_map:
 
 # Metadata elements

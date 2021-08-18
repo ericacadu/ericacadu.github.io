@@ -86,7 +86,7 @@
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;小明&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br></pre></td></tr></table></figure>
 <p>拆解：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 創造階段：函式優先</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;apple&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fn</span><br><span class="line"></span><br><span class="line"><span class="comment">// 執行階段：</span></span><br><span class="line">fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;apple&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn() <span class="comment">// 第一次執行：apple</span></span><br><span class="line">fn() <span class="comment">// 第二次執行：apple</span></span><br></pre></td></tr></table></figure>
-<h2 id="為什麼需要-Hoisting"><a href="#為什麼需要-Hoisting" class="headerlink" title="為什麼需要 Hoisting?"></a>為什麼需要 Hoisting?</h2><p>Hoistion 最初的設計是為了實現函式互相傳遞，畢竟在開發時會不只有一個函式，如果每個函式都要事先宣告的話，不僅繁瑣而且不好使用，如果有 Hoisting 的話就可以在任何地方呼叫函示。</p>
+<h2 id="為什麼需要-Hoisting"><a href="#為什麼需要-Hoisting" class="headerlink" title="為什麼需要 Hoisting?"></a>為什麼需要 Hoisting?</h2><p>Hoisting 最初的設計是為了實現函式互相傳遞，畢竟在開發時會不只有一個函式，如果每個函式都要事先宣告的話，不僅繁瑣而且不好使用，如果有 Hoisting 的話就可以在任何地方呼叫函示。</p>
 <hr>
 <h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
 <li><a href="https://blog.techbridge.cc/2018/11/10/javascript-hoisting/">我知道你懂 hoisting，可是你了解到多深？</a></li>
@@ -670,6 +670,25 @@
       </categories>
       <tags>
         <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【踩雷】Hexo 的 highlight 問題</title>
+    <url>/hexo/20210818/3505035943/</url>
+    <content><![CDATA[<p>最近需要更新 Blog 文章時開啟 hexo 出現這段警告</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Deprecated as of 10.7.0. highlight(lang, code, ...args) has been deprecated.</span><br><span class="line">Deprecated as of 10.7.0. Please use highlight(code, options) instead.</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;highlightjs&#x2F;highlight.js&#x2F;issues&#x2F;2277</span><br></pre></td></tr></table></figure>
+<p>記錄一下解決方法：</p>
+<ul>
+<li>開啟檔案 <code>node_modules/hexo-util/lib/highlight.js</code></li>
+<li>找到這段程式碼 <code>let result = hljs.highlight(lang, lines.shift());</code></li>
+<li>替換成這段就可以囉～<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">let result &#x3D; hljs.highlight(lines.shift(), &#123;</span><br><span class="line">    language: lang,</span><br><span class="line">    ignoreIllegals: false</span><br><span class="line">&#125;, result.top);</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
       </tags>
   </entry>
 </search>

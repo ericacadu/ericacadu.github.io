@@ -28,7 +28,7 @@
 <meta property="og:description" content="在 JavaScript 中，把宣告的 變數 和 函式 拉升到最上層，在被呼叫執行之前先存進記憶體，這個現象就叫做 「提升（hoisting）」。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-04-11T10:17:22.000Z">
-<meta property="article:modified_time" content="2021-04-18T12:38:07.523Z">
+<meta property="article:modified_time" content="2021-08-18T05:16:08.431Z">
 <meta property="article:author" content="Erica">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -160,20 +160,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -277,7 +277,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;小明&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br></pre></td></tr></table></figure>
 <p>拆解：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 創造階段：函式優先</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;apple&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fn</span><br><span class="line"></span><br><span class="line"><span class="comment">// 執行階段：</span></span><br><span class="line">fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;apple&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn() <span class="comment">// 第一次執行：apple</span></span><br><span class="line">fn() <span class="comment">// 第二次執行：apple</span></span><br></pre></td></tr></table></figure>
-<h2 id="為什麼需要-Hoisting"><a href="#為什麼需要-Hoisting" class="headerlink" title="為什麼需要 Hoisting?"></a>為什麼需要 Hoisting?</h2><p>Hoistion 最初的設計是為了實現函式互相傳遞，畢竟在開發時會不只有一個函式，如果每個函式都要事先宣告的話，不僅繁瑣而且不好使用，如果有 Hoisting 的話就可以在任何地方呼叫函示。</p>
+<h2 id="為什麼需要-Hoisting"><a href="#為什麼需要-Hoisting" class="headerlink" title="為什麼需要 Hoisting?"></a>為什麼需要 Hoisting?</h2><p>Hoisting 最初的設計是為了實現函式互相傳遞，畢竟在開發時會不只有一個函式，如果每個函式都要事先宣告的話，不僅繁瑣而且不好使用，如果有 Hoisting 的話就可以在任何地方呼叫函示。</p>
 <hr>
 <h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://blog.techbridge.cc/2018/11/10/javascript-hoisting/">我知道你懂 hoisting，可是你了解到多深？</a></li>

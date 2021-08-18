@@ -66,7 +66,7 @@ creative_commons:
   license: by-nc-sa
   # Available values: big | small
   size: small
-  sidebar: false
+  sidebar: true
   post: false
   # You can set a language value if you prefer a translated version of CC license, e.g. deed.zh
   # CC licenses are available in 39 languages, you can find the specific and correct abbreviation you need on https://creativecommons.org
@@ -94,7 +94,7 @@ menu:
 # Enable / Disable menu icons / item badges.
 menu_settings:
   icons: true
-  badges: false
+  badges: true
 
 
 # ---------------------------------------------------------------
@@ -104,8 +104,8 @@ menu_settings:
 
 sidebar:
   # Sidebar Position.
-  # position: left
-  position: right
+  position: left
+  # position: right
 
   # Manual define the sidebar width. If commented, will be default for:
   # Muse | Mist: 320
@@ -117,7 +117,7 @@ sidebar:
   #  - always  expand for all pages automatically.
   #  - hide    expand only when click on the sidebar toggle icon.
   #  - remove  totally remove sidebar including sidebar toggle.
-  display: post
+  display: always
 
   # Sidebar padding in pixels.
   padding: 18
@@ -174,9 +174,9 @@ toc:
   # Automatically add list number to toc.
   number: true
   # If true, all words will placed on next lines if header width longer then sidebar width.
-  wrap: false
+  wrap: true
   # If true, all level of TOC in a post will be displayed, rather than the activated part of it.
-  expand_all: false
+  expand_all: true
   # Maximum heading depth of generated toc.
   max_depth: 6
 
@@ -396,7 +396,7 @@ bookmark:
 
 # `Follow me on GitHub` banner in the top-right corner.
 github_banner:
-  enable: true
+  enable: false
   permalink: https://github.com/ericacadu
   title: Follow me on GitHub
 

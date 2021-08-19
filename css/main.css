@@ -2812,6 +2812,7 @@ mark.search-keyword {
 }
 img {
   display: block;
+  width: 100%;
   max-width: 900px;
   margin: 1rem auto;
 }
@@ -2864,12 +2865,11 @@ code {
   color: #6897bb;
 }
 blockquote {
-  color: #444;
+  color: #666;
   line-height: 1.8;
-  letter-spacing: 1px;
   background: #eee;
-  padding: 15px;
-  margin: 2em auto;
+  padding: 1rem;
+  margin: 1rem auto;
   border-left: 0;
 }
 blockquote p {

@@ -282,46 +282,6 @@
       </tags>
   </entry>
   <entry>
-    <title>九九乘法表 - JS 地下城</title>
-    <url>/js-underground/20210420/2028242470/</url>
-    <content><![CDATA[<h2 id="切版需求"><a href="#切版需求" class="headerlink" title="切版需求"></a>切版需求</h2><ul>
-<li>需使用 JS for 迴圈技巧，裡頭數字不能直接寫在 HTML 上，需使用 JS 印出。</li>
-<li>需使用 HTML、CSS、JS 技術</li>
-<li>介面需與設計稿一致：<a href="https://xd.adobe.com/spec/256981fc-ef65-4d9b-773c-45d8ef0353c6-5358/screen/50fba855-bde7-4771-b73c-3fd839418cf0/specs/">UI 線上設計稿</a></li>
-</ul>
-<span id="more"></span>
-
-<hr>
-<h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><p>HTML 的部分使用 Pug 撰寫，這邊就不再多贅述，從 Sass 樣式開始說明。</p>
-<h2 id="Sass"><a href="#Sass" class="headerlink" title="Sass"></a>Sass</h2><p>在切版之前，首先要定義好會用到的共用變數，例如顏色、字體等等，加快撰寫速度。</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$primary: #2EB738</span><br><span class="line">$second: #D8D8D8</span><br><span class="line">$light: #FFFFFF</span><br><span class="line">$bgColor: #F0F0F0</span><br><span class="line"></span><br><span class="line">$fs-xl: 5em</span><br><span class="line">$fs-l: 2em</span><br><span class="line">$fs-m: 24px</span><br><span class="line">$fs-s: 0.8em</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/0x9i804.png?300x" alt="Image"></p>
-<p>觀察設計稿，在左上方第一格的四個角，分別都用 <code>x</code> 作為裝飾。<br>為了減少 HTML 結構的複雜度，通常裝飾性質的元素會盡量避免直接寫在 HTML 上，類似這種裝飾可以用偽元素 <code>::before</code>、<code>::after</code> 和 <code>text-shadow</code> 搭配使用。</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">li</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="attribute">border-top</span>: <span class="number">1px</span> solid $primary</span><br><span class="line">  border-bottom: <span class="number">1px</span> solid $primary</span><br><span class="line">  position: relative</span><br><span class="line">  &amp;::before, &amp;::after</span><br><span class="line">    content: <span class="string">&#x27;x&#x27;</span></span><br><span class="line">    display: block</span><br><span class="line">    font-size: $fs-s</span><br><span class="line">    font-weight: <span class="number">300</span></span><br><span class="line">    position: absolute</span><br><span class="line">    left: -<span class="number">11%</span></span><br><span class="line">    text-shadow: <span class="number">14em</span> <span class="number">0</span> <span class="number">0</span> $primary</span><br><span class="line">    transform: <span class="built_in">translateY</span>(-<span class="number">0.7em</span>) <span class="built_in">scale</span>(<span class="number">1.1</span>, <span class="number">0.9</span>)</span><br><span class="line">  &amp;::before</span><br><span class="line">    top: <span class="number">0</span></span><br><span class="line">  &amp;::after</span><br><span class="line">    top: <span class="number">100%</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>在切版需求裡有提到，這邊需要使用 JS 迴圈的方式，將內容渲染在網頁上。<br>所以可以先思考一下，會用到哪些迴圈：</p>
-<ul>
-<li>大的索引數字</li>
-<li>內容列表</li>
-</ul>
-<p>首先要將大的索引數字渲染出來：<br>先建立一個 <code>&lt;ul&gt;</code> 元素當作容器，並透過 <code>appendChild()</code> 加進 DOM 節點。<br>接著建立索引元素 <code>&lt;li&gt;</code>，把數字 <code>i</code> 放進去後一併加進剛才建立的 <code>&lt;ul&gt;</code>。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> container = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.container .wrapper&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">2</span>; i&lt;=<span class="number">9</span>; i++) &#123;</span><br><span class="line">	<span class="keyword">let</span> table = <span class="built_in">document</span>.createElement(<span class="string">&#x27;ul&#x27;</span>)</span><br><span class="line">	table.setAttribute(<span class="string">&#x27;class&#x27;</span>, <span class="string">&#x27;list&#x27;</span>)</span><br><span class="line">	container.appendChild(table)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> index = <span class="built_in">document</span>.createElement(<span class="string">&#x27;li&#x27;</span>)</span><br><span class="line">	index.setAttribute(<span class="string">&#x27;class&#x27;</span>, <span class="string">&#x27;index&#x27;</span>)</span><br><span class="line">	index.textContent = i</span><br><span class="line">	table.appendChild(index)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/g0Ukoxp.png?70" alt="Image"></p>
-<p>接著在迴圈裡面加入第二層迴圈，這次的迴圈是計算內容，所以初始值是從 1 開始。<br>建立要存放內容的 <code>&lt;li&gt;</code> 後，把要顯示的變數放進去，最後再加進容器 <code>&lt;ul&gt;</code> 就完成了。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> container = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.container .wrapper&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">2</span>; i&lt;=<span class="number">9</span>; i++) &#123;</span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> k=<span class="number">1</span>; k&lt;=<span class="number">9</span>; k++) &#123;</span><br><span class="line">		<span class="keyword">let</span> item = <span class="built_in">document</span>.createElement(<span class="string">&#x27;li&#x27;</span>)</span><br><span class="line">		item.textContent = <span class="string">`<span class="subst">$&#123;i&#125;</span> x <span class="subst">$&#123;k&#125;</span> = <span class="subst">$&#123;i*k&#125;</span>`</span></span><br><span class="line">		table.appendChild(item)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/vJFcelW.png?70" alt="Image"></p>
-<hr>
-<h2 id="完成作品"><a href="#完成作品" class="headerlink" title="完成作品"></a>完成作品</h2><p><a href="https://codepen.io/ericadu/pen/yLgRNbM">Coedpen</a></p>
-]]></content>
-      <categories>
-        <category>JS 地下城</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>事件傳遞機制</title>
     <url>/note/20210419/2117635506/</url>
     <content><![CDATA[<h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><p>DOM 全名為 Document Object Model 中文翻譯為 文件物件模型。<br>其實就是把 HTML 文件內的標籤、文字、圖片等等都定義成物件，而這些物件會形成一個樹狀結構，並且可以利用 JavaScript 來對 HTML 文件進操作和互動。<br><img src="https://i.imgur.com/3R0iZSd.png?70" alt="Image"></p>
@@ -368,6 +328,85 @@
 ]]></content>
       <categories>
         <category>筆記</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>九九乘法表 - JS 地下城</title>
+    <url>/js-underground/20210420/2028242470/</url>
+    <content><![CDATA[<h2 id="切版需求"><a href="#切版需求" class="headerlink" title="切版需求"></a>切版需求</h2><ul>
+<li>需使用 JS for 迴圈技巧，裡頭數字不能直接寫在 HTML 上，需使用 JS 印出。</li>
+<li>需使用 HTML、CSS、JS 技術</li>
+<li>介面需與設計稿一致：<a href="https://xd.adobe.com/spec/256981fc-ef65-4d9b-773c-45d8ef0353c6-5358/screen/50fba855-bde7-4771-b73c-3fd839418cf0/specs/">UI 線上設計稿</a></li>
+</ul>
+<span id="more"></span>
+
+<hr>
+<h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><p>HTML 的部分使用 Pug 撰寫，這邊就不再多贅述，從 Sass 樣式開始說明。</p>
+<h2 id="Sass"><a href="#Sass" class="headerlink" title="Sass"></a>Sass</h2><p>在切版之前，首先要定義好會用到的共用變數，例如顏色、字體等等，加快撰寫速度。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$primary: #2EB738</span><br><span class="line">$second: #D8D8D8</span><br><span class="line">$light: #FFFFFF</span><br><span class="line">$bgColor: #F0F0F0</span><br><span class="line"></span><br><span class="line">$fs-xl: 5em</span><br><span class="line">$fs-l: 2em</span><br><span class="line">$fs-m: 24px</span><br><span class="line">$fs-s: 0.8em</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/0x9i804.png?300x" alt="Image"></p>
+<p>觀察設計稿，在左上方第一格的四個角，分別都用 <code>x</code> 作為裝飾。<br>為了減少 HTML 結構的複雜度，通常裝飾性質的元素會盡量避免直接寫在 HTML 上，類似這種裝飾可以用偽元素 <code>::before</code>、<code>::after</code> 和 <code>text-shadow</code> 搭配使用。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">li</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="attribute">border-top</span>: <span class="number">1px</span> solid $primary</span><br><span class="line">  border-bottom: <span class="number">1px</span> solid $primary</span><br><span class="line">  position: relative</span><br><span class="line">  &amp;::before, &amp;::after</span><br><span class="line">    content: <span class="string">&#x27;x&#x27;</span></span><br><span class="line">    display: block</span><br><span class="line">    font-size: $fs-s</span><br><span class="line">    font-weight: <span class="number">300</span></span><br><span class="line">    position: absolute</span><br><span class="line">    left: -<span class="number">11%</span></span><br><span class="line">    text-shadow: <span class="number">14em</span> <span class="number">0</span> <span class="number">0</span> $primary</span><br><span class="line">    transform: <span class="built_in">translateY</span>(-<span class="number">0.7em</span>) <span class="built_in">scale</span>(<span class="number">1.1</span>, <span class="number">0.9</span>)</span><br><span class="line">  &amp;::before</span><br><span class="line">    top: <span class="number">0</span></span><br><span class="line">  &amp;::after</span><br><span class="line">    top: <span class="number">100%</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>在切版需求裡有提到，這邊需要使用 JS 迴圈的方式，將內容渲染在網頁上。<br>所以可以先思考一下，會用到哪些迴圈：</p>
+<ul>
+<li>大的索引數字</li>
+<li>內容列表</li>
+</ul>
+<p>首先要將大的索引數字渲染出來：<br>先建立一個 <code>&lt;ul&gt;</code> 元素當作容器，並透過 <code>appendChild()</code> 加進 DOM 節點。<br>接著建立索引元素 <code>&lt;li&gt;</code>，把數字 <code>i</code> 放進去後一併加進剛才建立的 <code>&lt;ul&gt;</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> container = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.container .wrapper&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">2</span>; i&lt;=<span class="number">9</span>; i++) &#123;</span><br><span class="line">	<span class="keyword">let</span> table = <span class="built_in">document</span>.createElement(<span class="string">&#x27;ul&#x27;</span>)</span><br><span class="line">	table.setAttribute(<span class="string">&#x27;class&#x27;</span>, <span class="string">&#x27;list&#x27;</span>)</span><br><span class="line">	container.appendChild(table)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> index = <span class="built_in">document</span>.createElement(<span class="string">&#x27;li&#x27;</span>)</span><br><span class="line">	index.setAttribute(<span class="string">&#x27;class&#x27;</span>, <span class="string">&#x27;index&#x27;</span>)</span><br><span class="line">	index.textContent = i</span><br><span class="line">	table.appendChild(index)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/g0Ukoxp.png?70" alt="Image"></p>
+<p>接著在迴圈裡面加入第二層迴圈，這次的迴圈是計算內容，所以初始值是從 1 開始。<br>建立要存放內容的 <code>&lt;li&gt;</code> 後，把要顯示的變數放進去，最後再加進容器 <code>&lt;ul&gt;</code> 就完成了。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> container = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.container .wrapper&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">2</span>; i&lt;=<span class="number">9</span>; i++) &#123;</span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> k=<span class="number">1</span>; k&lt;=<span class="number">9</span>; k++) &#123;</span><br><span class="line">		<span class="keyword">let</span> item = <span class="built_in">document</span>.createElement(<span class="string">&#x27;li&#x27;</span>)</span><br><span class="line">		item.textContent = <span class="string">`<span class="subst">$&#123;i&#125;</span> x <span class="subst">$&#123;k&#125;</span> = <span class="subst">$&#123;i*k&#125;</span>`</span></span><br><span class="line">		table.appendChild(item)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/vJFcelW.png?70" alt="Image"></p>
+<hr>
+<h2 id="完成作品"><a href="#完成作品" class="headerlink" title="完成作品"></a>完成作品</h2><p><a href="https://codepen.io/ericadu/pen/yLgRNbM">Coedpen</a></p>
+]]></content>
+      <categories>
+        <category>JS 地下城</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>函式與作用域</title>
+    <url>/jscore/20210411/1442787642/</url>
+    <content><![CDATA[<p>函式屬於物件的一種，分為「<strong>具名函式</strong>」和「<strong>匿名函式</strong>」，包含程式碼片段，可帶入參數，並可被呼叫。</p>
+<span id="more"></span>
+<hr>
+<h2 id="具名函式-Named-Function"><a href="#具名函式-Named-Function" class="headerlink" title="具名函式 Named Function"></a>具名函式 Named Function</h2><p>具名函式顧名思義必須要有函式名稱。<br>而具名函式能夠在函式內被調用，但是函式中的具名函式無法在函式以外被調用。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;inner&#x27;</span>)</span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callSayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  sayHello() <span class="comment">// 具名函式能夠在函式內被調用</span></span><br><span class="line">&#125;</span><br><span class="line">callSayHello() <span class="comment">// Hello!</span></span><br><span class="line">inner() <span class="comment">// inner is not defined 無法被調用</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="匿名函式-Anonymous-Function"><a href="#匿名函式-Anonymous-Function" class="headerlink" title="匿名函式 Anonymous Function"></a>匿名函式 Anonymous Function</h2><p>函式名稱是可以被忽略的，也就是匿名函式，通常會用表達式來宣告匿名函式，另外立即函式（IIFE）也是屬於匿名函式。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> sayHello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">  ;(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;Hey!&#x27;</span>)</span><br><span class="line">  &#125;)()</span><br><span class="line">&#125;</span><br><span class="line">sayHello()</span><br><span class="line"><span class="comment">// Hello!</span></span><br><span class="line"><span class="comment">// Hey!</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="陳述式與表達式"><a href="#陳述式與表達式" class="headerlink" title="陳述式與表達式"></a>陳述式與表達式</h2><ul>
+<li>陳述式：Statement</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式陳述式、具名函式</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>表達式：Expression（運算式、表示式）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式表達式、匿名函式</span></span><br><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="函式作用域-Function-Scope"><a href="#函式作用域-Function-Scope" class="headerlink" title="函式作用域 Function Scope"></a>函式作用域 Function Scope</h2><p>函式有屬於自己的作用域，在 ES6 之前，「<strong>JavaScript 切分變數有效範圍的最小單位是 function</strong>」，所以在這個範圍內的變數只屬於這個函式，一旦離開函式範圍，記憶體就會被釋放掉。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">6</span></span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// a = 3</span></span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// b is not defined</span></span><br></pre></td></tr></table></figure>
+<p>如果在函式裡面沒有重新宣告變數，那 function 就會向外一層一層找。<br>function 可以從內層讀取外層宣告的變數，但是外層沒辦法讀取內層宣告的變數，這種行為稱作「<strong>範圍鏈（Scope Chain）</strong>」。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> msg = <span class="string">&#x27;global&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">outer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> msg = <span class="string">&#x27;local&#x27;</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> msg</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> inner</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> innerFunc = outer()</span><br><span class="line"><span class="keyword">var</span> result = innerFunc()</span><br><span class="line"><span class="built_in">console</span>.log(result) <span class="comment">// local</span></span><br></pre></td></tr></table></figure>
+<p>範例中加了一段 <code>var innerFunc = outer()</code> ，呼叫 <code>outer</code> 回傳的 <code>inner</code> 結果，取得原本從外層無法讀取的 <code>inner</code>，看似好像把 <code>inner</code> 獨立出來，msg 向外查找所以結果是的外層 <code>global</code> 。<br>但有個重要觀念：<strong>範圍鏈是在函式被定義當下決定的，不是被呼叫的時候。</strong><br>所以在「<strong>定義函式之後，呼叫函式之前</strong>」範圍鏈就已經被建立，<code>msg</code> 為 <code>inner</code> 外層的 <code>local</code>。</p>
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10191549">重新認識 JavaScript: Day 10 函式 Functions 的基本概念</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
       </categories>
       <tags>
         <tag>JavaScript</tag>
@@ -421,45 +460,6 @@
 <li><a href="https://ithelp.ithome.com.tw/articles/10194569/">重新認識 JavaScript: Day 26 同步與非同步</a></li>
 <li><a href="https://www.oxxostudio.tw/articles/201706/javascript-promise-settimeout.html">JavaScript 同步延遲 ( Promise + setTimeout )</a></li>
 <li><a href="https://wcc723.github.io/development/2020/02/16/all-new-promise/">JavaScript Promise 全介紹</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JS核心五分鐘</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>函式與作用域</title>
-    <url>/jscore/20210411/1442787642/</url>
-    <content><![CDATA[<p>函式屬於物件的一種，分為「<strong>具名函式</strong>」和「<strong>匿名函式</strong>」，包含程式碼片段，可帶入參數，並可被呼叫。</p>
-<span id="more"></span>
-<hr>
-<h2 id="具名函式-Named-Function"><a href="#具名函式-Named-Function" class="headerlink" title="具名函式 Named Function"></a>具名函式 Named Function</h2><p>具名函式顧名思義必須要有函式名稱。<br>而具名函式能夠在函式內被調用，但是函式中的具名函式無法在函式以外被調用。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;inner&#x27;</span>)</span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callSayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  sayHello() <span class="comment">// 具名函式能夠在函式內被調用</span></span><br><span class="line">&#125;</span><br><span class="line">callSayHello() <span class="comment">// Hello!</span></span><br><span class="line">inner() <span class="comment">// inner is not defined 無法被調用</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="匿名函式-Anonymous-Function"><a href="#匿名函式-Anonymous-Function" class="headerlink" title="匿名函式 Anonymous Function"></a>匿名函式 Anonymous Function</h2><p>函式名稱是可以被忽略的，也就是匿名函式，通常會用表達式來宣告匿名函式，另外立即函式（IIFE）也是屬於匿名函式。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> sayHello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">  ;(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;Hey!&#x27;</span>)</span><br><span class="line">  &#125;)()</span><br><span class="line">&#125;</span><br><span class="line">sayHello()</span><br><span class="line"><span class="comment">// Hello!</span></span><br><span class="line"><span class="comment">// Hey!</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="陳述式與表達式"><a href="#陳述式與表達式" class="headerlink" title="陳述式與表達式"></a>陳述式與表達式</h2><ul>
-<li>陳述式：Statement</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式陳述式、具名函式</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>表達式：Expression（運算式、表示式）</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式表達式、匿名函式</span></span><br><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="函式作用域-Function-Scope"><a href="#函式作用域-Function-Scope" class="headerlink" title="函式作用域 Function Scope"></a>函式作用域 Function Scope</h2><p>函式有屬於自己的作用域，在 ES6 之前，「<strong>JavaScript 切分變數有效範圍的最小單位是 function</strong>」，所以在這個範圍內的變數只屬於這個函式，一旦離開函式範圍，記憶體就會被釋放掉。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">6</span></span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// a = 3</span></span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// b is not defined</span></span><br></pre></td></tr></table></figure>
-<p>如果在函式裡面沒有重新宣告變數，那 function 就會向外一層一層找。<br>function 可以從內層讀取外層宣告的變數，但是外層沒辦法讀取內層宣告的變數，這種行為稱作「<strong>範圍鏈（Scope Chain）</strong>」。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> msg = <span class="string">&#x27;global&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">outer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> msg = <span class="string">&#x27;local&#x27;</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> msg</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> inner</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> innerFunc = outer()</span><br><span class="line"><span class="keyword">var</span> result = innerFunc()</span><br><span class="line"><span class="built_in">console</span>.log(result) <span class="comment">// local</span></span><br></pre></td></tr></table></figure>
-<p>範例中加了一段 <code>var innerFunc = outer()</code> ，呼叫 <code>outer</code> 回傳的 <code>inner</code> 結果，取得原本從外層無法讀取的 <code>inner</code>，看似好像把 <code>inner</code> 獨立出來，msg 向外查找所以結果是的外層 <code>global</code> 。<br>但有個重要觀念：<strong>範圍鏈是在函式被定義當下決定的，不是被呼叫的時候。</strong><br>所以在「<strong>定義函式之後，呼叫函式之前</strong>」範圍鏈就已經被建立，<code>msg</code> 為 <code>inner</code> 外層的 <code>local</code>。</p>
-<hr>
-<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
-<li><a href="https://ithelp.ithome.com.tw/articles/10191549">重新認識 JavaScript: Day 10 函式 Functions 的基本概念</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -629,7 +629,7 @@ JavaScript 是屬於直譯式語言，它會直接透過直譯器來產生代碼
 <p>假設今天 <code>a</code> 的值是 10，<code>b</code> 又等於 <code>a</code>，如果把 <code>a</code> 重新賦值 100，那 <code>b</code> 的結果會是什麼呢？</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">10</span></span><br><span class="line"><span class="keyword">var</span> b = a</span><br><span class="line">a = <span class="number">100</span></span><br><span class="line"><span class="built_in">console</span>.log(b)</span><br></pre></td></tr></table></figure>
 <p>答案是：10。</p>
-<p>在電腦裡的世界，可以想像成一個個空間，有「記憶體位置」的空間，也有「儲存值」的空間。<br>為了方便取用，才有變數的存在，再用變數連結（指向）這些記憶體位置。<br>而宣告變數賦值，就是把變數的值存進電腦裡專門存值的空間。<br>所以在傳值的概念裡，兩個變數分別儲存在不同空間，就算其中變數 <code>a</code> 重新賦值，也不會影響原本複製過去的變數 <code>b</code>。<br><img src="https://i.imgur.com/zt6x1G5.png?50" alt="Image"></p>
+<p>在電腦裡的世界，可以想像成一個個空間，有 <strong>記憶體位置</strong> 的空間，也有 <strong>儲存值</strong> 的空間。<br>為了方便取用，才有變數的存在，再用變數連結（指向）這些記憶體位置。<br>而宣告變數賦值，就是把變數的值存進電腦裡專門存值的空間。<br>所以在傳值的概念裡，兩個變數分別儲存在不同空間，就算其中變數 <code>a</code> 重新賦值，也不會影響原本複製過去的變數 <code>b</code>。<br><img src="https://i.imgur.com/zt6x1G5.png" alt="Image"></p>
 <h2 id="傳址"><a href="#傳址" class="headerlink" title="傳址"></a>傳址</h2><p>除了基本型別外，其他型別都算物件型別。<br>物件的定義需要包含 <code>key</code> 和 <code>value</code>，會以「<strong>傳址（傳參考）</strong>」的方式傳遞資料：</p>
 <ul>
 <li>Object：物件</li>
@@ -639,13 +639,13 @@ JavaScript 是屬於直譯式語言，它會直接透過直譯器來產生代碼
 <p>以下方範例為例，變數 <code>a</code>、<code>b</code> 分別是什麼呢？</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123; <span class="attr">x</span>: <span class="number">1</span> &#125;</span><br><span class="line"><span class="keyword">var</span> b = a</span><br><span class="line">b.x = <span class="number">2</span></span><br><span class="line">a.y = <span class="number">3</span></span><br><span class="line"><span class="built_in">console</span>.log(a, b)</span><br></pre></td></tr></table></figure>
 <p>答案是：<code>a = &#123; x: 2, y: 3 &#125;</code>，<code>b = &#123; x: 2, y: 3 &#125;</code></p>
-<p>因為物件是「傳址」，所以並不會重新賦值，當然也就不會準備新的儲存空間，只會指向原本的位置。當變數的值改變時，原本位置的值也會跟著改變。</p>
-<p><img src="https://i.imgur.com/sjbIC8J.png?50" alt="Image"></p>
+<p>因為物件是「<strong>傳址</strong>」，所以並不會重新賦值，當然也就不會準備新的儲存空間，只會指向原本的位置。當變數的值改變時，原本位置的值也會跟著改變。</p>
+<p><img src="https://i.imgur.com/sjbIC8J.png" alt="Image"></p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123; <span class="attr">x</span>: <span class="number">1</span> &#125; <span class="comment">// 儲存值 (1)</span></span><br><span class="line"><span class="keyword">var</span> b = a <span class="comment">// b 指向 a - 位置 (1)</span></span><br><span class="line">b.x = <span class="number">2</span> <span class="comment">// 對 a 的位置賦值</span></span><br><span class="line">a.y = <span class="number">3</span> <span class="comment">// a 的指向位置不變，對自己賦值</span></span><br><span class="line"><span class="built_in">console</span>.log(a, b)</span><br><span class="line"><span class="comment">// a = &#123; x: 2, y: 3 &#125;, b = &#123; x: 2, y: 3 &#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>再以下方範例為例：<br>如果用等號再對變數 <code>b</code> 重新賦值，再宣告一個變數 <code>c</code> 指向 <code>b</code>。<br>請問變數 <code>a</code>、<code>b</code>、<code>c</code> 分別是什麼呢？</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123; <span class="attr">x</span>: <span class="number">1</span> &#125;</span><br><span class="line"><span class="keyword">var</span> b = &#123; <span class="attr">x</span>: <span class="number">2</span> &#125;</span><br><span class="line"><span class="keyword">var</span> c = b</span><br><span class="line">b = a</span><br><span class="line">a.y = <span class="number">3</span></span><br><span class="line"><span class="built_in">console</span>.log(a, b, c)</span><br></pre></td></tr></table></figure>
-<p>答案是：<code>a = &#123; x: 1, y: 3 &#125;</code>，<code>b = &#123; x: 1, y: 3 &#125;</code>，<code>c = &#123; x: 2 &#125;</code><br>雖然有準備新的空間給變數 <code>b</code>，並且讓 <code>c</code> 指向 <code>b</code>，但是後來又把 <code>b</code> 指向 <code>a</code>，<code>c</code> 指向的是 <code>b</code> 原本的記憶體位置，所以當變數 <code>a</code> 的內容改變，<code>b</code> 的值也會一起改變。<br><img src="https://i.imgur.com/rAFkarQ.png?50" alt="Image"></p>
+<p>答案是：<code>a = &#123; x: 1, y: 3 &#125;</code>，<code>b = &#123; x: 1, y: 3 &#125;</code>，<code>c = &#123; x: 2 &#125;</code><br>雖然有準備新的空間給變數 <code>b</code>，並且讓 <code>c</code> 指向 <code>b</code>，但是後來又把 <code>b</code> 指向 <code>a</code>，<code>c</code> 指向的是 <code>b</code> 原本的記憶體位置，所以當變數 <code>a</code> 的內容改變，<code>b</code> 的值也會一起改變。<br><img src="https://i.imgur.com/rAFkarQ.png" alt="Image"></p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123; <span class="attr">x</span>: <span class="number">1</span> &#125; <span class="comment">// 儲存值 (1)</span></span><br><span class="line"><span class="keyword">var</span> b = &#123; <span class="attr">x</span>: <span class="number">2</span> &#125; <span class="comment">// 儲存值 (2)</span></span><br><span class="line"><span class="keyword">var</span> c = b <span class="comment">// c 指向 b - 位置 (2)</span></span><br><span class="line">b = a <span class="comment">// b 指向 a - 位置 (1)</span></span><br><span class="line">a.y = <span class="number">3</span> <span class="comment">// a 的指向位置不變，對自己賦值</span></span><br><span class="line"><span class="built_in">console</span>.log(a, b, c)</span><br><span class="line"><span class="comment">// a = &#123; x: 1, y: 3 , b = &#123; x: 1, y: 3 &#125;, c = &#123; x: 2 &#125;</span></span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>

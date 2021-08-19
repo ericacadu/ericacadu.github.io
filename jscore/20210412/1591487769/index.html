@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/kIAxMWk.png">
 <meta property="article:published_time" content="2021-04-12T03:33:43.000Z">
-<meta property="article:modified_time" content="2021-04-18T12:38:07.523Z">
+<meta property="article:modified_time" content="2021-08-19T14:29:10.721Z">
 <meta property="article:author" content="Erica">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -272,8 +272,9 @@
     <div class="post-body" itemprop="articleBody">
         <h2 id="this-是什麼"><a href="#this-是什麼" class="headerlink" title="this 是什麼"></a>this 是什麼</h2><p>this 是 JavaScript 的一個關鍵字，函式執行時自動生成的一個內部物件，用來呼叫自身擁有的屬性或值。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    <span class="keyword">debugger</span></span><br><span class="line">&#125;</span><br><span class="line">fn() <span class="comment">// window</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/kIAxMWk.png" alt="Image"></p>
 <span id="more"></span>
+
+<p><img src="https://i.imgur.com/kIAxMWk.png" alt="Image"></p>
 <hr>
 <h2 id="this-指向"><a href="#this-指向" class="headerlink" title="this 指向"></a>this 指向</h2><p><code>this</code> 的值跟「作用域」或「程式碼位置」在哪裡 <font color="red">完全無關</font>，只跟「<font color="red"><strong>如何呼叫</strong></font>」有關。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;全域&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.scope)</span><br><span class="line">&#125;</span><br><span class="line">func() <span class="comment">// 全域</span></span><br></pre></td></tr></table></figure>

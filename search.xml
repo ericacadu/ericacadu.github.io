@@ -323,45 +323,6 @@
       </tags>
   </entry>
   <entry>
-    <title>函式與作用域</title>
-    <url>/jscore/20210411/1442787642/</url>
-    <content><![CDATA[<p>函式屬於物件的一種，分為「<strong>具名函式</strong>」和「<strong>匿名函式</strong>」，包含程式碼片段，可帶入參數，並可被呼叫。</p>
-<span id="more"></span>
-<hr>
-<h2 id="具名函式-Named-Function"><a href="#具名函式-Named-Function" class="headerlink" title="具名函式 Named Function"></a>具名函式 Named Function</h2><p>具名函式顧名思義必須要有函式名稱。<br>而具名函式能夠在函式內被調用，但是函式中的具名函式無法在函式以外被調用。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;inner&#x27;</span>)</span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callSayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  sayHello() <span class="comment">// 具名函式能夠在函式內被調用</span></span><br><span class="line">&#125;</span><br><span class="line">callSayHello() <span class="comment">// Hello!</span></span><br><span class="line">inner() <span class="comment">// inner is not defined 無法被調用</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="匿名函式-Anonymous-Function"><a href="#匿名函式-Anonymous-Function" class="headerlink" title="匿名函式 Anonymous Function"></a>匿名函式 Anonymous Function</h2><p>函式名稱是可以被忽略的，也就是匿名函式，通常會用表達式來宣告匿名函式，另外立即函式（IIFE）也是屬於匿名函式。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> sayHello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">  ;(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;Hey!&#x27;</span>)</span><br><span class="line">  &#125;)()</span><br><span class="line">&#125;</span><br><span class="line">sayHello()</span><br><span class="line"><span class="comment">// Hello!</span></span><br><span class="line"><span class="comment">// Hey!</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="陳述式與表達式"><a href="#陳述式與表達式" class="headerlink" title="陳述式與表達式"></a>陳述式與表達式</h2><ul>
-<li>陳述式：Statement</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式陳述式、具名函式</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>表達式：Expression（運算式、表示式）</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式表達式、匿名函式</span></span><br><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="函式作用域-Function-Scope"><a href="#函式作用域-Function-Scope" class="headerlink" title="函式作用域 Function Scope"></a>函式作用域 Function Scope</h2><p>函式有屬於自己的作用域，在 ES6 之前，「<strong>JavaScript 切分變數有效範圍的最小單位是 function</strong>」，所以在這個範圍內的變數只屬於這個函式，一旦離開函式範圍，記憶體就會被釋放掉。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">6</span></span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// a = 3</span></span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// b is not defined</span></span><br></pre></td></tr></table></figure>
-<p>如果在函式裡面沒有重新宣告變數，那 function 就會向外一層一層找。<br>function 可以從內層讀取外層宣告的變數，但是外層沒辦法讀取內層宣告的變數，這種行為稱作「<strong>範圍鏈（Scope Chain）</strong>」。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> msg = <span class="string">&#x27;global&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">outer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> msg = <span class="string">&#x27;local&#x27;</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> msg</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> inner</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> innerFunc = outer()</span><br><span class="line"><span class="keyword">var</span> result = innerFunc()</span><br><span class="line"><span class="built_in">console</span>.log(result) <span class="comment">// local</span></span><br></pre></td></tr></table></figure>
-<p>範例中加了一段 <code>var innerFunc = outer()</code> ，呼叫 <code>outer</code> 回傳的 <code>inner</code> 結果，取得原本從外層無法讀取的 <code>inner</code>，看似好像把 <code>inner</code> 獨立出來，msg 向外查找所以結果是的外層 <code>global</code> 。<br>但有個重要觀念：<strong>範圍鏈是在函式被定義當下決定的，不是被呼叫的時候。</strong><br>所以在「<strong>定義函式之後，呼叫函式之前</strong>」範圍鏈就已經被建立，<code>msg</code> 為 <code>inner</code> 外層的 <code>local</code>。</p>
-<hr>
-<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
-<li><a href="https://ithelp.ithome.com.tw/articles/10191549">重新認識 JavaScript: Day 10 函式 Functions 的基本概念</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JS核心五分鐘</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>事件傳遞機制</title>
     <url>/note/20210419/2117635506/</url>
     <content><![CDATA[<h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><p>DOM 全名為 Document Object Model 中文翻譯為 文件物件模型。<br>其實就是把 HTML 文件內的標籤、文字、圖片等等都定義成物件，而這些物件會形成一個樹狀結構，並且可以利用 JavaScript 來對 HTML 文件進操作和互動。<br><img src="https://i.imgur.com/3R0iZSd.png?70" alt="Image"></p>
@@ -408,6 +369,45 @@
 ]]></content>
       <categories>
         <category>筆記</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>函式與作用域</title>
+    <url>/jscore/20210411/1442787642/</url>
+    <content><![CDATA[<p>函式屬於物件的一種，分為「<strong>具名函式</strong>」和「<strong>匿名函式</strong>」，包含程式碼片段，可帶入參數，並可被呼叫。</p>
+<span id="more"></span>
+<hr>
+<h2 id="具名函式-Named-Function"><a href="#具名函式-Named-Function" class="headerlink" title="具名函式 Named Function"></a>具名函式 Named Function</h2><p>具名函式顧名思義必須要有函式名稱。<br>而具名函式能夠在函式內被調用，但是函式中的具名函式無法在函式以外被調用。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;inner&#x27;</span>)</span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callSayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  sayHello() <span class="comment">// 具名函式能夠在函式內被調用</span></span><br><span class="line">&#125;</span><br><span class="line">callSayHello() <span class="comment">// Hello!</span></span><br><span class="line">inner() <span class="comment">// inner is not defined 無法被調用</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="匿名函式-Anonymous-Function"><a href="#匿名函式-Anonymous-Function" class="headerlink" title="匿名函式 Anonymous Function"></a>匿名函式 Anonymous Function</h2><p>函式名稱是可以被忽略的，也就是匿名函式，通常會用表達式來宣告匿名函式，另外立即函式（IIFE）也是屬於匿名函式。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> sayHello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">  ;(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;Hey!&#x27;</span>)</span><br><span class="line">  &#125;)()</span><br><span class="line">&#125;</span><br><span class="line">sayHello()</span><br><span class="line"><span class="comment">// Hello!</span></span><br><span class="line"><span class="comment">// Hey!</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="陳述式與表達式"><a href="#陳述式與表達式" class="headerlink" title="陳述式與表達式"></a>陳述式與表達式</h2><ul>
+<li>陳述式：Statement</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式陳述式、具名函式</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>表達式：Expression（運算式、表示式）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式表達式、匿名函式</span></span><br><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="函式作用域-Function-Scope"><a href="#函式作用域-Function-Scope" class="headerlink" title="函式作用域 Function Scope"></a>函式作用域 Function Scope</h2><p>函式有屬於自己的作用域，在 ES6 之前，「<strong>JavaScript 切分變數有效範圍的最小單位是 function</strong>」，所以在這個範圍內的變數只屬於這個函式，一旦離開函式範圍，記憶體就會被釋放掉。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">6</span></span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// a = 3</span></span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// b is not defined</span></span><br></pre></td></tr></table></figure>
+<p>如果在函式裡面沒有重新宣告變數，那 function 就會向外一層一層找。<br>function 可以從內層讀取外層宣告的變數，但是外層沒辦法讀取內層宣告的變數，這種行為稱作「<strong>範圍鏈（Scope Chain）</strong>」。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> msg = <span class="string">&#x27;global&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">outer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> msg = <span class="string">&#x27;local&#x27;</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> msg</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> inner</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> innerFunc = outer()</span><br><span class="line"><span class="keyword">var</span> result = innerFunc()</span><br><span class="line"><span class="built_in">console</span>.log(result) <span class="comment">// local</span></span><br></pre></td></tr></table></figure>
+<p>範例中加了一段 <code>var innerFunc = outer()</code> ，呼叫 <code>outer</code> 回傳的 <code>inner</code> 結果，取得原本從外層無法讀取的 <code>inner</code>，看似好像把 <code>inner</code> 獨立出來，msg 向外查找所以結果是的外層 <code>global</code> 。<br>但有個重要觀念：<strong>範圍鏈是在函式被定義當下決定的，不是被呼叫的時候。</strong><br>所以在「<strong>定義函式之後，呼叫函式之前</strong>」範圍鏈就已經被建立，<code>msg</code> 為 <code>inner</code> 外層的 <code>local</code>。</p>
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10191549">重新認識 JavaScript: Day 10 函式 Functions 的基本概念</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
       </categories>
       <tags>
         <tag>JavaScript</tag>
@@ -471,6 +471,45 @@
       </tags>
   </entry>
   <entry>
+    <title>浮點數相加</title>
+    <url>/note/20210414/981755103/</url>
+    <content><![CDATA[<h2 id="浮點數"><a href="#浮點數" class="headerlink" title="浮點數"></a>浮點數</h2><p>在日常生活中，如果要計算 0.1 + 0.2，我們能夠直覺的答出 0.3 這個答案。<br>但是在 JavaScript 中，計算結果卻不如預期，用 <code>console.log(0.1 + 0.2 === 0.3)</code> 回傳的結果竟會得到 <code>false</code>。<br>其實這和電腦的「<a href="https://www.h-schmidt.net/FloatConverter/IEEE754.html">IEEE754 二進制浮點運算</a>」計算方式有關，當我們宣告一段浮點數陣列，展開後會發現，有些浮點數會有些微誤差，以致於在進行計算時會出錯。<br>所以得到的結果自然是 <code>0.1 + 0.2 !== 0.3</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="built_in">Array</span>.from(<span class="built_in">Array</span>(<span class="number">10</span>).keys())</span><br><span class="line"><span class="keyword">var</span> result = num.map(<span class="function"><span class="params">item</span> =&gt;</span> item * <span class="number">0.1</span>)</span><br><span class="line"><span class="built_in">console</span>.log(result)</span><br><span class="line"><span class="comment">// 0, 0.1, 0.2, 0.30000000000000004, 0.4, 0.5, </span></span><br><span class="line"><span class="comment">// 0.6000000000000001, 0.7000000000000001, 0.8, 0.9</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<hr>
+<p>該如何解決浮點數問題呢？可以使用以下兩種方法：</p>
+<ul>
+<li>Number.toFixed()</li>
+<li>Number.toPrecision()</li>
+</ul>
+<h2 id="Number-toFixed"><a href="#Number-toFixed" class="headerlink" title="Number.toFixed"></a>Number.toFixed</h2><p><code>Number.toFixed()</code> 可以對數字進行四捨五入到指定的第 N 位數。</p>
+<blockquote>
+<p><code>toFixed()</code> 方法回傳的型別是「<strong>字串</strong>」，需要另外再轉換為數字型別。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">10.12345</span></span><br><span class="line">num.toFixed(<span class="number">2</span>) <span class="comment">// &quot;10.12&quot;</span></span><br><span class="line">num.toFixed(<span class="number">4</span>) <span class="comment">// &quot;10.1235&quot;</span></span><br></pre></td></tr></table></figure>
+<p>同樣方法用在浮點數上可以改成：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="built_in">Array</span>.from(<span class="built_in">Array</span>(<span class="number">10</span>).keys())</span><br><span class="line"><span class="keyword">var</span> result = num.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="built_in">Number</span>((item * <span class="number">0.1</span>).toFixed(<span class="number">1</span>)))</span><br><span class="line"><span class="built_in">console</span>.log(result)</span><br><span class="line"><span class="comment">// [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]</span></span><br></pre></td></tr></table></figure>
+<p>如果想去除小數點後為 0 的尾數，則可以用 <code>parseFloat()</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0.990</span></span><br><span class="line"><span class="built_in">parseFloat</span>(num) <span class="comment">// 0.99</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Number-toPrecision"><a href="#Number-toPrecision" class="headerlink" title="Number.toPrecision"></a>Number.toPrecision</h2><p><code>Number.toPrecision()</code> 方法可以指定想要顯示的浮點數範圍，範圍在 1～21，並且回傳「字串」。<br><code>toPrecision()</code> 方法有以下幾種狀況：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 數字是浮點數，就會補 0</span></span><br><span class="line"><span class="keyword">var</span> num1 = <span class="number">0.12</span></span><br><span class="line">num1.toPrecision(<span class="number">5</span>) <span class="comment">// &quot;0.12000&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 數字是浮點數，但位數不足，一樣會四捨五入</span></span><br><span class="line"><span class="keyword">var</span> num2 = <span class="number">12.345</span></span><br><span class="line">num2.toPrecision(<span class="number">4</span>) <span class="comment">// &quot;12.35&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 數字是整數，但是位數不足，會轉換成指數寫法</span></span><br><span class="line"><span class="keyword">var</span> num3 = <span class="number">1234</span></span><br><span class="line">num3.toPrecision(<span class="number">3</span>) <span class="comment">// &quot;1.23e+3&quot;</span></span><br></pre></td></tr></table></figure>
+<p>所以如果想要解決浮點數相加的問題，可以改成這樣：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">parseFloat</span>((<span class="number">0.1</span> + <span class="number">0.2</span>).toPrecision(<span class="number">12</span>)) <span class="comment">// &quot;0.3&quot;</span></span><br><span class="line"><span class="built_in">parseFloat</span>((<span class="number">0.6</span> + <span class="number">0.7</span>).toPrecision(<span class="number">12</span>)) <span class="comment">// &quot;1.3&quot;</span></span><br></pre></td></tr></table></figure>
+<p>至於為什麼參數要帶 12，因為 12 位數可以避免大部分浮點數的問題。</p>
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://tso1158687.github.io/blog/2018/12/17/javascript-float-trap/">javascript浮點數的陷阱</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>筆記</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>執行環境與作用域</title>
     <url>/jscore/20210819/1495754165/</url>
     <content><![CDATA[<h1 id="執行環境與作用域"><a href="#執行環境與作用域" class="headerlink" title="執行環境與作用域"></a>執行環境與作用域</h1><p>JavaScript 是屬於直譯式語言，它會直接透過直譯器來產生代碼，並且運行代碼。</p>
@@ -520,45 +559,6 @@
 ]]></content>
       <categories>
         <category>JS核心五分鐘</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>浮點數相加</title>
-    <url>/note/20210414/981755103/</url>
-    <content><![CDATA[<h2 id="浮點數"><a href="#浮點數" class="headerlink" title="浮點數"></a>浮點數</h2><p>在日常生活中，如果要計算 0.1 + 0.2，我們能夠直覺的答出 0.3 這個答案。<br>但是在 JavaScript 中，計算結果卻不如預期，用 <code>console.log(0.1 + 0.2 === 0.3)</code> 回傳的結果竟會得到 <code>false</code>。<br>其實這和電腦的「<a href="https://www.h-schmidt.net/FloatConverter/IEEE754.html">IEEE754 二進制浮點運算</a>」計算方式有關，當我們宣告一段浮點數陣列，展開後會發現，有些浮點數會有些微誤差，以致於在進行計算時會出錯。<br>所以得到的結果自然是 <code>0.1 + 0.2 !== 0.3</code>。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="built_in">Array</span>.from(<span class="built_in">Array</span>(<span class="number">10</span>).keys())</span><br><span class="line"><span class="keyword">var</span> result = num.map(<span class="function"><span class="params">item</span> =&gt;</span> item * <span class="number">0.1</span>)</span><br><span class="line"><span class="built_in">console</span>.log(result)</span><br><span class="line"><span class="comment">// 0, 0.1, 0.2, 0.30000000000000004, 0.4, 0.5, </span></span><br><span class="line"><span class="comment">// 0.6000000000000001, 0.7000000000000001, 0.8, 0.9</span></span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<hr>
-<p>該如何解決浮點數問題呢？可以使用以下兩種方法：</p>
-<ul>
-<li>Number.toFixed()</li>
-<li>Number.toPrecision()</li>
-</ul>
-<h2 id="Number-toFixed"><a href="#Number-toFixed" class="headerlink" title="Number.toFixed"></a>Number.toFixed</h2><p><code>Number.toFixed()</code> 可以對數字進行四捨五入到指定的第 N 位數。</p>
-<blockquote>
-<p><code>toFixed()</code> 方法回傳的型別是「<strong>字串</strong>」，需要另外再轉換為數字型別。</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">10.12345</span></span><br><span class="line">num.toFixed(<span class="number">2</span>) <span class="comment">// &quot;10.12&quot;</span></span><br><span class="line">num.toFixed(<span class="number">4</span>) <span class="comment">// &quot;10.1235&quot;</span></span><br></pre></td></tr></table></figure>
-<p>同樣方法用在浮點數上可以改成：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="built_in">Array</span>.from(<span class="built_in">Array</span>(<span class="number">10</span>).keys())</span><br><span class="line"><span class="keyword">var</span> result = num.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="built_in">Number</span>((item * <span class="number">0.1</span>).toFixed(<span class="number">1</span>)))</span><br><span class="line"><span class="built_in">console</span>.log(result)</span><br><span class="line"><span class="comment">// [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]</span></span><br></pre></td></tr></table></figure>
-<p>如果想去除小數點後為 0 的尾數，則可以用 <code>parseFloat()</code>。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0.990</span></span><br><span class="line"><span class="built_in">parseFloat</span>(num) <span class="comment">// 0.99</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Number-toPrecision"><a href="#Number-toPrecision" class="headerlink" title="Number.toPrecision"></a>Number.toPrecision</h2><p><code>Number.toPrecision()</code> 方法可以指定想要顯示的浮點數範圍，範圍在 1～21，並且回傳「字串」。<br><code>toPrecision()</code> 方法有以下幾種狀況：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 數字是浮點數，就會補 0</span></span><br><span class="line"><span class="keyword">var</span> num1 = <span class="number">0.12</span></span><br><span class="line">num1.toPrecision(<span class="number">5</span>) <span class="comment">// &quot;0.12000&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 數字是浮點數，但位數不足，一樣會四捨五入</span></span><br><span class="line"><span class="keyword">var</span> num2 = <span class="number">12.345</span></span><br><span class="line">num2.toPrecision(<span class="number">4</span>) <span class="comment">// &quot;12.35&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 數字是整數，但是位數不足，會轉換成指數寫法</span></span><br><span class="line"><span class="keyword">var</span> num3 = <span class="number">1234</span></span><br><span class="line">num3.toPrecision(<span class="number">3</span>) <span class="comment">// &quot;1.23e+3&quot;</span></span><br></pre></td></tr></table></figure>
-<p>所以如果想要解決浮點數相加的問題，可以改成這樣：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">parseFloat</span>((<span class="number">0.1</span> + <span class="number">0.2</span>).toPrecision(<span class="number">12</span>)) <span class="comment">// &quot;0.3&quot;</span></span><br><span class="line"><span class="built_in">parseFloat</span>((<span class="number">0.6</span> + <span class="number">0.7</span>).toPrecision(<span class="number">12</span>)) <span class="comment">// &quot;1.3&quot;</span></span><br></pre></td></tr></table></figure>
-<p>至於為什麼參數要帶 12，因為 12 位數可以避免大部分浮點數的問題。</p>
-<hr>
-<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
-<li><a href="https://tso1158687.github.io/blog/2018/12/17/javascript-float-trap/">javascript浮點數的陷阱</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>筆記</category>
       </categories>
       <tags>
         <tag>JavaScript</tag>

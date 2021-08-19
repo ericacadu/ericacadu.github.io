@@ -280,6 +280,46 @@
       </tags>
   </entry>
   <entry>
+    <title>九九乘法表 - JS 地下城</title>
+    <url>/js-underground/20210420/2028242470/</url>
+    <content><![CDATA[<h2 id="切版需求"><a href="#切版需求" class="headerlink" title="切版需求"></a>切版需求</h2><ul>
+<li>需使用 JS for 迴圈技巧，裡頭數字不能直接寫在 HTML 上，需使用 JS 印出。</li>
+<li>需使用 HTML、CSS、JS 技術</li>
+<li>介面需與設計稿一致：<a href="https://xd.adobe.com/spec/256981fc-ef65-4d9b-773c-45d8ef0353c6-5358/screen/50fba855-bde7-4771-b73c-3fd839418cf0/specs/">UI 線上設計稿</a></li>
+</ul>
+<span id="more"></span>
+
+<hr>
+<h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><p>HTML 的部分使用 Pug 撰寫，這邊就不再多贅述，從 Sass 樣式開始說明。</p>
+<h2 id="Sass"><a href="#Sass" class="headerlink" title="Sass"></a>Sass</h2><p>在切版之前，首先要定義好會用到的共用變數，例如顏色、字體等等，加快撰寫速度。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$primary: #2EB738</span><br><span class="line">$second: #D8D8D8</span><br><span class="line">$light: #FFFFFF</span><br><span class="line">$bgColor: #F0F0F0</span><br><span class="line"></span><br><span class="line">$fs-xl: 5em</span><br><span class="line">$fs-l: 2em</span><br><span class="line">$fs-m: 24px</span><br><span class="line">$fs-s: 0.8em</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/0x9i804.png?300x" alt="Image"></p>
+<p>觀察設計稿，在左上方第一格的四個角，分別都用 <code>x</code> 作為裝飾。<br>為了減少 HTML 結構的複雜度，通常裝飾性質的元素會盡量避免直接寫在 HTML 上，類似這種裝飾可以用偽元素 <code>::before</code>、<code>::after</code> 和 <code>text-shadow</code> 搭配使用。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">li</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="attribute">border-top</span>: <span class="number">1px</span> solid $primary</span><br><span class="line">  border-bottom: <span class="number">1px</span> solid $primary</span><br><span class="line">  position: relative</span><br><span class="line">  &amp;::before, &amp;::after</span><br><span class="line">    content: <span class="string">&#x27;x&#x27;</span></span><br><span class="line">    display: block</span><br><span class="line">    font-size: $fs-s</span><br><span class="line">    font-weight: <span class="number">300</span></span><br><span class="line">    position: absolute</span><br><span class="line">    left: -<span class="number">11%</span></span><br><span class="line">    text-shadow: <span class="number">14em</span> <span class="number">0</span> <span class="number">0</span> $primary</span><br><span class="line">    transform: <span class="built_in">translateY</span>(-<span class="number">0.7em</span>) <span class="built_in">scale</span>(<span class="number">1.1</span>, <span class="number">0.9</span>)</span><br><span class="line">  &amp;::before</span><br><span class="line">    top: <span class="number">0</span></span><br><span class="line">  &amp;::after</span><br><span class="line">    top: <span class="number">100%</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>在切版需求裡有提到，這邊需要使用 JS 迴圈的方式，將內容渲染在網頁上。<br>所以可以先思考一下，會用到哪些迴圈：</p>
+<ul>
+<li>大的索引數字</li>
+<li>內容列表</li>
+</ul>
+<p>首先要將大的索引數字渲染出來：<br>先建立一個 <code>&lt;ul&gt;</code> 元素當作容器，並透過 <code>appendChild()</code> 加進 DOM 節點。<br>接著建立索引元素 <code>&lt;li&gt;</code>，把數字 <code>i</code> 放進去後一併加進剛才建立的 <code>&lt;ul&gt;</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> container = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.container .wrapper&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">2</span>; i&lt;=<span class="number">9</span>; i++) &#123;</span><br><span class="line">	<span class="keyword">let</span> table = <span class="built_in">document</span>.createElement(<span class="string">&#x27;ul&#x27;</span>)</span><br><span class="line">	table.setAttribute(<span class="string">&#x27;class&#x27;</span>, <span class="string">&#x27;list&#x27;</span>)</span><br><span class="line">	container.appendChild(table)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> index = <span class="built_in">document</span>.createElement(<span class="string">&#x27;li&#x27;</span>)</span><br><span class="line">	index.setAttribute(<span class="string">&#x27;class&#x27;</span>, <span class="string">&#x27;index&#x27;</span>)</span><br><span class="line">	index.textContent = i</span><br><span class="line">	table.appendChild(index)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/g0Ukoxp.png?70" alt="Image"></p>
+<p>接著在迴圈裡面加入第二層迴圈，這次的迴圈是計算內容，所以初始值是從 1 開始。<br>建立要存放內容的 <code>&lt;li&gt;</code> 後，把要顯示的變數放進去，最後再加進容器 <code>&lt;ul&gt;</code> 就完成了。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> container = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.container .wrapper&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">2</span>; i&lt;=<span class="number">9</span>; i++) &#123;</span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> k=<span class="number">1</span>; k&lt;=<span class="number">9</span>; k++) &#123;</span><br><span class="line">		<span class="keyword">let</span> item = <span class="built_in">document</span>.createElement(<span class="string">&#x27;li&#x27;</span>)</span><br><span class="line">		item.textContent = <span class="string">`<span class="subst">$&#123;i&#125;</span> x <span class="subst">$&#123;k&#125;</span> = <span class="subst">$&#123;i*k&#125;</span>`</span></span><br><span class="line">		table.appendChild(item)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/vJFcelW.png?70" alt="Image"></p>
+<hr>
+<h2 id="完成作品"><a href="#完成作品" class="headerlink" title="完成作品"></a>完成作品</h2><p><a href="https://codepen.io/ericadu/pen/yLgRNbM">Coedpen</a></p>
+]]></content>
+      <categories>
+        <category>JS 地下城</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>事件傳遞機制</title>
     <url>/note/20210419/2117635506/</url>
     <content><![CDATA[<h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><p>DOM 全名為 Document Object Model 中文翻譯為 文件物件模型。<br>其實就是把 HTML 文件內的標籤、文字、圖片等等都定義成物件，而這些物件會形成一個樹狀結構，並且可以利用 JavaScript 來對 HTML 文件進操作和互動。<br><img src="https://i.imgur.com/3R0iZSd.png?70" alt="Image"></p>
@@ -467,6 +507,51 @@
       </tags>
   </entry>
   <entry>
+    <title>淺層複製與深層複製</title>
+    <url>/jscore/20210414/4242308893/</url>
+    <content><![CDATA[<p>之前提到物件型別有傳參考的特性，但是如果想要另外修改資料，就會連帶影響原始資料內容，JavaScript 提供幾種複製方式來解決這個問題。</p>
+<span id="more"></span>
+<hr>
+<h2 id="淺層複製-Shallow-Copy"><a href="#淺層複製-Shallow-Copy" class="headerlink" title="淺層複製 Shallow Copy"></a>淺層複製 Shallow Copy</h2><p>淺層複製只能複製物件的第一層，如果修改第二層資料的話，還是會影響原始資料。</p>
+<h3 id="for-in-loop"><a href="#for-in-loop" class="headerlink" title="for-in loop"></a>for-in loop</h3><p>以下範例可以發現，用 <code>for-in</code> 迴圈複製後的新物件會和原始資料不同。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> ( <span class="keyword">let</span> key <span class="keyword">in</span> data ) &#123;</span><br><span class="line">    target[key] = data[key]</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(target !== data) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>但是接著修改新物件後，修改第一層的內容沒有問題，不會影響原始資料，但是修改第二層後，就會連同原始物件一起修改。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">target.title = <span class="string">&#x27;Second Level&#x27;</span> </span><br><span class="line">target.info.tag = <span class="string">&#x27;copy&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(target, data)</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/BbbyV3N.png?55" alt="Image"></p>
+<h3 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign"></a>Object.assign</h3><p><code>Object.assign()</code> 可以用來複製物件本身的屬性到另外一個目標物件上。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> origin = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = <span class="built_in">Object</span>.assign(&#123;&#125;, origin)</span><br><span class="line"><span class="built_in">console</span>.log(origin, target)</span><br><span class="line"><span class="comment">// origin = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br><span class="line"><span class="comment">// target = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 <font color="#ff7575"><strong>目標物件</strong></font> 與 <font color="#6897bb"><strong>原始物件</strong></font> 的屬性名稱相同，<font color="#6897bb"><strong>原始物件</strong></font> 的屬性會覆蓋 <font color="#ff7575"><strong>目標物件</strong></font>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> origin = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123; <span class="attr">a</span>: <span class="number">4</span>, <span class="attr">b</span>: <span class="number">5</span>, <span class="attr">x</span>: <span class="number">0</span> &#125;</span><br><span class="line"><span class="built_in">Object</span>.assign(target, origin)</span><br><span class="line"><span class="built_in">console</span>.log(origin, target)</span><br><span class="line"><span class="comment">// origin = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br><span class="line"><span class="comment">// target = &#123;a: 1, b: 2, x: 0, c: 3&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ES6-展開語法"><a href="#ES6-展開語法" class="headerlink" title="ES6 展開語法"></a>ES6 展開語法</h3><p>除了以上兩種方法，也可以用 ES6 的展開語法達到相同效果。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123;...data&#125;</span><br><span class="line">target.a = <span class="number">999</span></span><br><span class="line"><span class="built_in">console</span>.log(target)</span><br><span class="line"><span class="comment">// target = &#123; a: 999, b: 2, c: 3 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="深層複製-Deep-Copy"><a href="#深層複製-Deep-Copy" class="headerlink" title="深層複製 Deep Copy"></a>深層複製 Deep Copy</h2><p>淺層複製只能複製第一層資料，深層複製則是可以將資料完整複製，讓整份新複製的資料都能往下層修改，並且不會影響原始資料。</p>
+<h3 id="JSON-stringify"><a href="#JSON-stringify" class="headerlink" title="JSON.stringify"></a>JSON.stringify</h3><p><code>JSON.stringify()</code> 可以將物件轉成「字串」後回傳。<br>重新轉成字串後再用 <code>JSON.parse()</code> 轉回 JavaScript 物件，如此就能達到深層複製的效果。<br>原理是將物件先轉成「純值」，再透過 <code>JSON.parse()</code> 轉回物件，此時的物件就會有一個新的記憶體空間，並且讓變數指向到新的位置。</p>
+<div class="alert alert-danger">
+如果物件中有 <b>undefined、function</b>，因為無法轉成純值，所以會直接消失，<b>NaN 則會變成 Null</b>
+</div>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> target = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(data))</span><br><span class="line">target.title = <span class="string">&#x27;Second Level&#x27;</span> </span><br><span class="line">target.info.tag = <span class="string">&#x27;copy&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(target, data)</span><br></pre></td></tr></table></figure>
+![Image](https://i.imgur.com/Zi6OaFe.png?55)
+
+<h3 id="jQuery-extend"><a href="#jQuery-extend" class="headerlink" title="jQuery.extend"></a>jQuery.extend</h3><p>如果要解決 <code>undefined</code>、<code>function</code> 和 <code>NaN</code> 的複製問題，可以用 jQuery 的 <code>$.extend</code> 方法，就能做到完整的深層複製。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;data.func&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    un: <span class="literal">undefined</span>,</span><br><span class="line">    nan: <span class="literal">NaN</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> shallow = $.extend(&#123;&#125;, data) <span class="comment">// 淺層複製</span></span><br><span class="line"><span class="keyword">var</span> deep = $.extend(<span class="literal">true</span>, &#123;&#125;, data) <span class="comment">// 深層複製</span></span><br><span class="line"><span class="built_in">console</span>.log(deep)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://hsiangfeng.github.io/javascript/20200905/1375484447/">JavaScript 核心觀念(30)-物件-淺層複製及深層複製</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>物件傳參考</title>
     <url>/jscore/20210413/1596758899/</url>
     <content><![CDATA[<p>JavaScript 中，資料的傳遞分為兩種方式：<br><strong>- 傳值</strong>：Call by value 或 Pass by value<br><strong>- 傳址（傳參考）</strong>：Call by reference 或 Pass by reference</p>
@@ -547,51 +632,6 @@
       </tags>
   </entry>
   <entry>
-    <title>淺層複製與深層複製</title>
-    <url>/jscore/20210414/4242308893/</url>
-    <content><![CDATA[<p>之前提到物件型別有傳參考的特性，但是如果想要另外修改資料，就會連帶影響原始資料內容，JavaScript 提供幾種複製方式來解決這個問題。</p>
-<span id="more"></span>
-<hr>
-<h2 id="淺層複製-Shallow-Copy"><a href="#淺層複製-Shallow-Copy" class="headerlink" title="淺層複製 Shallow Copy"></a>淺層複製 Shallow Copy</h2><p>淺層複製只能複製物件的第一層，如果修改第二層資料的話，還是會影響原始資料。</p>
-<h3 id="for-in-loop"><a href="#for-in-loop" class="headerlink" title="for-in loop"></a>for-in loop</h3><p>以下範例可以發現，用 <code>for-in</code> 迴圈複製後的新物件會和原始資料不同。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> ( <span class="keyword">let</span> key <span class="keyword">in</span> data ) &#123;</span><br><span class="line">    target[key] = data[key]</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(target !== data) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-<p>但是接著修改新物件後，修改第一層的內容沒有問題，不會影響原始資料，但是修改第二層後，就會連同原始物件一起修改。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">target.title = <span class="string">&#x27;Second Level&#x27;</span> </span><br><span class="line">target.info.tag = <span class="string">&#x27;copy&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(target, data)</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/BbbyV3N.png?55" alt="Image"></p>
-<h3 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign"></a>Object.assign</h3><p><code>Object.assign()</code> 可以用來複製物件本身的屬性到另外一個目標物件上。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> origin = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = <span class="built_in">Object</span>.assign(&#123;&#125;, origin)</span><br><span class="line"><span class="built_in">console</span>.log(origin, target)</span><br><span class="line"><span class="comment">// origin = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br><span class="line"><span class="comment">// target = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果 <font color="#ff7575"><strong>目標物件</strong></font> 與 <font color="#6897bb"><strong>原始物件</strong></font> 的屬性名稱相同，<font color="#6897bb"><strong>原始物件</strong></font> 的屬性會覆蓋 <font color="#ff7575"><strong>目標物件</strong></font>。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> origin = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123; <span class="attr">a</span>: <span class="number">4</span>, <span class="attr">b</span>: <span class="number">5</span>, <span class="attr">x</span>: <span class="number">0</span> &#125;</span><br><span class="line"><span class="built_in">Object</span>.assign(target, origin)</span><br><span class="line"><span class="built_in">console</span>.log(origin, target)</span><br><span class="line"><span class="comment">// origin = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br><span class="line"><span class="comment">// target = &#123;a: 1, b: 2, x: 0, c: 3&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="ES6-展開語法"><a href="#ES6-展開語法" class="headerlink" title="ES6 展開語法"></a>ES6 展開語法</h3><p>除了以上兩種方法，也可以用 ES6 的展開語法達到相同效果。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123;...data&#125;</span><br><span class="line">target.a = <span class="number">999</span></span><br><span class="line"><span class="built_in">console</span>.log(target)</span><br><span class="line"><span class="comment">// target = &#123; a: 999, b: 2, c: 3 &#125;</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="深層複製-Deep-Copy"><a href="#深層複製-Deep-Copy" class="headerlink" title="深層複製 Deep Copy"></a>深層複製 Deep Copy</h2><p>淺層複製只能複製第一層資料，深層複製則是可以將資料完整複製，讓整份新複製的資料都能往下層修改，並且不會影響原始資料。</p>
-<h3 id="JSON-stringify"><a href="#JSON-stringify" class="headerlink" title="JSON.stringify"></a>JSON.stringify</h3><p><code>JSON.stringify()</code> 可以將物件轉成「字串」後回傳。<br>重新轉成字串後再用 <code>JSON.parse()</code> 轉回 JavaScript 物件，如此就能達到深層複製的效果。<br>原理是將物件先轉成「純值」，再透過 <code>JSON.parse()</code> 轉回物件，此時的物件就會有一個新的記憶體空間，並且讓變數指向到新的位置。</p>
-<div class="alert alert-danger">
-如果物件中有 <b>undefined、function</b>，因為無法轉成純值，所以會直接消失，<b>NaN 則會變成 Null</b>
-</div>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> target = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(data))</span><br><span class="line">target.title = <span class="string">&#x27;Second Level&#x27;</span> </span><br><span class="line">target.info.tag = <span class="string">&#x27;copy&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(target, data)</span><br></pre></td></tr></table></figure>
-![Image](https://i.imgur.com/Zi6OaFe.png?55)
-
-<h3 id="jQuery-extend"><a href="#jQuery-extend" class="headerlink" title="jQuery.extend"></a>jQuery.extend</h3><p>如果要解決 <code>undefined</code>、<code>function</code> 和 <code>NaN</code> 的複製問題，可以用 jQuery 的 <code>$.extend</code> 方法，就能做到完整的深層複製。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;data.func&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    un: <span class="literal">undefined</span>,</span><br><span class="line">    nan: <span class="literal">NaN</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> shallow = $.extend(&#123;&#125;, data) <span class="comment">// 淺層複製</span></span><br><span class="line"><span class="keyword">var</span> deep = $.extend(<span class="literal">true</span>, &#123;&#125;, data) <span class="comment">// 深層複製</span></span><br><span class="line"><span class="built_in">console</span>.log(deep)</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
-<li><a href="https://hsiangfeng.github.io/javascript/20200905/1375484447/">JavaScript 核心觀念(30)-物件-淺層複製及深層複製</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JS核心五分鐘</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>關注點分離：Todolist</title>
     <url>/demo/20210415/642765602/</url>
     <content><![CDATA[<h2 id="關注點分離"><a href="#關注點分離" class="headerlink" title="關注點分離"></a>關注點分離</h2><p>關注點分離（Separation of Concerns，SoC）就是將程式碼依照各種「目的」、「功能」進行分類和整理，讓每個區塊專注於各自負責的工作，彼此分工合作。<br>這麼做的優點是可以將程式碼進行切割，依照需求各自獨立處理，並讓程式碼單純化。<br>為了更清楚理解關注點分離應用，來實作一個簡單的 Todolist。</p>
@@ -628,46 +668,6 @@
       <tags>
         <tag>JavaScript</tag>
         <tag>Todolist</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>九九乘法表 - JS 地下城</title>
-    <url>/js-underground/20210420/2028242470/</url>
-    <content><![CDATA[<h2 id="切版需求"><a href="#切版需求" class="headerlink" title="切版需求"></a>切版需求</h2><ul>
-<li>需使用 JS for 迴圈技巧，裡頭數字不能直接寫在 HTML 上，需使用 JS 印出。</li>
-<li>需使用 HTML、CSS、JS 技術</li>
-<li>介面需與設計稿一致：<a href="https://xd.adobe.com/spec/256981fc-ef65-4d9b-773c-45d8ef0353c6-5358/screen/50fba855-bde7-4771-b73c-3fd839418cf0/specs/">UI 線上設計稿</a></li>
-</ul>
-<span id="more"></span>
-
-<hr>
-<h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><p>HTML 的部分使用 Pug 撰寫，這邊就不再多贅述，從 Sass 樣式開始說明。</p>
-<h2 id="Sass"><a href="#Sass" class="headerlink" title="Sass"></a>Sass</h2><p>在切版之前，首先要定義好會用到的共用變數，例如顏色、字體等等，加快撰寫速度。</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$primary: #2EB738</span><br><span class="line">$second: #D8D8D8</span><br><span class="line">$light: #FFFFFF</span><br><span class="line">$bgColor: #F0F0F0</span><br><span class="line"></span><br><span class="line">$fs-xl: 5em</span><br><span class="line">$fs-l: 2em</span><br><span class="line">$fs-m: 24px</span><br><span class="line">$fs-s: 0.8em</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/0x9i804.png?300x" alt="Image"></p>
-<p>觀察設計稿，在左上方第一格的四個角，分別都用 <code>x</code> 作為裝飾。<br>為了減少 HTML 結構的複雜度，通常裝飾性質的元素會盡量避免直接寫在 HTML 上，類似這種裝飾可以用偽元素 <code>::before</code>、<code>::after</code> 和 <code>text-shadow</code> 搭配使用。</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">li</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="attribute">border-top</span>: <span class="number">1px</span> solid $primary</span><br><span class="line">  border-bottom: <span class="number">1px</span> solid $primary</span><br><span class="line">  position: relative</span><br><span class="line">  &amp;::before, &amp;::after</span><br><span class="line">    content: <span class="string">&#x27;x&#x27;</span></span><br><span class="line">    display: block</span><br><span class="line">    font-size: $fs-s</span><br><span class="line">    font-weight: <span class="number">300</span></span><br><span class="line">    position: absolute</span><br><span class="line">    left: -<span class="number">11%</span></span><br><span class="line">    text-shadow: <span class="number">14em</span> <span class="number">0</span> <span class="number">0</span> $primary</span><br><span class="line">    transform: <span class="built_in">translateY</span>(-<span class="number">0.7em</span>) <span class="built_in">scale</span>(<span class="number">1.1</span>, <span class="number">0.9</span>)</span><br><span class="line">  &amp;::before</span><br><span class="line">    top: <span class="number">0</span></span><br><span class="line">  &amp;::after</span><br><span class="line">    top: <span class="number">100%</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>在切版需求裡有提到，這邊需要使用 JS 迴圈的方式，將內容渲染在網頁上。<br>所以可以先思考一下，會用到哪些迴圈：</p>
-<ul>
-<li>大的索引數字</li>
-<li>內容列表</li>
-</ul>
-<p>首先要將大的索引數字渲染出來：<br>先建立一個 <code>&lt;ul&gt;</code> 元素當作容器，並透過 <code>appendChild()</code> 加進 DOM 節點。<br>接著建立索引元素 <code>&lt;li&gt;</code>，把數字 <code>i</code> 放進去後一併加進剛才建立的 <code>&lt;ul&gt;</code>。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> container = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.container .wrapper&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">2</span>; i&lt;=<span class="number">9</span>; i++) &#123;</span><br><span class="line">	<span class="keyword">let</span> table = <span class="built_in">document</span>.createElement(<span class="string">&#x27;ul&#x27;</span>)</span><br><span class="line">	table.setAttribute(<span class="string">&#x27;class&#x27;</span>, <span class="string">&#x27;list&#x27;</span>)</span><br><span class="line">	container.appendChild(table)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> index = <span class="built_in">document</span>.createElement(<span class="string">&#x27;li&#x27;</span>)</span><br><span class="line">	index.setAttribute(<span class="string">&#x27;class&#x27;</span>, <span class="string">&#x27;index&#x27;</span>)</span><br><span class="line">	index.textContent = i</span><br><span class="line">	table.appendChild(index)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/g0Ukoxp.png?70" alt="Image"></p>
-<p>接著在迴圈裡面加入第二層迴圈，這次的迴圈是計算內容，所以初始值是從 1 開始。<br>建立要存放內容的 <code>&lt;li&gt;</code> 後，把要顯示的變數放進去，最後再加進容器 <code>&lt;ul&gt;</code> 就完成了。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> container = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.container .wrapper&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">2</span>; i&lt;=<span class="number">9</span>; i++) &#123;</span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> k=<span class="number">1</span>; k&lt;=<span class="number">9</span>; k++) &#123;</span><br><span class="line">		<span class="keyword">let</span> item = <span class="built_in">document</span>.createElement(<span class="string">&#x27;li&#x27;</span>)</span><br><span class="line">		item.textContent = <span class="string">`<span class="subst">$&#123;i&#125;</span> x <span class="subst">$&#123;k&#125;</span> = <span class="subst">$&#123;i*k&#125;</span>`</span></span><br><span class="line">		table.appendChild(item)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/vJFcelW.png?70" alt="Image"></p>
-<hr>
-<h2 id="完成作品"><a href="#完成作品" class="headerlink" title="完成作品"></a>完成作品</h2><p><a href="https://codepen.io/ericadu/pen/yLgRNbM">Coedpen</a></p>
-]]></content>
-      <categories>
-        <category>JS 地下城</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
       </tags>
   </entry>
 </search>

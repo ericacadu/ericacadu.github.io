@@ -4,11 +4,15 @@ document.addEventListener('page:loaded', () => {
   if (CONFIG.page.isHome) {
     NexT.utils.getScript(
       `https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=${CONFIG.changyan.appid}`,
-      { attributes: {id: 'cy_cmt_num' } }
+      { attributes: { id: 'cy_cmt_num' } }
     );
   } else if (CONFIG.page.comments) {
     NexT.utils.loadComments('#SOHUCS')
-      .then(() => NexT.utils.getScript('https://changyan.sohu.com/upload/changyan.js'))
+      .then(() => {
+        delete window.changyan;
+        delete window.cyan;
+        return NexT.utils.getScript('https://changyan.sohu.com/upload/changyan.js');
+      })
       .then(() => {
         window.changyan.api.config({
           appid: CONFIG.changyan.appid,

@@ -22,7 +22,7 @@ if (typeof DOMTokenList.prototype.replace !== 'function') {
   );
 
   if (document.readyState === 'loading') {
-    document.addEventListener('readystatechange', onPageLoaded, {once: true});
+    document.addEventListener('readystatechange', onPageLoaded, { once: true });
   } else {
     onPageLoaded();
   }
@@ -181,7 +181,7 @@ NexT.utils = {
       }
       if (!Array.isArray(NexT.utils.sections)) return;
       let index = NexT.utils.sections.findIndex(element => {
-        return element && element.getBoundingClientRect().top > 0;
+        return element && element.getBoundingClientRect().top > 10;
       });
       if (index === -1) {
         index = NexT.utils.sections.length - 1;
@@ -189,7 +189,7 @@ NexT.utils = {
         index--;
       }
       this.activateNavByIndex(index);
-    });
+    }, { passive: true });
 
     backToTop && backToTop.addEventListener('click', () => {
       window.anime({
@@ -275,10 +275,21 @@ NexT.utils = {
           targets  : document.scrollingElement,
           duration : 500,
           easing   : 'linear',
-          scrollTop: offset + 10
+          scrollTop: offset,
+          complete : () => {
+            history.pushState(null, document.title, element.href);
+          }
         });
       });
       return target;
+    });
+  },
+
+  registerPostReward: function() {
+    const button = document.querySelector('.reward-container button');
+    if (!button) return;
+    button.addEventListener('click', () => {
+      document.querySelector('.post-reward').classList.toggle('active');
     });
   },
 
@@ -337,53 +348,75 @@ NexT.utils = {
     }
   },
 
-  getScript: (url, {
-    condition = false,
-    attributes: {
-      id = '',
-      async = false,
-      defer = false,
-      crossOrigin = '',
-      dataset = {},
-      ...otherAttributes
-    } = {},
-    parentNode = null
-  } = {}) => new Promise((resolve, reject) => {
-    if (condition) {
-      resolve();
-    } else {
-      const script = document.createElement('script');
-
-      if (id) script.id = id;
-      if (crossOrigin) script.crossOrigin = crossOrigin;
-      script.async = async;
-      script.defer = defer;
-      Object.assign(script.dataset, dataset);
-      Object.entries(otherAttributes).forEach(([name, value]) => {
-        script.setAttribute(name, String(value));
-      });
-
-      script.onload = resolve;
-      script.onerror = reject;
-
-      script.src = url;
-      (parentNode || document.head).appendChild(script);
+  getScript: function(src, options = {}, legacyCondition) {
+    if (typeof options === 'function') {
+      return this.getScript(src, {
+        condition: legacyCondition
+      }).then(options);
     }
-  }),
+    const {
+      condition = false,
+      attributes: {
+        id = '',
+        async = false,
+        defer = false,
+        crossOrigin = '',
+        dataset = {},
+        ...otherAttributes
+      } = {},
+      parentNode = null
+    } = options;
+    return new Promise((resolve, reject) => {
+      if (condition) {
+        resolve();
+      } else {
+        const script = document.createElement('script');
 
-  loadComments: (selector) => new Promise((resolve) => {
-    const element = document.querySelector(selector);
-    if (!CONFIG.comments.lazyload || !element) {
-      resolve();
-      return;
-    }
-    const intersectionObserver = new IntersectionObserver((entries, observer) => {
-      const entry = entries[0];
-      if (!entry.isIntersecting) return;
+        if (id) script.id = id;
+        if (crossOrigin) script.crossOrigin = crossOrigin;
+        script.async = async;
+        script.defer = defer;
+        Object.assign(script.dataset, dataset);
+        Object.entries(otherAttributes).forEach(([name, value]) => {
+          script.setAttribute(name, String(value));
+        });
 
-      resolve();
-      observer.disconnect();
+        script.onload = resolve;
+        script.onerror = reject;
+
+        if (typeof src === 'object') {
+          const { url, integrity } = src;
+          script.src = url;
+          if (integrity) {
+            script.integrity = integrity;
+            script.crossOrigin = 'anonymous';
+          }
+        } else {
+          script.src = src;
+        }
+        (parentNode || document.head).appendChild(script);
+      }
     });
-    intersectionObserver.observe(element);
-  })
+  },
+
+  loadComments: function(selector, legacyCallback) {
+    if (legacyCallback) {
+      return this.loadComments(selector).then(legacyCallback);
+    }
+    return new Promise(resolve => {
+      const element = document.querySelector(selector);
+      if (!CONFIG.comments.lazyload || !element) {
+        resolve();
+        return;
+      }
+      const intersectionObserver = new IntersectionObserver((entries, observer) => {
+        const entry = entries[0];
+        if (!entry.isIntersecting) return;
+
+        resolve();
+        observer.disconnect();
+      });
+      intersectionObserver.observe(element);
+    });
+  }
 };

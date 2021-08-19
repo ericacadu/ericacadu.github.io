@@ -3,12 +3,12 @@ hr {
     background: transparent;
     border-top: 1px solid #DDD;
 }
-.nav .active > a , a[target^="_blank"], span[itemprop^="name"]{
+.sidebar-toc-active .sidebar-nav-toc, .sidebar-overview-active .sidebar-nav-overview, .post-toc .nav .active > a , a[target^="_blank"], span[itemprop^="name"]{
     color: $primary;
     border-bottom 1px solid $primary;
 }
 
-.post-toc, .sidebar-toc-active .sidebar-nav-toc .sidebar-nav-overview, .sidebar-overview-active a {
+.links-of-author-item a {
     color: #666;
     border 0;
 }
@@ -24,6 +24,16 @@ hr {
 .sidebar-nav li:hover {
     color: $primary;
 }
+
+.menu .menu-item .badge {
+    text-shadow: 0 0 0 transparent
+}
+
+mark.search-keyword, .posts-expand .post-meta-container time:hover {
+    color: $primary;
+    border-color: $primary;
+}
+
 .with-love {
     color: $primary;
 }
@@ -42,7 +52,6 @@ blockquote {
     padding: 15px;
     margin: 2em auto;
     border-left: 0;
-    // border-left-color $primary;
 }
 blockquote p {
     margin-bottom: 0;
@@ -75,7 +84,7 @@ blockquote code {
 }
 .alert-info {
     color: #3a87ad;
-    background-color: #e2eaee;
+    background-color: #D9EDF7;
     border-color: #c5d5dd;
 }
 .alert-warning {
@@ -85,7 +94,7 @@ blockquote code {
 }
 .alert-danger {
     color: #b94a48;
-    background-color: #f2dede;
+    background-color: #F2DEDE;
     border-color: #ebccd1;
 }
 

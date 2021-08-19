@@ -37,9 +37,9 @@ custom_file_path:
 
 # Schemes
 # scheme: Muse
-#scheme: Mist
+# scheme: Mist
 scheme: Pisces
-#scheme: Gemini
+# scheme: Gemini
 
 # Dark Mode
 darkmode: false
@@ -237,7 +237,7 @@ post_meta:
   item_text: true
   created_at: true
   updated_at:
-    enable: true
+    enable: false
     another_day: true
   categories: true
 
@@ -370,7 +370,7 @@ codeblock:
 back2top:
   enable: true
   # Back to top in sidebar.
-  sidebar: true
+  sidebar: false
   # Scroll percent label in b2t button.
   scrollpercent: true
 

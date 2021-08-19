@@ -8,7 +8,9 @@ abbrlink: 1110903207
 date: 2021-04-11 19:39:10
 ---
 `Promise` 是用來解決 AJAX 非同步問題，優化非同步程式的 ES6 語法，會回傳「**接受**」或「**拒絕**」的結果。
-> AJAX 是 JavaScript 與 XML 技術的縮寫，網頁不用重新整理，就能即時透過瀏覽器跟伺服器溝通、撈取資料。
+<div class="alert alert-info">
+    AJAX 是 JavaScript 與 XML 技術的縮寫，網頁不用重新整理，就能即時透過瀏覽器跟伺服器溝通、撈取資料。
+</div>
 
 ```
 function promise(num) {

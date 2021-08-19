@@ -2810,6 +2810,9 @@ mark.search-keyword {
     margin-bottom: 10px;
   }
 }
+main {
+  max-width: 1440px;
+}
 img {
   display: block;
   width: 100%;

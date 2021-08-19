@@ -19,7 +19,9 @@ function fn () {
 ```
 所謂的「Callback Function」其實就是「**把函式當作參數，透過另外一個函式呼叫**」。
 可以解釋成：希望在某個 **地點**，透過某個 **動作**，執行某個 **程式**，來達成結果。
-> 地點.addEventListener('動作', 參數)
+<div class="alert alert-info">
+地點.addEventListener('動作', 參數)
+</div>
 
 我們可以用一段匿名函式的方式把函式帶入參數：
 ```javascript

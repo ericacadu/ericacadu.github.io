@@ -103,9 +103,10 @@
     <title>Promise 方法</title>
     <url>/jscore/20210411/1110903207/</url>
     <content><![CDATA[<p><code>Promise</code> 是用來解決 AJAX 非同步問題，優化非同步程式的 ES6 語法，會回傳「<strong>接受</strong>」或「<strong>拒絕</strong>」的結果。</p>
-<blockquote>
-<p>AJAX 是 JavaScript 與 XML 技術的縮寫，網頁不用重新整理，就能即時透過瀏覽器跟伺服器溝通、撈取資料。</p>
-</blockquote>
+<div class="alert alert-info">
+    AJAX 是 JavaScript 與 XML 技術的縮寫，網頁不用重新整理，就能即時透過瀏覽器跟伺服器溝通、撈取資料。
+</div>
+
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function promise(num) &#123;</span><br><span class="line">  return new Promise((resolve, reject) &#x3D;&gt; &#123;</span><br><span class="line">    num ? resolve(num) : reject(&#39;失敗&#39;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 
@@ -196,6 +197,81 @@
 <li><a href="https://kuro.tw/posts/2017/10/17/What-s-THIS-in-JavaScript-%E4%B8%AD/">What’s THIS in JavaScript ?</a></li>
 <li><a href="https://blog.techbridge.cc/2019/02/23/javascript-this/">淺談 JavaScript 頭號難題 this：絕對不完整，但保證好懂</a></li>
 </ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>var、let、const</title>
+    <url>/jscore/20210411/659913096/</url>
+    <content><![CDATA[<h2 id="var"><a href="#var" class="headerlink" title="var"></a>var</h2><p><code>var</code> 的宣告屬於 <strong>全域變數</strong>，代表 <strong>全域物件的屬性</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>假設一個 <code>for</code> 迴圈用 <code>var</code> 宣告 <code>i</code>，在全域還是可以取得 <code>i</code> 值。<br>如果想要限制 <code>i</code> 的作用域的話，可以使用立即函式，避免外層取到 <code>for</code> 迴圈裡面的值，最直接的方式就是使用 <code>let</code> 宣告。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line">&#125;)()</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// i is not defined</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// i is not defined</span></span><br></pre></td></tr></table></figure>
+<p>在 JavaScript 中，<code>var</code> 的作用域是函式作用域，但在函式內的區域變數也可能被視為全域變數，傳統用 <code>var</code> 宣告變數可能會汙染全域，如果使用 <code>let</code>、<code>const</code> 就可以避免這種情形。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.a) <span class="comment">// 10</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="let"><a href="#let" class="headerlink" title="let"></a>let</h2><p><code>let</code> 的作用域屬於區塊內({} 大括號)，和 <code>const</code> 最大差異就是可以重新賦值，而 <code>const</code> 不行。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">0</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> a = <span class="number">1</span> <span class="comment">// 因為 let 的作用域是區塊內，所以不算重複宣告</span></span><br><span class="line">    a = <span class="number">2</span></span><br><span class="line">    <span class="built_in">console</span>.log(a) <span class="comment">// 2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">0</span>) <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+<p>舉個非同步 <code>for</code> 迴圈的例子，假設想要讓 <code>setTimeout</code> 依序執行並印出結果，如果用 <code>var</code> 宣告的話，因為 <code>var</code> 是全域變數，所以只會取出最後一次執行的結果。<br>而 <code>setTimeout</code> 是非同步程式，會先放到「事件佇列」裡面，等到所有程式碼執行完畢後才會執行。<br>如果想要達到預期結果，只要用 <code>let</code> 宣告就可以依序執行並取得正確數值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`這是第 <span class="subst">$&#123;i&#125;</span> 次執行結果`</span>)</span><br><span class="line">    &#125;, <span class="number">0</span>)</span><br><span class="line">&#125; <span class="comment">// 這是第 3 次執行結果</span></span><br><span class="line">---</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`這是第 <span class="subst">$&#123;i + <span class="number">1</span>&#125;</span> 次執行結果`</span>)</span><br><span class="line">    &#125;, <span class="number">0</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 這是第 0 次執行結果</span></span><br><span class="line"><span class="comment">// 這是第 1 次執行結果</span></span><br><span class="line"><span class="comment">// 這是第 2 次執行結果</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="const"><a href="#const" class="headerlink" title="const"></a>const</h2><p><code>const</code> 是宣告一個常數，用 <code>const</code> 宣告的變數沒辦法再被調整。<br>雖然變數沒辦法被調整，但如果是物件的話，因為物件屬於傳參考特性，只要不直接替換掉物件，可以修改內容屬性值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> person = &#123;</span><br><span class="line">    name: <span class="string">&#x27;小明&#x27;</span>,</span><br><span class="line">    money: <span class="number">500</span></span><br><span class="line">&#125;</span><br><span class="line">person.name = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(person.name) <span class="comment">// 大明</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line">person = &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(person) <span class="comment">// Assignment to constant variable.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Hoisting-與-暫時性死區"><a href="#Hoisting-與-暫時性死區" class="headerlink" title="Hoisting 與 暫時性死區"></a>Hoisting 與 暫時性死區</h2><p>JavaScript 中有 hoisting 的現象，先來比較一下這三種的狀況：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// b is not defined</span></span><br><span class="line"><span class="keyword">let</span> b = <span class="number">2</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="built_in">console</span>.log(c) <span class="comment">// Cannot access &#x27;c&#x27; before initialization</span></span><br><span class="line"><span class="keyword">const</span> c = <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>var: <code>undefined</code>，有 hoisting</li>
+<li>let: <code>not defined</code>，沒有 hoisting</li>
+<li>const: 宣告前無法使用，沒有 hoisting</li>
+</ol>
+<p>看起來沒什麼問題，接著猜測一下面範例結果：</p>
+<ul>
+<li>(1) 如果 <code>let</code> 沒有提升的話，就會往外層查找取得 <strong>小明</strong> 的值</li>
+<li>(2) 如果 <code>let</code> 有提升的話，就會出現其他狀況</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> Ming = <span class="string">&#x27;小明&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(Ming)</span><br><span class="line">    <span class="keyword">let</span> Ming = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>結果是(2)： <code>Cannot access &#39;Ming&#39; before initialization</code><br><code>let</code> 在提升的過程中會產生一個「暫時性死區」Temporal Dead Zone(TDZ)。<br>在這個區域內是無法存取變數，也就不會賦予 <code>undefined</code> 的值，如果試圖取值就會跳出錯誤提示。<br>所以 <code>let</code> 雖然有類似提升 <strong>創造 - 執行階段</strong> 的概念，但是和 <code>var</code> 的 hoisting 概念並不相同。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> Ming = <span class="string">&#x27;小明&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 創造</span></span><br><span class="line">    <span class="keyword">let</span> Ming <span class="comment">// 暫時性死區 TDZ</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 執行</span></span><br><span class="line">    <span class="built_in">console</span>.log(Ming)</span><br><span class="line">    <span class="keyword">let</span> Ming = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="重點整理"><a href="#重點整理" class="headerlink" title="重點整理"></a>重點整理</h2><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">作用範圍</th>
+<th align="center">重複宣告</th>
+<th align="center">重新賦值</th>
+<th align="center">Hoisting</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">var</td>
+<td align="center">全域</td>
+<td align="center">v</td>
+<td align="center">v</td>
+<td align="center">v</td>
+</tr>
+<tr>
+<td align="center">let</td>
+<td align="center">區塊</td>
+<td align="center">x</td>
+<td align="center">v</td>
+<td align="center">v</td>
+</tr>
+<tr>
+<td align="center">const</td>
+<td align="center">區塊</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+</tbody></table>
 ]]></content>
       <categories>
         <category>JS核心五分鐘</category>
@@ -297,81 +373,6 @@
       </tags>
   </entry>
   <entry>
-    <title>var、let、const</title>
-    <url>/jscore/20210411/659913096/</url>
-    <content><![CDATA[<h2 id="var"><a href="#var" class="headerlink" title="var"></a>var</h2><p><code>var</code> 的宣告屬於 <strong>全域變數</strong>，代表 <strong>全域物件的屬性</strong>。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>假設一個 <code>for</code> 迴圈用 <code>var</code> 宣告 <code>i</code>，在全域還是可以取得 <code>i</code> 值。<br>如果想要限制 <code>i</code> 的作用域的話，可以使用立即函式，避免外層取到 <code>for</code> 迴圈裡面的值，最直接的方式就是使用 <code>let</code> 宣告。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line">&#125;)()</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// i is not defined</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// i is not defined</span></span><br></pre></td></tr></table></figure>
-<p>在 JavaScript 中，<code>var</code> 的作用域是函式作用域，但在函式內的區域變數也可能被視為全域變數，傳統用 <code>var</code> 宣告變數可能會汙染全域，如果使用 <code>let</code>、<code>const</code> 就可以避免這種情形。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.a) <span class="comment">// 10</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="let"><a href="#let" class="headerlink" title="let"></a>let</h2><p><code>let</code> 的作用域屬於區塊內({} 大括號)，和 <code>const</code> 最大差異就是可以重新賦值，而 <code>const</code> 不行。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">0</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> a = <span class="number">1</span> <span class="comment">// 因為 let 的作用域是區塊內，所以不算重複宣告</span></span><br><span class="line">    a = <span class="number">2</span></span><br><span class="line">    <span class="built_in">console</span>.log(a) <span class="comment">// 2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">0</span>) <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
-<p>舉個非同步 <code>for</code> 迴圈的例子，假設想要讓 <code>setTimeout</code> 依序執行並印出結果，如果用 <code>var</code> 宣告的話，因為 <code>var</code> 是全域變數，所以只會取出最後一次執行的結果。<br>而 <code>setTimeout</code> 是非同步程式，會先放到「事件佇列」裡面，等到所有程式碼執行完畢後才會執行。<br>如果想要達到預期結果，只要用 <code>let</code> 宣告就可以依序執行並取得正確數值。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`這是第 <span class="subst">$&#123;i&#125;</span> 次執行結果`</span>)</span><br><span class="line">    &#125;, <span class="number">0</span>)</span><br><span class="line">&#125; <span class="comment">// 這是第 3 次執行結果</span></span><br><span class="line">---</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`這是第 <span class="subst">$&#123;i + <span class="number">1</span>&#125;</span> 次執行結果`</span>)</span><br><span class="line">    &#125;, <span class="number">0</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 這是第 0 次執行結果</span></span><br><span class="line"><span class="comment">// 這是第 1 次執行結果</span></span><br><span class="line"><span class="comment">// 這是第 2 次執行結果</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="const"><a href="#const" class="headerlink" title="const"></a>const</h2><p><code>const</code> 是宣告一個常數，用 <code>const</code> 宣告的變數沒辦法再被調整。<br>雖然變數沒辦法被調整，但如果是物件的話，因為物件屬於傳參考特性，只要不直接替換掉物件，可以修改內容屬性值。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> person = &#123;</span><br><span class="line">    name: <span class="string">&#x27;小明&#x27;</span>,</span><br><span class="line">    money: <span class="number">500</span></span><br><span class="line">&#125;</span><br><span class="line">person.name = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(person.name) <span class="comment">// 大明</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line">person = &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(person) <span class="comment">// Assignment to constant variable.</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Hoisting-與-暫時性死區"><a href="#Hoisting-與-暫時性死區" class="headerlink" title="Hoisting 與 暫時性死區"></a>Hoisting 與 暫時性死區</h2><p>JavaScript 中有 hoisting 的現象，先來比較一下這三種的狀況：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// b is not defined</span></span><br><span class="line"><span class="keyword">let</span> b = <span class="number">2</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="built_in">console</span>.log(c) <span class="comment">// Cannot access &#x27;c&#x27; before initialization</span></span><br><span class="line"><span class="keyword">const</span> c = <span class="number">3</span></span><br></pre></td></tr></table></figure>
-<ol>
-<li>var: <code>undefined</code>，有 hoisting</li>
-<li>let: <code>not defined</code>，沒有 hoisting</li>
-<li>const: 宣告前無法使用，沒有 hoisting</li>
-</ol>
-<p>看起來沒什麼問題，接著猜測一下面範例結果：</p>
-<ul>
-<li>(1) 如果 <code>let</code> 沒有提升的話，就會往外層查找取得 <strong>小明</strong> 的值</li>
-<li>(2) 如果 <code>let</code> 有提升的話，就會出現其他狀況</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> Ming = <span class="string">&#x27;小明&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(Ming)</span><br><span class="line">    <span class="keyword">let</span> Ming = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>結果是(2)： <code>Cannot access &#39;Ming&#39; before initialization</code><br><code>let</code> 在提升的過程中會產生一個「暫時性死區」Temporal Dead Zone(TDZ)。<br>在這個區域內是無法存取變數，也就不會賦予 <code>undefined</code> 的值，如果試圖取值就會跳出錯誤提示。<br>所以 <code>let</code> 雖然有類似提升 <strong>創造 - 執行階段</strong> 的概念，但是和 <code>var</code> 的 hoisting 概念並不相同。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> Ming = <span class="string">&#x27;小明&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 創造</span></span><br><span class="line">    <span class="keyword">let</span> Ming <span class="comment">// 暫時性死區 TDZ</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 執行</span></span><br><span class="line">    <span class="built_in">console</span>.log(Ming)</span><br><span class="line">    <span class="keyword">let</span> Ming = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="重點整理"><a href="#重點整理" class="headerlink" title="重點整理"></a>重點整理</h2><table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center">作用範圍</th>
-<th align="center">重複宣告</th>
-<th align="center">重新賦值</th>
-<th align="center">Hoisting</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">var</td>
-<td align="center">全域</td>
-<td align="center">v</td>
-<td align="center">v</td>
-<td align="center">v</td>
-</tr>
-<tr>
-<td align="center">let</td>
-<td align="center">區塊</td>
-<td align="center">x</td>
-<td align="center">v</td>
-<td align="center">v</td>
-</tr>
-<tr>
-<td align="center">const</td>
-<td align="center">區塊</td>
-<td align="center">x</td>
-<td align="center">x</td>
-<td align="center">x</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>JS核心五分鐘</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>函式與作用域</title>
     <url>/jscore/20210411/1442787642/</url>
     <content><![CDATA[<p>函式屬於物件的一種，分為「<strong>具名函式</strong>」和「<strong>匿名函式</strong>」，包含程式碼片段，可帶入參數，並可被呼叫。</p>
@@ -401,90 +402,6 @@
 <hr>
 <h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
 <li><a href="https://ithelp.ithome.com.tw/articles/10191549">重新認識 JavaScript: Day 10 函式 Functions 的基本概念</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JS核心五分鐘</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>浮點數相加</title>
-    <url>/note/20210414/981755103/</url>
-    <content><![CDATA[<h2 id="浮點數"><a href="#浮點數" class="headerlink" title="浮點數"></a>浮點數</h2><p>在日常生活中，如果要計算 0.1 + 0.2，我們能夠直覺的答出 0.3 這個答案。<br>但是在 JavaScript 中，計算結果卻不如預期，用 <code>console.log(0.1 + 0.2 === 0.3)</code> 回傳的結果竟會得到 <code>false</code>。<br>其實這和電腦的「<a href="https://www.h-schmidt.net/FloatConverter/IEEE754.html">IEEE754 二進制浮點運算</a>」計算方式有關，當我們宣告一段浮點數陣列，展開後會發現，有些浮點數會有些微誤差，以致於在進行計算時會出錯。<br>所以得到的結果自然是 <code>0.1 + 0.2 !== 0.3</code>。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="built_in">Array</span>.from(<span class="built_in">Array</span>(<span class="number">10</span>).keys())</span><br><span class="line"><span class="keyword">var</span> result = num.map(<span class="function"><span class="params">item</span> =&gt;</span> item * <span class="number">0.1</span>)</span><br><span class="line"><span class="built_in">console</span>.log(result)</span><br><span class="line"><span class="comment">// 0, 0.1, 0.2, 0.30000000000000004, 0.4, 0.5, </span></span><br><span class="line"><span class="comment">// 0.6000000000000001, 0.7000000000000001, 0.8, 0.9</span></span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<hr>
-<p>該如何解決浮點數問題呢？可以使用以下兩種方法：</p>
-<ul>
-<li>Number.toFixed()</li>
-<li>Number.toPrecision()</li>
-</ul>
-<h2 id="Number-toFixed"><a href="#Number-toFixed" class="headerlink" title="Number.toFixed"></a>Number.toFixed</h2><p><code>Number.toFixed()</code> 可以對數字進行四捨五入到指定的第 N 位數。</p>
-<blockquote>
-<p><code>toFixed()</code> 方法回傳的型別是「<strong>字串</strong>」，需要另外再轉換為數字型別。</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">10.12345</span></span><br><span class="line">num.toFixed(<span class="number">2</span>) <span class="comment">// &quot;10.12&quot;</span></span><br><span class="line">num.toFixed(<span class="number">4</span>) <span class="comment">// &quot;10.1235&quot;</span></span><br></pre></td></tr></table></figure>
-<p>同樣方法用在浮點數上可以改成：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="built_in">Array</span>.from(<span class="built_in">Array</span>(<span class="number">10</span>).keys())</span><br><span class="line"><span class="keyword">var</span> result = num.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="built_in">Number</span>((item * <span class="number">0.1</span>).toFixed(<span class="number">1</span>)))</span><br><span class="line"><span class="built_in">console</span>.log(result)</span><br><span class="line"><span class="comment">// [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]</span></span><br></pre></td></tr></table></figure>
-<p>如果想去除小數點後為 0 的尾數，則可以用 <code>parseFloat()</code>。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0.990</span></span><br><span class="line"><span class="built_in">parseFloat</span>(num) <span class="comment">// 0.99</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Number-toPrecision"><a href="#Number-toPrecision" class="headerlink" title="Number.toPrecision"></a>Number.toPrecision</h2><p><code>Number.toPrecision()</code> 方法可以指定想要顯示的浮點數範圍，範圍在 1～21，並且回傳「字串」。<br><code>toPrecision()</code> 方法有以下幾種狀況：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 數字是浮點數，就會補 0</span></span><br><span class="line"><span class="keyword">var</span> num1 = <span class="number">0.12</span></span><br><span class="line">num1.toPrecision(<span class="number">5</span>) <span class="comment">// &quot;0.12000&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 數字是浮點數，但位數不足，一樣會四捨五入</span></span><br><span class="line"><span class="keyword">var</span> num2 = <span class="number">12.345</span></span><br><span class="line">num2.toPrecision(<span class="number">4</span>) <span class="comment">// &quot;12.35&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 數字是整數，但是位數不足，會轉換成指數寫法</span></span><br><span class="line"><span class="keyword">var</span> num3 = <span class="number">1234</span></span><br><span class="line">num3.toPrecision(<span class="number">3</span>) <span class="comment">// &quot;1.23e+3&quot;</span></span><br></pre></td></tr></table></figure>
-<p>所以如果想要解決浮點數相加的問題，可以改成這樣：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">parseFloat</span>((<span class="number">0.1</span> + <span class="number">0.2</span>).toPrecision(<span class="number">12</span>)) <span class="comment">// &quot;0.3&quot;</span></span><br><span class="line"><span class="built_in">parseFloat</span>((<span class="number">0.6</span> + <span class="number">0.7</span>).toPrecision(<span class="number">12</span>)) <span class="comment">// &quot;1.3&quot;</span></span><br></pre></td></tr></table></figure>
-<p>至於為什麼參數要帶 12，因為 12 位數可以避免大部分浮點數的問題。</p>
-<hr>
-<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
-<li><a href="https://tso1158687.github.io/blog/2018/12/17/javascript-float-trap/">javascript浮點數的陷阱</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>筆記</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>淺層複製與深層複製</title>
-    <url>/jscore/20210414/4242308893/</url>
-    <content><![CDATA[<p>之前提到物件型別有傳參考的特性，但是如果想要另外修改資料，就會連帶影響原始資料內容，JavaScript 提供幾種複製方式來解決這個問題。</p>
-<span id="more"></span>
-<hr>
-<h2 id="淺層複製-Shallow-Copy"><a href="#淺層複製-Shallow-Copy" class="headerlink" title="淺層複製 Shallow Copy"></a>淺層複製 Shallow Copy</h2><p>淺層複製只能複製物件的第一層，如果修改第二層資料的話，還是會影響原始資料。</p>
-<h3 id="for-in-loop"><a href="#for-in-loop" class="headerlink" title="for-in loop"></a>for-in loop</h3><p>以下範例可以發現，用 <code>for-in</code> 迴圈複製後的新物件會和原始資料不同。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> ( <span class="keyword">let</span> key <span class="keyword">in</span> data ) &#123;</span><br><span class="line">    target[key] = data[key]</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(target !== data) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-<p>但是接著修改新物件後，修改第一層的內容沒有問題，不會影響原始資料，但是修改第二層後，就會連同原始物件一起修改。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">target.title = <span class="string">&#x27;Second Level&#x27;</span> </span><br><span class="line">target.info.tag = <span class="string">&#x27;copy&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(target, data)</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/BbbyV3N.png?55" alt="Image"></p>
-<h3 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign"></a>Object.assign</h3><p><code>Object.assign()</code> 可以用來複製物件本身的屬性到另外一個目標物件上。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> origin = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = <span class="built_in">Object</span>.assign(&#123;&#125;, origin)</span><br><span class="line"><span class="built_in">console</span>.log(origin, target)</span><br><span class="line"><span class="comment">// origin = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br><span class="line"><span class="comment">// target = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果 <font color="#ff7575"><strong>目標物件</strong></font> 與 <font color="#6897bb"><strong>原始物件</strong></font> 的屬性名稱相同，<font color="#6897bb"><strong>原始物件</strong></font> 的屬性會覆蓋 <font color="#ff7575"><strong>目標物件</strong></font>。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> origin = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123; <span class="attr">a</span>: <span class="number">4</span>, <span class="attr">b</span>: <span class="number">5</span>, <span class="attr">x</span>: <span class="number">0</span> &#125;</span><br><span class="line"><span class="built_in">Object</span>.assign(target, origin)</span><br><span class="line"><span class="built_in">console</span>.log(origin, target)</span><br><span class="line"><span class="comment">// origin = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br><span class="line"><span class="comment">// target = &#123;a: 1, b: 2, x: 0, c: 3&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="ES6-展開語法"><a href="#ES6-展開語法" class="headerlink" title="ES6 展開語法"></a>ES6 展開語法</h3><p>除了以上兩種方法，也可以用 ES6 的展開語法達到相同效果。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123;...data&#125;</span><br><span class="line">target.a = <span class="number">999</span></span><br><span class="line"><span class="built_in">console</span>.log(target)</span><br><span class="line"><span class="comment">// target = &#123; a: 999, b: 2, c: 3 &#125;</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="深層複製-Deep-Copy"><a href="#深層複製-Deep-Copy" class="headerlink" title="深層複製 Deep Copy"></a>深層複製 Deep Copy</h2><p>淺層複製只能複製第一層資料，深層複製則是可以將資料完整複製，讓整份新複製的資料都能往下層修改，並且不會影響原始資料。</p>
-<h3 id="JSON-stringify"><a href="#JSON-stringify" class="headerlink" title="JSON.stringify"></a>JSON.stringify</h3><p><code>JSON.stringify()</code> 可以將物件轉成「字串」後回傳。<br>重新轉成字串後再用 <code>JSON.parse()</code> 轉回 JavaScript 物件，如此就能達到深層複製的效果。<br>原理是將物件先轉成「純值」，再透過 <code>JSON.parse()</code> 轉回物件，此時的物件就會有一個新的記憶體空間，並且讓變數指向到新的位置。</p>
-<div class="alert alert-danger">
-如果物件中有 <b>undefined、function</b>，因為無法轉成純值，所以會直接消失，<b>NaN 則會變成 Null</b>
-</div>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> target = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(data))</span><br><span class="line">target.title = <span class="string">&#x27;Second Level&#x27;</span> </span><br><span class="line">target.info.tag = <span class="string">&#x27;copy&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(target, data)</span><br></pre></td></tr></table></figure>
-![Image](https://i.imgur.com/Zi6OaFe.png?55)
-
-<h3 id="jQuery-extend"><a href="#jQuery-extend" class="headerlink" title="jQuery.extend"></a>jQuery.extend</h3><p>如果要解決 <code>undefined</code>、<code>function</code> 和 <code>NaN</code> 的複製問題，可以用 jQuery 的 <code>$.extend</code> 方法，就能做到完整的深層複製。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;data.func&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    un: <span class="literal">undefined</span>,</span><br><span class="line">    nan: <span class="literal">NaN</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> shallow = $.extend(&#123;&#125;, data) <span class="comment">// 淺層複製</span></span><br><span class="line"><span class="keyword">var</span> deep = $.extend(<span class="literal">true</span>, &#123;&#125;, data) <span class="comment">// 深層複製</span></span><br><span class="line"><span class="built_in">console</span>.log(deep)</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
-<li><a href="https://hsiangfeng.github.io/javascript/20200905/1375484447/">JavaScript 核心觀念(30)-物件-淺層複製及深層複製</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -552,6 +469,45 @@
       </tags>
   </entry>
   <entry>
+    <title>浮點數相加</title>
+    <url>/note/20210414/981755103/</url>
+    <content><![CDATA[<h2 id="浮點數"><a href="#浮點數" class="headerlink" title="浮點數"></a>浮點數</h2><p>在日常生活中，如果要計算 0.1 + 0.2，我們能夠直覺的答出 0.3 這個答案。<br>但是在 JavaScript 中，計算結果卻不如預期，用 <code>console.log(0.1 + 0.2 === 0.3)</code> 回傳的結果竟會得到 <code>false</code>。<br>其實這和電腦的「<a href="https://www.h-schmidt.net/FloatConverter/IEEE754.html">IEEE754 二進制浮點運算</a>」計算方式有關，當我們宣告一段浮點數陣列，展開後會發現，有些浮點數會有些微誤差，以致於在進行計算時會出錯。<br>所以得到的結果自然是 <code>0.1 + 0.2 !== 0.3</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="built_in">Array</span>.from(<span class="built_in">Array</span>(<span class="number">10</span>).keys())</span><br><span class="line"><span class="keyword">var</span> result = num.map(<span class="function"><span class="params">item</span> =&gt;</span> item * <span class="number">0.1</span>)</span><br><span class="line"><span class="built_in">console</span>.log(result)</span><br><span class="line"><span class="comment">// 0, 0.1, 0.2, 0.30000000000000004, 0.4, 0.5, </span></span><br><span class="line"><span class="comment">// 0.6000000000000001, 0.7000000000000001, 0.8, 0.9</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<hr>
+<p>該如何解決浮點數問題呢？可以使用以下兩種方法：</p>
+<ul>
+<li>Number.toFixed()</li>
+<li>Number.toPrecision()</li>
+</ul>
+<h2 id="Number-toFixed"><a href="#Number-toFixed" class="headerlink" title="Number.toFixed"></a>Number.toFixed</h2><p><code>Number.toFixed()</code> 可以對數字進行四捨五入到指定的第 N 位數。</p>
+<blockquote>
+<p><code>toFixed()</code> 方法回傳的型別是「<strong>字串</strong>」，需要另外再轉換為數字型別。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">10.12345</span></span><br><span class="line">num.toFixed(<span class="number">2</span>) <span class="comment">// &quot;10.12&quot;</span></span><br><span class="line">num.toFixed(<span class="number">4</span>) <span class="comment">// &quot;10.1235&quot;</span></span><br></pre></td></tr></table></figure>
+<p>同樣方法用在浮點數上可以改成：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="built_in">Array</span>.from(<span class="built_in">Array</span>(<span class="number">10</span>).keys())</span><br><span class="line"><span class="keyword">var</span> result = num.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="built_in">Number</span>((item * <span class="number">0.1</span>).toFixed(<span class="number">1</span>)))</span><br><span class="line"><span class="built_in">console</span>.log(result)</span><br><span class="line"><span class="comment">// [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]</span></span><br></pre></td></tr></table></figure>
+<p>如果想去除小數點後為 0 的尾數，則可以用 <code>parseFloat()</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0.990</span></span><br><span class="line"><span class="built_in">parseFloat</span>(num) <span class="comment">// 0.99</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Number-toPrecision"><a href="#Number-toPrecision" class="headerlink" title="Number.toPrecision"></a>Number.toPrecision</h2><p><code>Number.toPrecision()</code> 方法可以指定想要顯示的浮點數範圍，範圍在 1～21，並且回傳「字串」。<br><code>toPrecision()</code> 方法有以下幾種狀況：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 數字是浮點數，就會補 0</span></span><br><span class="line"><span class="keyword">var</span> num1 = <span class="number">0.12</span></span><br><span class="line">num1.toPrecision(<span class="number">5</span>) <span class="comment">// &quot;0.12000&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 數字是浮點數，但位數不足，一樣會四捨五入</span></span><br><span class="line"><span class="keyword">var</span> num2 = <span class="number">12.345</span></span><br><span class="line">num2.toPrecision(<span class="number">4</span>) <span class="comment">// &quot;12.35&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 數字是整數，但是位數不足，會轉換成指數寫法</span></span><br><span class="line"><span class="keyword">var</span> num3 = <span class="number">1234</span></span><br><span class="line">num3.toPrecision(<span class="number">3</span>) <span class="comment">// &quot;1.23e+3&quot;</span></span><br></pre></td></tr></table></figure>
+<p>所以如果想要解決浮點數相加的問題，可以改成這樣：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">parseFloat</span>((<span class="number">0.1</span> + <span class="number">0.2</span>).toPrecision(<span class="number">12</span>)) <span class="comment">// &quot;0.3&quot;</span></span><br><span class="line"><span class="built_in">parseFloat</span>((<span class="number">0.6</span> + <span class="number">0.7</span>).toPrecision(<span class="number">12</span>)) <span class="comment">// &quot;1.3&quot;</span></span><br></pre></td></tr></table></figure>
+<p>至於為什麼參數要帶 12，因為 12 位數可以避免大部分浮點數的問題。</p>
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://tso1158687.github.io/blog/2018/12/17/javascript-float-trap/">javascript浮點數的陷阱</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>筆記</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>物件傳參考</title>
     <url>/jscore/20210413/1596758899/</url>
     <content><![CDATA[<p>JavaScript 中，資料的傳遞分為兩種方式：<br><strong>- 傳值</strong>：Call by value 或 Pass by value<br><strong>- 傳址（傳參考）</strong>：Call by reference 或 Pass by reference</p>
@@ -591,6 +547,51 @@
 <h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
 <li><a href="https://ithelp.ithome.com.tw/articles/10191057">重新認識 JavaScript: Day 05 JavaScript 是「傳值」或「傳址」？</a></li>
 <li><a href="https://medium.com/itsems-frontend/javascript-pass-by-value-reference-sharing-5d6095ae030b"> Javascript中的傳值 by value 與傳址 by reference</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>淺層複製與深層複製</title>
+    <url>/jscore/20210414/4242308893/</url>
+    <content><![CDATA[<p>之前提到物件型別有傳參考的特性，但是如果想要另外修改資料，就會連帶影響原始資料內容，JavaScript 提供幾種複製方式來解決這個問題。</p>
+<span id="more"></span>
+<hr>
+<h2 id="淺層複製-Shallow-Copy"><a href="#淺層複製-Shallow-Copy" class="headerlink" title="淺層複製 Shallow Copy"></a>淺層複製 Shallow Copy</h2><p>淺層複製只能複製物件的第一層，如果修改第二層資料的話，還是會影響原始資料。</p>
+<h3 id="for-in-loop"><a href="#for-in-loop" class="headerlink" title="for-in loop"></a>for-in loop</h3><p>以下範例可以發現，用 <code>for-in</code> 迴圈複製後的新物件會和原始資料不同。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> ( <span class="keyword">let</span> key <span class="keyword">in</span> data ) &#123;</span><br><span class="line">    target[key] = data[key]</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(target !== data) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>但是接著修改新物件後，修改第一層的內容沒有問題，不會影響原始資料，但是修改第二層後，就會連同原始物件一起修改。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">target.title = <span class="string">&#x27;Second Level&#x27;</span> </span><br><span class="line">target.info.tag = <span class="string">&#x27;copy&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(target, data)</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/BbbyV3N.png?55" alt="Image"></p>
+<h3 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign"></a>Object.assign</h3><p><code>Object.assign()</code> 可以用來複製物件本身的屬性到另外一個目標物件上。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> origin = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = <span class="built_in">Object</span>.assign(&#123;&#125;, origin)</span><br><span class="line"><span class="built_in">console</span>.log(origin, target)</span><br><span class="line"><span class="comment">// origin = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br><span class="line"><span class="comment">// target = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 <font color="#ff7575"><strong>目標物件</strong></font> 與 <font color="#6897bb"><strong>原始物件</strong></font> 的屬性名稱相同，<font color="#6897bb"><strong>原始物件</strong></font> 的屬性會覆蓋 <font color="#ff7575"><strong>目標物件</strong></font>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> origin = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123; <span class="attr">a</span>: <span class="number">4</span>, <span class="attr">b</span>: <span class="number">5</span>, <span class="attr">x</span>: <span class="number">0</span> &#125;</span><br><span class="line"><span class="built_in">Object</span>.assign(target, origin)</span><br><span class="line"><span class="built_in">console</span>.log(origin, target)</span><br><span class="line"><span class="comment">// origin = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br><span class="line"><span class="comment">// target = &#123;a: 1, b: 2, x: 0, c: 3&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ES6-展開語法"><a href="#ES6-展開語法" class="headerlink" title="ES6 展開語法"></a>ES6 展開語法</h3><p>除了以上兩種方法，也可以用 ES6 的展開語法達到相同效果。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123;...data&#125;</span><br><span class="line">target.a = <span class="number">999</span></span><br><span class="line"><span class="built_in">console</span>.log(target)</span><br><span class="line"><span class="comment">// target = &#123; a: 999, b: 2, c: 3 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="深層複製-Deep-Copy"><a href="#深層複製-Deep-Copy" class="headerlink" title="深層複製 Deep Copy"></a>深層複製 Deep Copy</h2><p>淺層複製只能複製第一層資料，深層複製則是可以將資料完整複製，讓整份新複製的資料都能往下層修改，並且不會影響原始資料。</p>
+<h3 id="JSON-stringify"><a href="#JSON-stringify" class="headerlink" title="JSON.stringify"></a>JSON.stringify</h3><p><code>JSON.stringify()</code> 可以將物件轉成「字串」後回傳。<br>重新轉成字串後再用 <code>JSON.parse()</code> 轉回 JavaScript 物件，如此就能達到深層複製的效果。<br>原理是將物件先轉成「純值」，再透過 <code>JSON.parse()</code> 轉回物件，此時的物件就會有一個新的記憶體空間，並且讓變數指向到新的位置。</p>
+<div class="alert alert-danger">
+如果物件中有 <b>undefined、function</b>，因為無法轉成純值，所以會直接消失，<b>NaN 則會變成 Null</b>
+</div>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> target = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(data))</span><br><span class="line">target.title = <span class="string">&#x27;Second Level&#x27;</span> </span><br><span class="line">target.info.tag = <span class="string">&#x27;copy&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(target, data)</span><br></pre></td></tr></table></figure>
+![Image](https://i.imgur.com/Zi6OaFe.png?55)
+
+<h3 id="jQuery-extend"><a href="#jQuery-extend" class="headerlink" title="jQuery.extend"></a>jQuery.extend</h3><p>如果要解決 <code>undefined</code>、<code>function</code> 和 <code>NaN</code> 的複製問題，可以用 jQuery 的 <code>$.extend</code> 方法，就能做到完整的深層複製。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;data.func&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    un: <span class="literal">undefined</span>,</span><br><span class="line">    nan: <span class="literal">NaN</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> shallow = $.extend(&#123;&#125;, data) <span class="comment">// 淺層複製</span></span><br><span class="line"><span class="keyword">var</span> deep = $.extend(<span class="literal">true</span>, &#123;&#125;, data) <span class="comment">// 深層複製</span></span><br><span class="line"><span class="built_in">console</span>.log(deep)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://hsiangfeng.github.io/javascript/20200905/1375484447/">JavaScript 核心觀念(30)-物件-淺層複製及深層複製</a></li>
 </ul>
 ]]></content>
       <categories>

@@ -21,15 +21,15 @@
   <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js" integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Promise 是用來解決 AJAX 非同步問題，優化非同步程式的 ES6 語法，會回傳「接受」或「拒絕」的結果。  AJAX 是 JavaScript 與 XML 技術的縮寫，網頁不用重新整理，就能即時透過瀏覽器跟伺服器溝通、撈取資料。  12345function promise(num) &amp;#123;  return new Promise((resolve, reject) &#x3D;&amp;">
+<meta name="description" content="Promise 是用來解決 AJAX 非同步問題，優化非同步程式的 ES6 語法，會回傳「接受」或「拒絕」的結果。      AJAX 是 JavaScript 與 XML 技術的縮寫，網頁不用重新整理，就能即時透過瀏覽器跟伺服器溝通、撈取資料。   12345function promise(num) &amp;#123;  return new Promise((resolve, reject) &amp;#">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Promise 方法">
 <meta property="og:url" content="http://example.com/jscore/20210411/1110903207/index.html">
 <meta property="og:site_name" content="艾瑞卡卡">
-<meta property="og:description" content="Promise 是用來解決 AJAX 非同步問題，優化非同步程式的 ES6 語法，會回傳「接受」或「拒絕」的結果。  AJAX 是 JavaScript 與 XML 技術的縮寫，網頁不用重新整理，就能即時透過瀏覽器跟伺服器溝通、撈取資料。  12345function promise(num) &amp;#123;  return new Promise((resolve, reject) &#x3D;&amp;">
+<meta property="og:description" content="Promise 是用來解決 AJAX 非同步問題，優化非同步程式的 ES6 語法，會回傳「接受」或「拒絕」的結果。      AJAX 是 JavaScript 與 XML 技術的縮寫，網頁不用重新整理，就能即時透過瀏覽器跟伺服器溝通、撈取資料。   12345function promise(num) &amp;#123;  return new Promise((resolve, reject) &amp;#">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-04-11T11:39:10.000Z">
-<meta property="article:modified_time" content="2021-04-18T12:38:07.523Z">
+<meta property="article:modified_time" content="2021-08-19T04:42:35.995Z">
 <meta property="article:author" content="Erica">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -248,13 +248,6 @@
 
       <time title="創建時間：2021-04-11 19:39:10" itemprop="dateCreated datePublished" datetime="2021-04-11T19:39:10+08:00">2021-04-11</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新於</span>
-        <time title="修改時間：2021-04-18 20:38:07" itemprop="dateModified" datetime="2021-04-18T20:38:07+08:00">2021-04-18</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -276,9 +269,10 @@
     
     <div class="post-body" itemprop="articleBody">
         <p><code>Promise</code> 是用來解決 AJAX 非同步問題，優化非同步程式的 ES6 語法，會回傳「<strong>接受</strong>」或「<strong>拒絕</strong>」的結果。</p>
-<blockquote>
-<p>AJAX 是 JavaScript 與 XML 技術的縮寫，網頁不用重新整理，就能即時透過瀏覽器跟伺服器溝通、撈取資料。</p>
-</blockquote>
+<div class="alert alert-info">
+    AJAX 是 JavaScript 與 XML 技術的縮寫，網頁不用重新整理，就能即時透過瀏覽器跟伺服器溝通、撈取資料。
+</div>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function promise(num) &#123;</span><br><span class="line">  return new Promise((resolve, reject) &#x3D;&gt; &#123;</span><br><span class="line">    num ? resolve(num) : reject(&#39;失敗&#39;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 

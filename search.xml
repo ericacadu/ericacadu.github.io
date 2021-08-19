@@ -470,6 +470,61 @@
       </tags>
   </entry>
   <entry>
+    <title>執行環境與作用域</title>
+    <url>/jscore/20210819/1495754165/</url>
+    <content><![CDATA[<h1 id="執行環境與作用域"><a href="#執行環境與作用域" class="headerlink" title="執行環境與作用域"></a>執行環境與作用域</h1><p>JavaScript 是屬於直譯式語言，它會直接透過直譯器來產生代碼，並且運行代碼。</p>
+<span id="more"></span>
+
+<h2 id="執行的錯誤情境"><a href="#執行的錯誤情境" class="headerlink" title="執行的錯誤情境"></a>執行的錯誤情境</h2><ul>
+<li><strong>RHS (Right Hand Side)</strong> ：RHS 取值來自於右側的變數上</li>
+<li><strong>LHS (Left Hand Side)</strong> ：LHS 取值來自於左側的變數上<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">把「小明」賦予到左側的變數上，就稱為 LHS</span><br><span class="line">var ming &#x3D; &#39;小明&#39;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">右邊的值是使用 RHS 取得變數，並且透過 LHS 賦予到左邊的變數</span><br><span class="line">var min &#x3D; ming</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="語法作用域"><a href="#語法作用域" class="headerlink" title="語法作用域"></a>語法作用域</h2><p><img src="https://i.imgur.com/O8mE7To.png"></p>
+<ul>
+<li><strong>靜態作用域</strong> ：語法作用域又稱為 <strong>靜態作用域</strong>，所以會在與法解析時就已經確定作用域，而且不會再改變。</li>
+<li><strong>動態作用域</strong> ：變數的作用域會在函式調用時才決定。</li>
+</ul>
+<h3 id="範圍鍊-Scope-Chain"><a href="#範圍鍊-Scope-Chain" class="headerlink" title="範圍鍊 Scope Chain"></a>範圍鍊 Scope Chain</h3><p>JavaScript 是採用 <strong>語法作用域</strong> ，所以當函式建立時，作用域就已經被限制在函式範圍內，當在函式內宣告變數時，外層是無法讀取的。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> min = <span class="string">&#x27;小明&#x27;</span></span><br><span class="line">    <span class="built_in">console</span>.log(min) <span class="comment">// 小明</span></span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">console</span>.log(min) <span class="comment">// min is not defined</span></span><br></pre></td></tr></table></figure>
+<p>也就是說，每個函式的作用域都是獨立的，如果在函式作用域內需要特定變數，但是作用域內並沒有特定變數，此時就會向外查找；如果向外查找也沒有的話，就會出現 <font color="red"><code>ReferenceError: b is not defined</code></font> 的錯誤。<br>而這個向外尋找變數的過程，就叫做 <strong>範圍鍊</strong> ，範圍練取決於函式的作用域，與執行環境沒有關係。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">&#x27;a&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(a) &#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(b) &#125;</span><br><span class="line">fn1()</span><br><span class="line">fn2()</span><br></pre></td></tr></table></figure>
+<h3 id="容易搞混的靜態作用域-⚡⚡⚡"><a href="#容易搞混的靜態作用域-⚡⚡⚡" class="headerlink" title="容易搞混的靜態作用域 ⚡⚡⚡"></a>容易搞混的靜態作用域 ⚡⚡⚡</h3><div class="alert alert-danger">
+函式建立時就已經確定作用域，並且 <b>不會改變</b> 
+</div>
+因此以下範例來說，當 fn1 建立時就已經確定了 value 的值為 1，就算在 fn2 重新宣告並呼叫，`value = 2` 的有效作用範圍僅止於 fn2 內，並不會影響 fn1 的內容。
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> value = <span class="number">1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(value) <span class="comment">// 1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> value = <span class="number">2</span></span><br><span class="line">    fn1()</span><br><span class="line">&#125;</span><br><span class="line">fn2()</span><br></pre></td></tr></table></figure>
+
+<h2 id="執行環境"><a href="#執行環境" class="headerlink" title="執行環境"></a>執行環境</h2><div class="alert alert-info">
+建立函式後並執行 (呼叫) 函式，會產生執行環境
+</div>
+
+<p>舉例來說，如果在函式內宣告一個變數，那變數的作用域就會被限制在函式內，但是如果函式沒有被執行，就不產生執行環境，也就不會有任何變數產生。也就是說，如果函式反覆被執行，就會不斷產生新的執行環境。</p>
+<p>全域也有屬於自己的執行環境，建立時機在網頁一開啟，或是後端 Node.js 一開啟時，執行環境就會被建立。</p>
+<h2 id="執行堆疊"><a href="#執行堆疊" class="headerlink" title="執行堆疊"></a>執行堆疊</h2><ol>
+<li>當網頁一開啟時，會先建立全域執行環境</li>
+<li>呼叫 doSomething 時，就會建立 doSomething 的執行環境，並且堆疊在全域執行環境之上</li>
+<li>在 doSomething 內呼叫 sayHi 函式，此時 sayHi 的執行環境就會堆疊在 doSomething </li>
+</ol>
+<p><img src="https://i.imgur.com/vePAq5r.png"></p>
+<div class="alert alert-danger">
+執行環境是一層一層堆疊上去，和函式宣告的時機沒有關聯，而是和函式被呼叫的位置有關
+</div>
+
+
+<hr>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://www.hexschool.com/courses/js-core.html">JavaScript 核心篇</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>浮點數相加</title>
     <url>/note/20210414/981755103/</url>
     <content><![CDATA[<h2 id="浮點數"><a href="#浮點數" class="headerlink" title="浮點數"></a>浮點數</h2><p>在日常生活中，如果要計算 0.1 + 0.2，我們能夠直覺的答出 0.3 這個答案。<br>但是在 JavaScript 中，計算結果卻不如預期，用 <code>console.log(0.1 + 0.2 === 0.3)</code> 回傳的結果竟會得到 <code>false</code>。<br>其實這和電腦的「<a href="https://www.h-schmidt.net/FloatConverter/IEEE754.html">IEEE754 二進制浮點運算</a>」計算方式有關，當我們宣告一段浮點數陣列，展開後會發現，有些浮點數會有些微誤差，以致於在進行計算時會出錯。<br>所以得到的結果自然是 <code>0.1 + 0.2 !== 0.3</code>。</p>
@@ -503,6 +558,51 @@
 ]]></content>
       <categories>
         <category>筆記</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>淺層複製與深層複製</title>
+    <url>/jscore/20210414/4242308893/</url>
+    <content><![CDATA[<p>之前提到物件型別有傳參考的特性，但是如果想要另外修改資料，就會連帶影響原始資料內容，JavaScript 提供幾種複製方式來解決這個問題。</p>
+<span id="more"></span>
+<hr>
+<h2 id="淺層複製-Shallow-Copy"><a href="#淺層複製-Shallow-Copy" class="headerlink" title="淺層複製 Shallow Copy"></a>淺層複製 Shallow Copy</h2><p>淺層複製只能複製物件的第一層，如果修改第二層資料的話，還是會影響原始資料。</p>
+<h3 id="for-in-loop"><a href="#for-in-loop" class="headerlink" title="for-in loop"></a>for-in loop</h3><p>以下範例可以發現，用 <code>for-in</code> 迴圈複製後的新物件會和原始資料不同。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> ( <span class="keyword">let</span> key <span class="keyword">in</span> data ) &#123;</span><br><span class="line">    target[key] = data[key]</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(target !== data) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>但是接著修改新物件後，修改第一層的內容沒有問題，不會影響原始資料，但是修改第二層後，就會連同原始物件一起修改。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">target.title = <span class="string">&#x27;Second Level&#x27;</span> </span><br><span class="line">target.info.tag = <span class="string">&#x27;copy&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(target, data)</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/BbbyV3N.png?55" alt="Image"></p>
+<h3 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign"></a>Object.assign</h3><p><code>Object.assign()</code> 可以用來複製物件本身的屬性到另外一個目標物件上。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> origin = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = <span class="built_in">Object</span>.assign(&#123;&#125;, origin)</span><br><span class="line"><span class="built_in">console</span>.log(origin, target)</span><br><span class="line"><span class="comment">// origin = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br><span class="line"><span class="comment">// target = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 <font color="#ff7575"><strong>目標物件</strong></font> 與 <font color="#6897bb"><strong>原始物件</strong></font> 的屬性名稱相同，<font color="#6897bb"><strong>原始物件</strong></font> 的屬性會覆蓋 <font color="#ff7575"><strong>目標物件</strong></font>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> origin = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123; <span class="attr">a</span>: <span class="number">4</span>, <span class="attr">b</span>: <span class="number">5</span>, <span class="attr">x</span>: <span class="number">0</span> &#125;</span><br><span class="line"><span class="built_in">Object</span>.assign(target, origin)</span><br><span class="line"><span class="built_in">console</span>.log(origin, target)</span><br><span class="line"><span class="comment">// origin = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br><span class="line"><span class="comment">// target = &#123;a: 1, b: 2, x: 0, c: 3&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ES6-展開語法"><a href="#ES6-展開語法" class="headerlink" title="ES6 展開語法"></a>ES6 展開語法</h3><p>除了以上兩種方法，也可以用 ES6 的展開語法達到相同效果。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123;...data&#125;</span><br><span class="line">target.a = <span class="number">999</span></span><br><span class="line"><span class="built_in">console</span>.log(target)</span><br><span class="line"><span class="comment">// target = &#123; a: 999, b: 2, c: 3 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="深層複製-Deep-Copy"><a href="#深層複製-Deep-Copy" class="headerlink" title="深層複製 Deep Copy"></a>深層複製 Deep Copy</h2><p>淺層複製只能複製第一層資料，深層複製則是可以將資料完整複製，讓整份新複製的資料都能往下層修改，並且不會影響原始資料。</p>
+<h3 id="JSON-stringify"><a href="#JSON-stringify" class="headerlink" title="JSON.stringify"></a>JSON.stringify</h3><p><code>JSON.stringify()</code> 可以將物件轉成「字串」後回傳。<br>重新轉成字串後再用 <code>JSON.parse()</code> 轉回 JavaScript 物件，如此就能達到深層複製的效果。<br>原理是將物件先轉成「純值」，再透過 <code>JSON.parse()</code> 轉回物件，此時的物件就會有一個新的記憶體空間，並且讓變數指向到新的位置。</p>
+<div class="alert alert-danger">
+如果物件中有 <b>undefined、function</b>，因為無法轉成純值，所以會直接消失，<b>NaN 則會變成 Null</b>
+</div>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> target = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(data))</span><br><span class="line">target.title = <span class="string">&#x27;Second Level&#x27;</span> </span><br><span class="line">target.info.tag = <span class="string">&#x27;copy&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(target, data)</span><br></pre></td></tr></table></figure>
+![Image](https://i.imgur.com/Zi6OaFe.png?55)
+
+<h3 id="jQuery-extend"><a href="#jQuery-extend" class="headerlink" title="jQuery.extend"></a>jQuery.extend</h3><p>如果要解決 <code>undefined</code>、<code>function</code> 和 <code>NaN</code> 的複製問題，可以用 jQuery 的 <code>$.extend</code> 方法，就能做到完整的深層複製。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;data.func&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    un: <span class="literal">undefined</span>,</span><br><span class="line">    nan: <span class="literal">NaN</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> shallow = $.extend(&#123;&#125;, data) <span class="comment">// 淺層複製</span></span><br><span class="line"><span class="keyword">var</span> deep = $.extend(<span class="literal">true</span>, &#123;&#125;, data) <span class="comment">// 深層複製</span></span><br><span class="line"><span class="built_in">console</span>.log(deep)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://hsiangfeng.github.io/javascript/20200905/1375484447/">JavaScript 核心觀念(30)-物件-淺層複製及深層複製</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
       </categories>
       <tags>
         <tag>JavaScript</tag>
@@ -548,51 +648,6 @@
 <h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
 <li><a href="https://ithelp.ithome.com.tw/articles/10191057">重新認識 JavaScript: Day 05 JavaScript 是「傳值」或「傳址」？</a></li>
 <li><a href="https://medium.com/itsems-frontend/javascript-pass-by-value-reference-sharing-5d6095ae030b"> Javascript中的傳值 by value 與傳址 by reference</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JS核心五分鐘</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>淺層複製與深層複製</title>
-    <url>/jscore/20210414/4242308893/</url>
-    <content><![CDATA[<p>之前提到物件型別有傳參考的特性，但是如果想要另外修改資料，就會連帶影響原始資料內容，JavaScript 提供幾種複製方式來解決這個問題。</p>
-<span id="more"></span>
-<hr>
-<h2 id="淺層複製-Shallow-Copy"><a href="#淺層複製-Shallow-Copy" class="headerlink" title="淺層複製 Shallow Copy"></a>淺層複製 Shallow Copy</h2><p>淺層複製只能複製物件的第一層，如果修改第二層資料的話，還是會影響原始資料。</p>
-<h3 id="for-in-loop"><a href="#for-in-loop" class="headerlink" title="for-in loop"></a>for-in loop</h3><p>以下範例可以發現，用 <code>for-in</code> 迴圈複製後的新物件會和原始資料不同。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> ( <span class="keyword">let</span> key <span class="keyword">in</span> data ) &#123;</span><br><span class="line">    target[key] = data[key]</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(target !== data) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-<p>但是接著修改新物件後，修改第一層的內容沒有問題，不會影響原始資料，但是修改第二層後，就會連同原始物件一起修改。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">target.title = <span class="string">&#x27;Second Level&#x27;</span> </span><br><span class="line">target.info.tag = <span class="string">&#x27;copy&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(target, data)</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/BbbyV3N.png?55" alt="Image"></p>
-<h3 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign"></a>Object.assign</h3><p><code>Object.assign()</code> 可以用來複製物件本身的屬性到另外一個目標物件上。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> origin = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = <span class="built_in">Object</span>.assign(&#123;&#125;, origin)</span><br><span class="line"><span class="built_in">console</span>.log(origin, target)</span><br><span class="line"><span class="comment">// origin = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br><span class="line"><span class="comment">// target = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果 <font color="#ff7575"><strong>目標物件</strong></font> 與 <font color="#6897bb"><strong>原始物件</strong></font> 的屬性名稱相同，<font color="#6897bb"><strong>原始物件</strong></font> 的屬性會覆蓋 <font color="#ff7575"><strong>目標物件</strong></font>。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> origin = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123; <span class="attr">a</span>: <span class="number">4</span>, <span class="attr">b</span>: <span class="number">5</span>, <span class="attr">x</span>: <span class="number">0</span> &#125;</span><br><span class="line"><span class="built_in">Object</span>.assign(target, origin)</span><br><span class="line"><span class="built_in">console</span>.log(origin, target)</span><br><span class="line"><span class="comment">// origin = &#123; a: 1, b: 2, c: 3 &#125;</span></span><br><span class="line"><span class="comment">// target = &#123;a: 1, b: 2, x: 0, c: 3&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="ES6-展開語法"><a href="#ES6-展開語法" class="headerlink" title="ES6 展開語法"></a>ES6 展開語法</h3><p>除了以上兩種方法，也可以用 ES6 的展開語法達到相同效果。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;</span><br><span class="line"><span class="keyword">var</span> target = &#123;...data&#125;</span><br><span class="line">target.a = <span class="number">999</span></span><br><span class="line"><span class="built_in">console</span>.log(target)</span><br><span class="line"><span class="comment">// target = &#123; a: 999, b: 2, c: 3 &#125;</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="深層複製-Deep-Copy"><a href="#深層複製-Deep-Copy" class="headerlink" title="深層複製 Deep Copy"></a>深層複製 Deep Copy</h2><p>淺層複製只能複製第一層資料，深層複製則是可以將資料完整複製，讓整份新複製的資料都能往下層修改，並且不會影響原始資料。</p>
-<h3 id="JSON-stringify"><a href="#JSON-stringify" class="headerlink" title="JSON.stringify"></a>JSON.stringify</h3><p><code>JSON.stringify()</code> 可以將物件轉成「字串」後回傳。<br>重新轉成字串後再用 <code>JSON.parse()</code> 轉回 JavaScript 物件，如此就能達到深層複製的效果。<br>原理是將物件先轉成「純值」，再透過 <code>JSON.parse()</code> 轉回物件，此時的物件就會有一個新的記憶體空間，並且讓變數指向到新的位置。</p>
-<div class="alert alert-danger">
-如果物件中有 <b>undefined、function</b>，因為無法轉成純值，所以會直接消失，<b>NaN 則會變成 Null</b>
-</div>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> target = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(data))</span><br><span class="line">target.title = <span class="string">&#x27;Second Level&#x27;</span> </span><br><span class="line">target.info.tag = <span class="string">&#x27;copy&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(target, data)</span><br></pre></td></tr></table></figure>
-![Image](https://i.imgur.com/Zi6OaFe.png?55)
-
-<h3 id="jQuery-extend"><a href="#jQuery-extend" class="headerlink" title="jQuery.extend"></a>jQuery.extend</h3><p>如果要解決 <code>undefined</code>、<code>function</code> 和 <code>NaN</code> 的複製問題，可以用 jQuery 的 <code>$.extend</code> 方法，就能做到完整的深層複製。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;data.func&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    un: <span class="literal">undefined</span>,</span><br><span class="line">    nan: <span class="literal">NaN</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> shallow = $.extend(&#123;&#125;, data) <span class="comment">// 淺層複製</span></span><br><span class="line"><span class="keyword">var</span> deep = $.extend(<span class="literal">true</span>, &#123;&#125;, data) <span class="comment">// 深層複製</span></span><br><span class="line"><span class="built_in">console</span>.log(deep)</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
-<li><a href="https://hsiangfeng.github.io/javascript/20200905/1375484447/">JavaScript 核心觀念(30)-物件-淺層複製及深層複製</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -670,61 +725,6 @@
       <tags>
         <tag>JavaScript</tag>
         <tag>Todolist</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>執行環境與作用域</title>
-    <url>/jscore/20210819/1495754165/</url>
-    <content><![CDATA[<h1 id="執行環境與作用域"><a href="#執行環境與作用域" class="headerlink" title="執行環境與作用域"></a>執行環境與作用域</h1><p>JavaScript 是屬於直譯式語言，它會直接透過直譯器來產生代碼，並且運行代碼。</p>
-<span id="more"></span>
-
-<h2 id="執行的錯誤情境"><a href="#執行的錯誤情境" class="headerlink" title="執行的錯誤情境"></a>執行的錯誤情境</h2><ul>
-<li><strong>RHS (Right Hand Side)</strong> ：RHS 取值來自於右側的變數上</li>
-<li><strong>LHS (Left Hand Side)</strong> ：LHS 取值來自於左側的變數上<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">把「小明」賦予到左側的變數上，就稱為 LHS</span><br><span class="line">var ming &#x3D; &#39;小明&#39;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">右邊的值是使用 RHS 取得變數，並且透過 LHS 賦予到左邊的變數</span><br><span class="line">var min &#x3D; ming</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="語法作用域"><a href="#語法作用域" class="headerlink" title="語法作用域"></a>語法作用域</h2><p><img src="https://i.imgur.com/O8mE7To.png"></p>
-<ul>
-<li><strong>靜態作用域</strong> ：語法作用域又稱為 <strong>靜態作用域</strong>，所以會在與法解析時就已經確定作用域，而且不會再改變。</li>
-<li><strong>動態作用域</strong> ：變數的作用域會在函式調用時才決定。</li>
-</ul>
-<h3 id="範圍鍊-Scope-Chain"><a href="#範圍鍊-Scope-Chain" class="headerlink" title="範圍鍊 Scope Chain"></a>範圍鍊 Scope Chain</h3><p>JavaScript 是採用 <strong>語法作用域</strong> ，所以當函式建立時，作用域就已經被限制在函式範圍內，當在函式內宣告變數時，外層是無法讀取的。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> min = <span class="string">&#x27;小明&#x27;</span></span><br><span class="line">    <span class="built_in">console</span>.log(min) <span class="comment">// 小明</span></span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">console</span>.log(min) <span class="comment">// min is not defined</span></span><br></pre></td></tr></table></figure>
-<p>也就是說，每個函式的作用域都是獨立的，如果在函式作用域內需要特定變數，但是作用域內並沒有特定變數，此時就會向外查找；如果向外查找也沒有的話，就會出現 <font color="red"><code>ReferenceError: b is not defined</code></font> 的錯誤。<br>而這個向外尋找變數的過程，就叫做 <strong>範圍鍊</strong> ，範圍練取決於函式的作用域，與執行環境沒有關係。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">&#x27;a&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(a) &#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(b) &#125;</span><br><span class="line">fn1()</span><br><span class="line">fn2()</span><br></pre></td></tr></table></figure>
-<h3 id="容易搞混的靜態作用域-⚡⚡⚡"><a href="#容易搞混的靜態作用域-⚡⚡⚡" class="headerlink" title="容易搞混的靜態作用域 ⚡⚡⚡"></a>容易搞混的靜態作用域 ⚡⚡⚡</h3><div class="alert alert-danger">
-函式建立時就已經確定作用域，並且 <b>不會改變</b> 
-</div>
-因此以下範例來說，當 fn1 建立時就已經確定了 value 的值為 1，就算在 fn2 重新宣告並呼叫，`value = 2` 的有效作用範圍僅止於 fn2 內，並不會影響 fn1 的內容。
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> value = <span class="number">1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(value) <span class="comment">// 1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> value = <span class="number">2</span></span><br><span class="line">    fn1()</span><br><span class="line">&#125;</span><br><span class="line">fn2()</span><br></pre></td></tr></table></figure>
-
-<h2 id="執行環境"><a href="#執行環境" class="headerlink" title="執行環境"></a>執行環境</h2><div class="alert alert-info">
-建立函式後並執行 (呼叫) 函式，會產生執行環境
-</div>
-
-<p>舉例來說，如果在函式內宣告一個變數，那變數的作用域就會被限制在函式內，但是如果函式沒有被執行，就不產生執行環境，也就不會有任何變數產生。也就是說，如果函式反覆被執行，就會不斷產生新的執行環境。</p>
-<p>全域也有屬於自己的執行環境，建立時機在網頁一開啟，或是後端 Node.js 一開啟時，執行環境就會被建立。</p>
-<h2 id="執行堆疊"><a href="#執行堆疊" class="headerlink" title="執行堆疊"></a>執行堆疊</h2><ol>
-<li>當網頁一開啟時，會先建立全域執行環境</li>
-<li>呼叫 doSomething 時，就會建立 doSomething 的執行環境，並且堆疊在全域執行環境之上</li>
-<li>在 doSomething 內呼叫 sayHi 函式，此時 sayHi 的執行環境就會堆疊在 doSomething </li>
-</ol>
-<p><img src="https://i.imgur.com/vePAq5r.png"></p>
-<div class="alert alert-danger">
-執行環境是一層一層堆疊上去，和函式宣告的時機沒有關聯，而是和函式被呼叫的位置有關
-</div>
-
-
-<hr>
-<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://www.hexschool.com/courses/js-core.html">JavaScript 核心篇</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JS核心五分鐘</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
       </tags>
   </entry>
 </search>

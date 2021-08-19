@@ -2810,6 +2810,11 @@ mark.search-keyword {
     margin-bottom: 10px;
   }
 }
+img {
+  display: block;
+  max-width: 900px;
+  margin: 1rem auto;
+}
 hr {
   background: transparent;
   border-top: 1px solid #ddd;
@@ -2849,6 +2854,10 @@ mark.search-keyword,
 }
 .reading-progress-bar {
   background: #ff7575;
+}
+figure.highlight,
+pre {
+  margin: 1rem auto 1.5rem;
 }
 code {
   background: #eee;

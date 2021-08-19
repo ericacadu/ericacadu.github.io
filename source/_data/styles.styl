@@ -3,13 +3,24 @@ hr {
     background: transparent;
     border-top: 1px solid #DDD;
 }
-.sidebar-toc-active .sidebar-nav-toc, .sidebar-overview-active .sidebar-nav-overview, .post-toc .nav .active > a , a[target^="_blank"], span[itemprop^="name"]{
+.nav .active > a , a[target^="_blank"], span[itemprop^="name"]{
     color: $primary;
     border-bottom 1px solid $primary;
 }
-.sidebar-toc-active .sidebar-nav-toc:hover, .sidebar-overview-active .sidebar-nav-overview:hover {
-    color: $primary;
+
+.post-toc, .sidebar-toc-active .sidebar-nav-toc .sidebar-nav-overview, .sidebar-overview-active a {
+    color: #666;
+    border 0;
 }
+.post-title-link span {
+    color: $primary;
+    border: 0;
+}
+
+.sidebar {
+    visibility: visible;
+}
+
 .sidebar-nav li:hover {
     color: $primary;
 }

@@ -374,45 +374,6 @@
       </tags>
   </entry>
   <entry>
-    <title>函式與作用域</title>
-    <url>/jscore/20210411/1442787642/</url>
-    <content><![CDATA[<p>函式屬於物件的一種，分為「<strong>具名函式</strong>」和「<strong>匿名函式</strong>」，包含程式碼片段，可帶入參數，並可被呼叫。</p>
-<span id="more"></span>
-<hr>
-<h2 id="具名函式-Named-Function"><a href="#具名函式-Named-Function" class="headerlink" title="具名函式 Named Function"></a>具名函式 Named Function</h2><p>具名函式顧名思義必須要有函式名稱。<br>而具名函式能夠在函式內被調用，但是函式中的具名函式無法在函式以外被調用。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;inner&#x27;</span>)</span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callSayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  sayHello() <span class="comment">// 具名函式能夠在函式內被調用</span></span><br><span class="line">&#125;</span><br><span class="line">callSayHello() <span class="comment">// Hello!</span></span><br><span class="line">inner() <span class="comment">// inner is not defined 無法被調用</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="匿名函式-Anonymous-Function"><a href="#匿名函式-Anonymous-Function" class="headerlink" title="匿名函式 Anonymous Function"></a>匿名函式 Anonymous Function</h2><p>函式名稱是可以被忽略的，也就是匿名函式，通常會用表達式來宣告匿名函式，另外立即函式（IIFE）也是屬於匿名函式。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> sayHello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">  ;(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;Hey!&#x27;</span>)</span><br><span class="line">  &#125;)()</span><br><span class="line">&#125;</span><br><span class="line">sayHello()</span><br><span class="line"><span class="comment">// Hello!</span></span><br><span class="line"><span class="comment">// Hey!</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="陳述式與表達式"><a href="#陳述式與表達式" class="headerlink" title="陳述式與表達式"></a>陳述式與表達式</h2><ul>
-<li>陳述式：Statement</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式陳述式、具名函式</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>表達式：Expression（運算式、表示式）</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式表達式、匿名函式</span></span><br><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="函式作用域-Function-Scope"><a href="#函式作用域-Function-Scope" class="headerlink" title="函式作用域 Function Scope"></a>函式作用域 Function Scope</h2><p>函式有屬於自己的作用域，在 ES6 之前，「<strong>JavaScript 切分變數有效範圍的最小單位是 function</strong>」，所以在這個範圍內的變數只屬於這個函式，一旦離開函式範圍，記憶體就會被釋放掉。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">6</span></span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// a = 3</span></span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// b is not defined</span></span><br></pre></td></tr></table></figure>
-<p>如果在函式裡面沒有重新宣告變數，那 function 就會向外一層一層找。<br>function 可以從內層讀取外層宣告的變數，但是外層沒辦法讀取內層宣告的變數，這種行為稱作「<strong>範圍鏈（Scope Chain）</strong>」。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> msg = <span class="string">&#x27;global&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">outer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> msg = <span class="string">&#x27;local&#x27;</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> msg</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> inner</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> innerFunc = outer()</span><br><span class="line"><span class="keyword">var</span> result = innerFunc()</span><br><span class="line"><span class="built_in">console</span>.log(result) <span class="comment">// local</span></span><br></pre></td></tr></table></figure>
-<p>範例中加了一段 <code>var innerFunc = outer()</code> ，呼叫 <code>outer</code> 回傳的 <code>inner</code> 結果，取得原本從外層無法讀取的 <code>inner</code>，看似好像把 <code>inner</code> 獨立出來，msg 向外查找所以結果是的外層 <code>global</code> 。<br>但有個重要觀念：<strong>範圍鏈是在函式被定義當下決定的，不是被呼叫的時候。</strong><br>所以在「<strong>定義函式之後，呼叫函式之前</strong>」範圍鏈就已經被建立，<code>msg</code> 為 <code>inner</code> 外層的 <code>local</code>。</p>
-<hr>
-<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
-<li><a href="https://ithelp.ithome.com.tw/articles/10191549">重新認識 JavaScript: Day 10 函式 Functions 的基本概念</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JS核心五分鐘</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>同步 Sync 與非同步 Async</title>
     <url>/jscore/20210411/3360846865/</url>
     <content><![CDATA[<h2 id="同步與非同步的差異"><a href="#同步與非同步的差異" class="headerlink" title="同步與非同步的差異"></a>同步與非同步的差異</h2><p>在學習同步與非同步的概念時很容易混淆，「<strong>同步</strong>」光看字面上的意思，可能會誤解成「所有動作同時進行」，而其實正好相反。</p>
@@ -470,6 +431,45 @@
       </tags>
   </entry>
   <entry>
+    <title>函式與作用域</title>
+    <url>/jscore/20210411/1442787642/</url>
+    <content><![CDATA[<p>函式屬於物件的一種，分為「<strong>具名函式</strong>」和「<strong>匿名函式</strong>」，包含程式碼片段，可帶入參數，並可被呼叫。</p>
+<span id="more"></span>
+<hr>
+<h2 id="具名函式-Named-Function"><a href="#具名函式-Named-Function" class="headerlink" title="具名函式 Named Function"></a>具名函式 Named Function</h2><p>具名函式顧名思義必須要有函式名稱。<br>而具名函式能夠在函式內被調用，但是函式中的具名函式無法在函式以外被調用。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;inner&#x27;</span>)</span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callSayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  sayHello() <span class="comment">// 具名函式能夠在函式內被調用</span></span><br><span class="line">&#125;</span><br><span class="line">callSayHello() <span class="comment">// Hello!</span></span><br><span class="line">inner() <span class="comment">// inner is not defined 無法被調用</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="匿名函式-Anonymous-Function"><a href="#匿名函式-Anonymous-Function" class="headerlink" title="匿名函式 Anonymous Function"></a>匿名函式 Anonymous Function</h2><p>函式名稱是可以被忽略的，也就是匿名函式，通常會用表達式來宣告匿名函式，另外立即函式（IIFE）也是屬於匿名函式。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> sayHello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">  ;(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;Hey!&#x27;</span>)</span><br><span class="line">  &#125;)()</span><br><span class="line">&#125;</span><br><span class="line">sayHello()</span><br><span class="line"><span class="comment">// Hello!</span></span><br><span class="line"><span class="comment">// Hey!</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="陳述式與表達式"><a href="#陳述式與表達式" class="headerlink" title="陳述式與表達式"></a>陳述式與表達式</h2><ul>
+<li>陳述式：Statement</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式陳述式、具名函式</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>表達式：Expression（運算式、表示式）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式表達式、匿名函式</span></span><br><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="函式作用域-Function-Scope"><a href="#函式作用域-Function-Scope" class="headerlink" title="函式作用域 Function Scope"></a>函式作用域 Function Scope</h2><p>函式有屬於自己的作用域，在 ES6 之前，「<strong>JavaScript 切分變數有效範圍的最小單位是 function</strong>」，所以在這個範圍內的變數只屬於這個函式，一旦離開函式範圍，記憶體就會被釋放掉。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">6</span></span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// a = 3</span></span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// b is not defined</span></span><br></pre></td></tr></table></figure>
+<p>如果在函式裡面沒有重新宣告變數，那 function 就會向外一層一層找。<br>function 可以從內層讀取外層宣告的變數，但是外層沒辦法讀取內層宣告的變數，這種行為稱作「<strong>範圍鏈（Scope Chain）</strong>」。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> msg = <span class="string">&#x27;global&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">outer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> msg = <span class="string">&#x27;local&#x27;</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> msg</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> inner</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> innerFunc = outer()</span><br><span class="line"><span class="keyword">var</span> result = innerFunc()</span><br><span class="line"><span class="built_in">console</span>.log(result) <span class="comment">// local</span></span><br></pre></td></tr></table></figure>
+<p>範例中加了一段 <code>var innerFunc = outer()</code> ，呼叫 <code>outer</code> 回傳的 <code>inner</code> 結果，取得原本從外層無法讀取的 <code>inner</code>，看似好像把 <code>inner</code> 獨立出來，msg 向外查找所以結果是的外層 <code>global</code> 。<br>但有個重要觀念：<strong>範圍鏈是在函式被定義當下決定的，不是被呼叫的時候。</strong><br>所以在「<strong>定義函式之後，呼叫函式之前</strong>」範圍鏈就已經被建立，<code>msg</code> 為 <code>inner</code> 外層的 <code>local</code>。</p>
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10191549">重新認識 JavaScript: Day 10 函式 Functions 的基本概念</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>執行環境與作用域</title>
     <url>/jscore/20210819/1495754165/</url>
     <content><![CDATA[<h1 id="執行環境與作用域"><a href="#執行環境與作用域" class="headerlink" title="執行環境與作用域"></a>執行環境與作用域</h1><p>JavaScript 是屬於直譯式語言，它會直接透過直譯器來產生代碼，並且運行代碼。</p>
@@ -487,7 +487,7 @@
 </ul>
 <h3 id="範圍鍊-Scope-Chain"><a href="#範圍鍊-Scope-Chain" class="headerlink" title="範圍鍊 Scope Chain"></a>範圍鍊 Scope Chain</h3><p>JavaScript 是採用 <strong>語法作用域</strong> ，所以當函式建立時，作用域就已經被限制在函式範圍內，當在函式內宣告變數時，外層是無法讀取的。</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> min = <span class="string">&#x27;小明&#x27;</span></span><br><span class="line">    <span class="built_in">console</span>.log(min) <span class="comment">// 小明</span></span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">console</span>.log(min) <span class="comment">// min is not defined</span></span><br></pre></td></tr></table></figure>
-<p>也就是說，每個函式的作用域都是獨立的，如果在函式作用域內需要特定變數，但是作用域內並沒有特定變數，此時就會向外查找；如果向外查找也沒有的話，就會出現 <font color="red"><code>ReferenceError: b is not defined</code></font> 的錯誤。<br>而這個向外尋找變數的過程，就叫做 <strong>範圍鍊</strong> ，範圍練取決於函式的作用域，與執行環境沒有關係。</p>
+<p>也就是說，每個函式的作用域都是獨立的，如果在函式作用域內需要特定變數，但是作用域內並沒有特定變數，此時就會向外查找；<br>如果向外查找也沒有的話，就會出現 <font color="red"><code>ReferenceError: b is not defined</code></font> 的錯誤。<br>而這個向外尋找變數的過程，就叫做 <strong>範圍鍊</strong> ，範圍練取決於函式的作用域，與執行環境沒有關係。</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">&#x27;a&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(a) &#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(b) &#125;</span><br><span class="line">fn1()</span><br><span class="line">fn2()</span><br></pre></td></tr></table></figure>
 <h3 id="容易搞混的靜態作用域-⚡⚡⚡"><a href="#容易搞混的靜態作用域-⚡⚡⚡" class="headerlink" title="容易搞混的靜態作用域 ⚡⚡⚡"></a>容易搞混的靜態作用域 ⚡⚡⚡</h3><div class="alert alert-danger">
 函式建立時就已經確定作用域，並且 <b>不會改變</b> 
@@ -499,7 +499,7 @@
 建立函式後並執行 (呼叫) 函式，會產生執行環境
 </div>
 
-<p>舉例來說，如果在函式內宣告一個變數，那變數的作用域就會被限制在函式內，但是如果函式沒有被執行，就不產生執行環境，也就不會有任何變數產生。也就是說，如果函式反覆被執行，就會不斷產生新的執行環境。</p>
+<p>舉例來說，如果在函式內宣告一個變數，那變數的作用域就會被限制在函式內，但是如果函式沒有被執行，就不產生執行環境，也就不會有任何變數產生。<br>也就是說，如果函式反覆被執行，就會不斷產生新的執行環境。</p>
 <p>全域也有屬於自己的執行環境，建立時機在網頁一開啟，或是後端 Node.js 一開啟時，執行環境就會被建立。</p>
 <h2 id="執行堆疊"><a href="#執行堆疊" class="headerlink" title="執行堆疊"></a>執行堆疊</h2><ol>
 <li>當網頁一開啟時，會先建立全域執行環境</li>

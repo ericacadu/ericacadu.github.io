@@ -205,81 +205,6 @@
       </tags>
   </entry>
   <entry>
-    <title>var、let、const</title>
-    <url>/jscore/20210411/659913096/</url>
-    <content><![CDATA[<h2 id="var"><a href="#var" class="headerlink" title="var"></a>var</h2><p><code>var</code> 的宣告屬於 <strong>全域變數</strong>，代表 <strong>全域物件的屬性</strong>。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>假設一個 <code>for</code> 迴圈用 <code>var</code> 宣告 <code>i</code>，在全域還是可以取得 <code>i</code> 值。<br>如果想要限制 <code>i</code> 的作用域的話，可以使用立即函式，避免外層取到 <code>for</code> 迴圈裡面的值，最直接的方式就是使用 <code>let</code> 宣告。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line">&#125;)()</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// i is not defined</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// i is not defined</span></span><br></pre></td></tr></table></figure>
-<p>在 JavaScript 中，<code>var</code> 的作用域是函式作用域，但在函式內的區域變數也可能被視為全域變數，傳統用 <code>var</code> 宣告變數可能會汙染全域，如果使用 <code>let</code>、<code>const</code> 就可以避免這種情形。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.a) <span class="comment">// 10</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="let"><a href="#let" class="headerlink" title="let"></a>let</h2><p><code>let</code> 的作用域屬於區塊內({} 大括號)，和 <code>const</code> 最大差異就是可以重新賦值，而 <code>const</code> 不行。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">0</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> a = <span class="number">1</span> <span class="comment">// 因為 let 的作用域是區塊內，所以不算重複宣告</span></span><br><span class="line">    a = <span class="number">2</span></span><br><span class="line">    <span class="built_in">console</span>.log(a) <span class="comment">// 2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">0</span>) <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
-<p>舉個非同步 <code>for</code> 迴圈的例子，假設想要讓 <code>setTimeout</code> 依序執行並印出結果，如果用 <code>var</code> 宣告的話，因為 <code>var</code> 是全域變數，所以只會取出最後一次執行的結果。<br>而 <code>setTimeout</code> 是非同步程式，會先放到「事件佇列」裡面，等到所有程式碼執行完畢後才會執行。<br>如果想要達到預期結果，只要用 <code>let</code> 宣告就可以依序執行並取得正確數值。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`這是第 <span class="subst">$&#123;i&#125;</span> 次執行結果`</span>)</span><br><span class="line">    &#125;, <span class="number">0</span>)</span><br><span class="line">&#125; <span class="comment">// 這是第 3 次執行結果</span></span><br><span class="line">---</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`這是第 <span class="subst">$&#123;i + <span class="number">1</span>&#125;</span> 次執行結果`</span>)</span><br><span class="line">    &#125;, <span class="number">0</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 這是第 0 次執行結果</span></span><br><span class="line"><span class="comment">// 這是第 1 次執行結果</span></span><br><span class="line"><span class="comment">// 這是第 2 次執行結果</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="const"><a href="#const" class="headerlink" title="const"></a>const</h2><p><code>const</code> 是宣告一個常數，用 <code>const</code> 宣告的變數沒辦法再被調整。<br>雖然變數沒辦法被調整，但如果是物件的話，因為物件屬於傳參考特性，只要不直接替換掉物件，可以修改內容屬性值。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> person = &#123;</span><br><span class="line">    name: <span class="string">&#x27;小明&#x27;</span>,</span><br><span class="line">    money: <span class="number">500</span></span><br><span class="line">&#125;</span><br><span class="line">person.name = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(person.name) <span class="comment">// 大明</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line">person = &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(person) <span class="comment">// Assignment to constant variable.</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Hoisting-與-暫時性死區"><a href="#Hoisting-與-暫時性死區" class="headerlink" title="Hoisting 與 暫時性死區"></a>Hoisting 與 暫時性死區</h2><p>JavaScript 中有 hoisting 的現象，先來比較一下這三種的狀況：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// b is not defined</span></span><br><span class="line"><span class="keyword">let</span> b = <span class="number">2</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="built_in">console</span>.log(c) <span class="comment">// Cannot access &#x27;c&#x27; before initialization</span></span><br><span class="line"><span class="keyword">const</span> c = <span class="number">3</span></span><br></pre></td></tr></table></figure>
-<ol>
-<li>var: <code>undefined</code>，有 hoisting</li>
-<li>let: <code>not defined</code>，沒有 hoisting</li>
-<li>const: 宣告前無法使用，沒有 hoisting</li>
-</ol>
-<p>看起來沒什麼問題，接著猜測一下面範例結果：</p>
-<ul>
-<li>(1) 如果 <code>let</code> 沒有提升的話，就會往外層查找取得 <strong>小明</strong> 的值</li>
-<li>(2) 如果 <code>let</code> 有提升的話，就會出現其他狀況</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> Ming = <span class="string">&#x27;小明&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(Ming)</span><br><span class="line">    <span class="keyword">let</span> Ming = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>結果是(2)： <code>Cannot access &#39;Ming&#39; before initialization</code><br><code>let</code> 在提升的過程中會產生一個「暫時性死區」Temporal Dead Zone(TDZ)。<br>在這個區域內是無法存取變數，也就不會賦予 <code>undefined</code> 的值，如果試圖取值就會跳出錯誤提示。<br>所以 <code>let</code> 雖然有類似提升 <strong>創造 - 執行階段</strong> 的概念，但是和 <code>var</code> 的 hoisting 概念並不相同。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> Ming = <span class="string">&#x27;小明&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 創造</span></span><br><span class="line">    <span class="keyword">let</span> Ming <span class="comment">// 暫時性死區 TDZ</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 執行</span></span><br><span class="line">    <span class="built_in">console</span>.log(Ming)</span><br><span class="line">    <span class="keyword">let</span> Ming = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="重點整理"><a href="#重點整理" class="headerlink" title="重點整理"></a>重點整理</h2><table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center">作用範圍</th>
-<th align="center">重複宣告</th>
-<th align="center">重新賦值</th>
-<th align="center">Hoisting</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">var</td>
-<td align="center">全域</td>
-<td align="center">v</td>
-<td align="center">v</td>
-<td align="center">v</td>
-</tr>
-<tr>
-<td align="center">let</td>
-<td align="center">區塊</td>
-<td align="center">x</td>
-<td align="center">v</td>
-<td align="center">v</td>
-</tr>
-<tr>
-<td align="center">const</td>
-<td align="center">區塊</td>
-<td align="center">x</td>
-<td align="center">x</td>
-<td align="center">x</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>JS核心五分鐘</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>九九乘法表 - JS 地下城</title>
     <url>/js-underground/20210420/2028242470/</url>
     <content><![CDATA[<h2 id="切版需求"><a href="#切版需求" class="headerlink" title="切版需求"></a>切版需求</h2><ul>
@@ -372,6 +297,81 @@
       </tags>
   </entry>
   <entry>
+    <title>var、let、const</title>
+    <url>/jscore/20210411/659913096/</url>
+    <content><![CDATA[<h2 id="var"><a href="#var" class="headerlink" title="var"></a>var</h2><p><code>var</code> 的宣告屬於 <strong>全域變數</strong>，代表 <strong>全域物件的屬性</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>假設一個 <code>for</code> 迴圈用 <code>var</code> 宣告 <code>i</code>，在全域還是可以取得 <code>i</code> 值。<br>如果想要限制 <code>i</code> 的作用域的話，可以使用立即函式，避免外層取到 <code>for</code> 迴圈裡面的值，最直接的方式就是使用 <code>let</code> 宣告。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line">&#125;)()</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// i is not defined</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i) <span class="comment">// i is not defined</span></span><br></pre></td></tr></table></figure>
+<p>在 JavaScript 中，<code>var</code> 的作用域是函式作用域，但在函式內的區域變數也可能被視為全域變數，傳統用 <code>var</code> 宣告變數可能會汙染全域，如果使用 <code>let</code>、<code>const</code> 就可以避免這種情形。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.a) <span class="comment">// 10</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="let"><a href="#let" class="headerlink" title="let"></a>let</h2><p><code>let</code> 的作用域屬於區塊內({} 大括號)，和 <code>const</code> 最大差異就是可以重新賦值，而 <code>const</code> 不行。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">0</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> a = <span class="number">1</span> <span class="comment">// 因為 let 的作用域是區塊內，所以不算重複宣告</span></span><br><span class="line">    a = <span class="number">2</span></span><br><span class="line">    <span class="built_in">console</span>.log(a) <span class="comment">// 2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">0</span>) <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+<p>舉個非同步 <code>for</code> 迴圈的例子，假設想要讓 <code>setTimeout</code> 依序執行並印出結果，如果用 <code>var</code> 宣告的話，因為 <code>var</code> 是全域變數，所以只會取出最後一次執行的結果。<br>而 <code>setTimeout</code> 是非同步程式，會先放到「事件佇列」裡面，等到所有程式碼執行完畢後才會執行。<br>如果想要達到預期結果，只要用 <code>let</code> 宣告就可以依序執行並取得正確數值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`這是第 <span class="subst">$&#123;i&#125;</span> 次執行結果`</span>)</span><br><span class="line">    &#125;, <span class="number">0</span>)</span><br><span class="line">&#125; <span class="comment">// 這是第 3 次執行結果</span></span><br><span class="line">---</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`這是第 <span class="subst">$&#123;i + <span class="number">1</span>&#125;</span> 次執行結果`</span>)</span><br><span class="line">    &#125;, <span class="number">0</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 這是第 0 次執行結果</span></span><br><span class="line"><span class="comment">// 這是第 1 次執行結果</span></span><br><span class="line"><span class="comment">// 這是第 2 次執行結果</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="const"><a href="#const" class="headerlink" title="const"></a>const</h2><p><code>const</code> 是宣告一個常數，用 <code>const</code> 宣告的變數沒辦法再被調整。<br>雖然變數沒辦法被調整，但如果是物件的話，因為物件屬於傳參考特性，只要不直接替換掉物件，可以修改內容屬性值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> person = &#123;</span><br><span class="line">    name: <span class="string">&#x27;小明&#x27;</span>,</span><br><span class="line">    money: <span class="number">500</span></span><br><span class="line">&#125;</span><br><span class="line">person.name = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(person.name) <span class="comment">// 大明</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line">person = &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(person) <span class="comment">// Assignment to constant variable.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Hoisting-與-暫時性死區"><a href="#Hoisting-與-暫時性死區" class="headerlink" title="Hoisting 與 暫時性死區"></a>Hoisting 與 暫時性死區</h2><p>JavaScript 中有 hoisting 的現象，先來比較一下這三種的狀況：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// b is not defined</span></span><br><span class="line"><span class="keyword">let</span> b = <span class="number">2</span></span><br><span class="line"><span class="comment">// ---</span></span><br><span class="line"><span class="built_in">console</span>.log(c) <span class="comment">// Cannot access &#x27;c&#x27; before initialization</span></span><br><span class="line"><span class="keyword">const</span> c = <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>var: <code>undefined</code>，有 hoisting</li>
+<li>let: <code>not defined</code>，沒有 hoisting</li>
+<li>const: 宣告前無法使用，沒有 hoisting</li>
+</ol>
+<p>看起來沒什麼問題，接著猜測一下面範例結果：</p>
+<ul>
+<li>(1) 如果 <code>let</code> 沒有提升的話，就會往外層查找取得 <strong>小明</strong> 的值</li>
+<li>(2) 如果 <code>let</code> 有提升的話，就會出現其他狀況</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> Ming = <span class="string">&#x27;小明&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(Ming)</span><br><span class="line">    <span class="keyword">let</span> Ming = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>結果是(2)： <code>Cannot access &#39;Ming&#39; before initialization</code><br><code>let</code> 在提升的過程中會產生一個「暫時性死區」Temporal Dead Zone(TDZ)。<br>在這個區域內是無法存取變數，也就不會賦予 <code>undefined</code> 的值，如果試圖取值就會跳出錯誤提示。<br>所以 <code>let</code> 雖然有類似提升 <strong>創造 - 執行階段</strong> 的概念，但是和 <code>var</code> 的 hoisting 概念並不相同。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> Ming = <span class="string">&#x27;小明&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 創造</span></span><br><span class="line">    <span class="keyword">let</span> Ming <span class="comment">// 暫時性死區 TDZ</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 執行</span></span><br><span class="line">    <span class="built_in">console</span>.log(Ming)</span><br><span class="line">    <span class="keyword">let</span> Ming = <span class="string">&#x27;大明&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="重點整理"><a href="#重點整理" class="headerlink" title="重點整理"></a>重點整理</h2><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">作用範圍</th>
+<th align="center">重複宣告</th>
+<th align="center">重新賦值</th>
+<th align="center">Hoisting</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">var</td>
+<td align="center">全域</td>
+<td align="center">v</td>
+<td align="center">v</td>
+<td align="center">v</td>
+</tr>
+<tr>
+<td align="center">let</td>
+<td align="center">區塊</td>
+<td align="center">x</td>
+<td align="center">v</td>
+<td align="center">v</td>
+</tr>
+<tr>
+<td align="center">const</td>
+<td align="center">區塊</td>
+<td align="center">x</td>
+<td align="center">x</td>
+<td align="center">x</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>函式與作用域</title>
     <url>/jscore/20210411/1442787642/</url>
     <content><![CDATA[<p>函式屬於物件的一種，分為「<strong>具名函式</strong>」和「<strong>匿名函式</strong>」，包含程式碼片段，可帶入參數，並可被呼叫。</p>
@@ -401,63 +401,6 @@
 <hr>
 <h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
 <li><a href="https://ithelp.ithome.com.tw/articles/10191549">重新認識 JavaScript: Day 10 函式 Functions 的基本概念</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JS核心五分鐘</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>同步 Sync 與非同步 Async</title>
-    <url>/jscore/20210411/3360846865/</url>
-    <content><![CDATA[<h2 id="同步與非同步的差異"><a href="#同步與非同步的差異" class="headerlink" title="同步與非同步的差異"></a>同步與非同步的差異</h2><p>在學習同步與非同步的概念時很容易混淆，「<strong>同步</strong>」光看字面上的意思，可能會誤解成「所有動作同時進行」，而其實正好相反。</p>
-<span id="more"></span>
-<p>就以去夜市點餐來說明，如果今天想買的東西有：雞排、QQ球、珍奶。</p>
-<ul>
-<li><p>同步 (sync)：先去買雞排 -&gt; 再去買QQ球 -&gt; 然後再買珍奶。<br>像這樣「先完成 A 才能做 B、C、D …」的運作方式我們就會把它稱作「<strong>同步</strong>」。</p>
-</li>
-<li><p>非同步 (async)：再找兩個朋友幫忙，每人去一個攤位買一樣東西，就可以同時買好雞排、QQ球、珍奶。</p>
-</li>
-</ul>
-<p>所以同步的概念其實比較像是「<strong>一步一步來處理</strong>」的意思。<br>非同步則是，我不用等待 A 做完才做 B、C，而是這三個事情可以同時發送出去。</p>
-<h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p><strong>Promise</strong>  是 ES6 新增的建構函式，用來優化非同步的語法，增加可讀性。<br>Promise 字面上翻譯就是「約定、承諾」，可以想像成 A 和 B 約定要做某件事情，接著回報處理結果，而這個結果只能是「<strong>完成</strong>」或「<strong>拒絕</strong>」。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">asyncFunction</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, rejecte</span>) =&gt;</span> &#123;</span><br><span class="line">        value ? resolve(<span class="string">&#x27;處理完成的結果&#x27;</span>) : reject(<span class="string">&#x27;被拒絕的原因&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="為什麼需要-Promise？"><a href="#為什麼需要-Promise？" class="headerlink" title="為什麼需要 Promise？"></a>為什麼需要 Promise？</h3><p>JavaScript 是單執行緒（同步）的程式語言，一次只能處理一件事情，所以遇到非同步的事件時，就會先把程式碼放到「<strong>事件佇列</strong>」，等到所有事件處理完後才會執行非同步事件。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;開始&#x27;</span>) <span class="comment">// 執行順序 1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;非同步事件&#x27;</span>) <span class="comment">// 執行順序 3</span></span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;程式碼結束&#x27;</span>) <span class="comment">// 執行順序 2</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="狀態"><a href="#狀態" class="headerlink" title="狀態"></a>狀態</h3><p>Promise 在處理非同步的事件的過程中，包含不同的進度狀態</p>
-<ul>
-<li>Pending：尚未得到結果</li>
-<li>Resolved：事件已經執行完畢且成功操作，回傳 <code>resolve</code> 的結果</li>
-<li>Rejected：事件已經執行完畢但操作失敗，回傳 <code>reject</code> 的結果<br><img src="https://i.imgur.com/I79SHF4.png" alt="Image"></li>
-</ul>
-<h3 id="接收回傳"><a href="#接收回傳" class="headerlink" title="接收回傳"></a>接收回傳</h3><p>Promise 可以用 <code>then</code> 和 <code>catch</code> 來接收並回傳結果：<br><code>then</code> 可以同時接收成功、失敗結果，而 <code>catch</code> 只接收失敗結果</p>
-<ul>
-<li><strong>使用 catch 接收失敗：</strong><br>在任何階段遇到 <code>reject</code> 時，都會直接跳到 <code>catch</code>，之後的 <code>then</code> 都不會執行<br>雖然 <code>catch</code> 依然可以使用 <code>return</code> 繼續串接，但很少這樣使用</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">promise(<span class="number">1</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success) <span class="comment">// resolve 接收成功 // &#x27;1&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">0</span>)    <span class="comment">// return promise(0) -&gt; reject 跳到 catch</span></span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;       <span class="comment">// 因為上面出現 reject 所以跳過</span></span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">3</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    .catch( <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)    <span class="comment">// reject 接收失敗 // &#x27;失敗&#x27;</span></span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>使用 then 接收失敗：</strong><br><code>then</code> 中的兩個函式必定執行其中一個，可以用此方式確保所有的鏈接都能夠被執行</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">promise(<span class="number">0</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">1</span>)</span><br><span class="line">    &#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)     <span class="comment">// reject 接收失敗 // &#x27;失敗&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">2</span>)     <span class="comment">// return promise(2)</span></span><br><span class="line">    &#125;)</span><br><span class="line"> </span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success) <span class="comment">// resolve 接收成功 // &#x27;2&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">0</span>)    <span class="comment">// return promise(0)</span></span><br><span class="line">    &#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)</span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">4</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">    &#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)     <span class="comment">// reject 接收失敗 // &#x27;失敗&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h3><ul>
-<li>最後可以使用 <code>finally</code> 來確認工作結束</li>
-<li><code>finally</code> 不帶有任何參數，適合用來確認 Ajax 已經讀取完成</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">promise(<span class="number">1</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">    &#125;).finally(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;done&#x27;</span>)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
-
-
-<hr>
-<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
-<li><a href="https://ithelp.ithome.com.tw/articles/10194569/">重新認識 JavaScript: Day 26 同步與非同步</a></li>
-<li><a href="https://www.oxxostudio.tw/articles/201706/javascript-promise-settimeout.html">JavaScript 同步延遲 ( Promise + setTimeout )</a></li>
-<li><a href="https://wcc723.github.io/development/2020/02/16/all-new-promise/">JavaScript Promise 全介紹</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -542,6 +485,63 @@
 <hr>
 <h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
 <li><a href="https://hsiangfeng.github.io/javascript/20200905/1375484447/">JavaScript 核心觀念(30)-物件-淺層複製及深層複製</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>同步 Sync 與非同步 Async</title>
+    <url>/jscore/20210411/3360846865/</url>
+    <content><![CDATA[<h2 id="同步與非同步的差異"><a href="#同步與非同步的差異" class="headerlink" title="同步與非同步的差異"></a>同步與非同步的差異</h2><p>在學習同步與非同步的概念時很容易混淆，「<strong>同步</strong>」光看字面上的意思，可能會誤解成「所有動作同時進行」，而其實正好相反。</p>
+<span id="more"></span>
+<p>就以去夜市點餐來說明，如果今天想買的東西有：雞排、QQ球、珍奶。</p>
+<ul>
+<li><p>同步 (sync)：先去買雞排 -&gt; 再去買QQ球 -&gt; 然後再買珍奶。<br>像這樣「先完成 A 才能做 B、C、D …」的運作方式我們就會把它稱作「<strong>同步</strong>」。</p>
+</li>
+<li><p>非同步 (async)：再找兩個朋友幫忙，每人去一個攤位買一樣東西，就可以同時買好雞排、QQ球、珍奶。</p>
+</li>
+</ul>
+<p>所以同步的概念其實比較像是「<strong>一步一步來處理</strong>」的意思。<br>非同步則是，我不用等待 A 做完才做 B、C，而是這三個事情可以同時發送出去。</p>
+<h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p><strong>Promise</strong>  是 ES6 新增的建構函式，用來優化非同步的語法，增加可讀性。<br>Promise 字面上翻譯就是「約定、承諾」，可以想像成 A 和 B 約定要做某件事情，接著回報處理結果，而這個結果只能是「<strong>完成</strong>」或「<strong>拒絕</strong>」。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">asyncFunction</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, rejecte</span>) =&gt;</span> &#123;</span><br><span class="line">        value ? resolve(<span class="string">&#x27;處理完成的結果&#x27;</span>) : reject(<span class="string">&#x27;被拒絕的原因&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="為什麼需要-Promise？"><a href="#為什麼需要-Promise？" class="headerlink" title="為什麼需要 Promise？"></a>為什麼需要 Promise？</h3><p>JavaScript 是單執行緒（同步）的程式語言，一次只能處理一件事情，所以遇到非同步的事件時，就會先把程式碼放到「<strong>事件佇列</strong>」，等到所有事件處理完後才會執行非同步事件。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;開始&#x27;</span>) <span class="comment">// 執行順序 1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;非同步事件&#x27;</span>) <span class="comment">// 執行順序 3</span></span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;程式碼結束&#x27;</span>) <span class="comment">// 執行順序 2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="狀態"><a href="#狀態" class="headerlink" title="狀態"></a>狀態</h3><p>Promise 在處理非同步的事件的過程中，包含不同的進度狀態</p>
+<ul>
+<li>Pending：尚未得到結果</li>
+<li>Resolved：事件已經執行完畢且成功操作，回傳 <code>resolve</code> 的結果</li>
+<li>Rejected：事件已經執行完畢但操作失敗，回傳 <code>reject</code> 的結果<br><img src="https://i.imgur.com/I79SHF4.png" alt="Image"></li>
+</ul>
+<h3 id="接收回傳"><a href="#接收回傳" class="headerlink" title="接收回傳"></a>接收回傳</h3><p>Promise 可以用 <code>then</code> 和 <code>catch</code> 來接收並回傳結果：<br><code>then</code> 可以同時接收成功、失敗結果，而 <code>catch</code> 只接收失敗結果</p>
+<ul>
+<li><strong>使用 catch 接收失敗：</strong><br>在任何階段遇到 <code>reject</code> 時，都會直接跳到 <code>catch</code>，之後的 <code>then</code> 都不會執行<br>雖然 <code>catch</code> 依然可以使用 <code>return</code> 繼續串接，但很少這樣使用</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">promise(<span class="number">1</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success) <span class="comment">// resolve 接收成功 // &#x27;1&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">0</span>)    <span class="comment">// return promise(0) -&gt; reject 跳到 catch</span></span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;       <span class="comment">// 因為上面出現 reject 所以跳過</span></span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">3</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    .catch( <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)    <span class="comment">// reject 接收失敗 // &#x27;失敗&#x27;</span></span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>使用 then 接收失敗：</strong><br><code>then</code> 中的兩個函式必定執行其中一個，可以用此方式確保所有的鏈接都能夠被執行</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">promise(<span class="number">0</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">1</span>)</span><br><span class="line">    &#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)     <span class="comment">// reject 接收失敗 // &#x27;失敗&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">2</span>)     <span class="comment">// return promise(2)</span></span><br><span class="line">    &#125;)</span><br><span class="line"> </span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success) <span class="comment">// resolve 接收成功 // &#x27;2&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">0</span>)    <span class="comment">// return promise(0)</span></span><br><span class="line">    &#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)</span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">4</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">    &#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)     <span class="comment">// reject 接收失敗 // &#x27;失敗&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h3><ul>
+<li>最後可以使用 <code>finally</code> 來確認工作結束</li>
+<li><code>finally</code> 不帶有任何參數，適合用來確認 Ajax 已經讀取完成</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">promise(<span class="number">1</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">    &#125;).finally(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;done&#x27;</span>)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10194569/">重新認識 JavaScript: Day 26 同步與非同步</a></li>
+<li><a href="https://www.oxxostudio.tw/articles/201706/javascript-promise-settimeout.html">JavaScript 同步延遲 ( Promise + setTimeout )</a></li>
+<li><a href="https://wcc723.github.io/development/2020/02/16/all-new-promise/">JavaScript Promise 全介紹</a></li>
 </ul>
 ]]></content>
       <categories>

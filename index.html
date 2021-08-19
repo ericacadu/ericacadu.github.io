@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -17,13 +17,16 @@
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css" integrity="sha256-no0c5ccDODBwp+9hSmV5VvPpKwHCpbVzXHexIkupM6U=" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js" integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 <meta property="og:type" content="website">
 <meta property="og:title" content="艾瑞卡卡">
 <meta property="og:url" content="http://example.com/index.html">
 <meta property="og:site_name" content="艾瑞卡卡">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_TW">
 <meta property="article:author" content="Erica">
 <meta name="twitter:card" content="summary">
 
@@ -32,7 +35,7 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-TW","comments":"","permalink":"","path":"index.html","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>艾瑞卡卡</title>
@@ -46,14 +49,14 @@
   </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
 
   <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    <div class="toggle" aria-label="切換導航欄" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -80,11 +83,11 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
       <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
         </a>
       </li>
   </ul>
@@ -99,7 +102,7 @@
   </span>
   <div class="search-input-container">
     <input autocomplete="off" autocapitalize="off" maxlength="80"
-           placeholder="Searching..." spellcheck="false"
+           placeholder="搜尋..." spellcheck="false"
            type="search" class="search-input">
   </div>
   <span class="popup-btn-close" role="button">
@@ -129,10 +132,10 @@
     <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
-          Table of Contents
+          文章目錄
         </li>
         <li class="sidebar-nav-overview">
-          Overview
+          本站概要
         </li>
       </ul>
 
@@ -155,18 +158,18 @@
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
           <span class="site-state-item-count">15</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
         <span class="site-state-item-count">4</span>
-        <span class="site-state-item-name">categories</span></a>
+        <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
         <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">tags</span></a>
+        <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
 </div>
@@ -184,7 +187,7 @@
     </header>
 
     
-  <div class="back-to-top" role="button" aria-label="Back to top">
+  <div class="back-to-top" role="button" aria-label="回到頂端">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -226,16 +229,16 @@
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">發表於</span>
       
 
-      <time title="Created: 2021-04-20 16:05:51 / Modified: 17:25:00" itemprop="dateCreated datePublished" datetime="2021-04-20T16:05:51+08:00">2021-04-20</time>
+      <time title="創建時間：2021-04-20 16:05:51 / 修改時間：17:25:00" itemprop="dateCreated datePublished" datetime="2021-04-20T16:05:51+08:00">2021-04-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分類於</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/js-underground/" itemprop="url" rel="index"><span itemprop="name">JS 地下城</span></a>
         </span>
@@ -259,7 +262,7 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/js-underground/20210420/2028242470/#more" rel="contents">
-                Read more &raquo;
+                閱讀全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
@@ -311,16 +314,16 @@
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">發表於</span>
       
 
-      <time title="Created: 2021-04-19 15:13:17 / Modified: 22:42:33" itemprop="dateCreated datePublished" datetime="2021-04-19T15:13:17+08:00">2021-04-19</time>
+      <time title="創建時間：2021-04-19 15:13:17 / 修改時間：22:42:33" itemprop="dateCreated datePublished" datetime="2021-04-19T15:13:17+08:00">2021-04-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分類於</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">筆記</span></a>
         </span>
@@ -340,7 +343,7 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/note/20210419/2117635506/#more" rel="contents">
-                Read more &raquo;
+                閱讀全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
@@ -392,22 +395,22 @@
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">發表於</span>
 
-      <time title="Created: 2021-04-16 13:46:04" itemprop="dateCreated datePublished" datetime="2021-04-16T13:46:04+08:00">2021-04-16</time>
+      <time title="創建時間：2021-04-16 13:46:04" itemprop="dateCreated datePublished" datetime="2021-04-16T13:46:04+08:00">2021-04-16</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-18 20:38:07" itemprop="dateModified" datetime="2021-04-18T20:38:07+08:00">2021-04-18</time>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2021-04-18 20:38:07" itemprop="dateModified" datetime="2021-04-18T20:38:07+08:00">2021-04-18</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分類於</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/jscore/" itemprop="url" rel="index"><span itemprop="name">JS核心五分鐘</span></a>
         </span>
@@ -427,7 +430,7 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/jscore/20210416/712608437/#more" rel="contents">
-                Read more &raquo;
+                閱讀全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
@@ -479,22 +482,22 @@
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">發表於</span>
 
-      <time title="Created: 2021-04-15 16:49:38" itemprop="dateCreated datePublished" datetime="2021-04-15T16:49:38+08:00">2021-04-15</time>
+      <time title="創建時間：2021-04-15 16:49:38" itemprop="dateCreated datePublished" datetime="2021-04-15T16:49:38+08:00">2021-04-15</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-18 20:38:07" itemprop="dateModified" datetime="2021-04-18T20:38:07+08:00">2021-04-18</time>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2021-04-18 20:38:07" itemprop="dateModified" datetime="2021-04-18T20:38:07+08:00">2021-04-18</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分類於</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/demo/" itemprop="url" rel="index"><span itemprop="name">實作</span></a>
         </span>
@@ -514,7 +517,7 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/demo/20210415/642765602/#more" rel="contents">
-                Read more &raquo;
+                閱讀全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
@@ -566,22 +569,22 @@
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">發表於</span>
 
-      <time title="Created: 2021-04-14 11:04:11" itemprop="dateCreated datePublished" datetime="2021-04-14T11:04:11+08:00">2021-04-14</time>
+      <time title="創建時間：2021-04-14 11:04:11" itemprop="dateCreated datePublished" datetime="2021-04-14T11:04:11+08:00">2021-04-14</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-18 22:29:29" itemprop="dateModified" datetime="2021-08-18T22:29:29+08:00">2021-08-18</time>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2021-08-18 22:29:29" itemprop="dateModified" datetime="2021-08-18T22:29:29+08:00">2021-08-18</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分類於</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/jscore/" itemprop="url" rel="index"><span itemprop="name">JS核心五分鐘</span></a>
         </span>
@@ -601,7 +604,7 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/jscore/20210414/4242308893/#more" rel="contents">
-                Read more &raquo;
+                閱讀全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
@@ -653,22 +656,22 @@
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">發表於</span>
 
-      <time title="Created: 2021-04-14 00:27:52" itemprop="dateCreated datePublished" datetime="2021-04-14T00:27:52+08:00">2021-04-14</time>
+      <time title="創建時間：2021-04-14 00:27:52" itemprop="dateCreated datePublished" datetime="2021-04-14T00:27:52+08:00">2021-04-14</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-18 20:38:07" itemprop="dateModified" datetime="2021-04-18T20:38:07+08:00">2021-04-18</time>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2021-04-18 20:38:07" itemprop="dateModified" datetime="2021-04-18T20:38:07+08:00">2021-04-18</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分類於</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">筆記</span></a>
         </span>
@@ -689,7 +692,7 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/note/20210414/981755103/#more" rel="contents">
-                Read more &raquo;
+                閱讀全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
@@ -741,22 +744,22 @@
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">發表於</span>
 
-      <time title="Created: 2021-04-13 17:51:03" itemprop="dateCreated datePublished" datetime="2021-04-13T17:51:03+08:00">2021-04-13</time>
+      <time title="創建時間：2021-04-13 17:51:03" itemprop="dateCreated datePublished" datetime="2021-04-13T17:51:03+08:00">2021-04-13</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-18 20:38:07" itemprop="dateModified" datetime="2021-04-18T20:38:07+08:00">2021-04-18</time>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2021-04-18 20:38:07" itemprop="dateModified" datetime="2021-04-18T20:38:07+08:00">2021-04-18</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分類於</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/jscore/" itemprop="url" rel="index"><span itemprop="name">JS核心五分鐘</span></a>
         </span>
@@ -776,7 +779,7 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/jscore/20210413/1596758899/#more" rel="contents">
-                Read more &raquo;
+                閱讀全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
@@ -828,22 +831,22 @@
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">發表於</span>
 
-      <time title="Created: 2021-04-12 11:33:43" itemprop="dateCreated datePublished" datetime="2021-04-12T11:33:43+08:00">2021-04-12</time>
+      <time title="創建時間：2021-04-12 11:33:43" itemprop="dateCreated datePublished" datetime="2021-04-12T11:33:43+08:00">2021-04-12</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-18 20:38:07" itemprop="dateModified" datetime="2021-04-18T20:38:07+08:00">2021-04-18</time>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2021-04-18 20:38:07" itemprop="dateModified" datetime="2021-04-18T20:38:07+08:00">2021-04-18</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分類於</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/jscore/" itemprop="url" rel="index"><span itemprop="name">JS核心五分鐘</span></a>
         </span>
@@ -865,7 +868,7 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/jscore/20210412/1591487769/#more" rel="contents">
-                Read more &raquo;
+                閱讀全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
@@ -917,22 +920,22 @@
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">發表於</span>
 
-      <time title="Created: 2021-04-11 19:39:10" itemprop="dateCreated datePublished" datetime="2021-04-11T19:39:10+08:00">2021-04-11</time>
+      <time title="創建時間：2021-04-11 19:39:10" itemprop="dateCreated datePublished" datetime="2021-04-11T19:39:10+08:00">2021-04-11</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-18 20:38:07" itemprop="dateModified" datetime="2021-04-18T20:38:07+08:00">2021-04-18</time>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2021-04-18 20:38:07" itemprop="dateModified" datetime="2021-04-18T20:38:07+08:00">2021-04-18</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分類於</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/jscore/" itemprop="url" rel="index"><span itemprop="name">JS核心五分鐘</span></a>
         </span>
@@ -956,7 +959,7 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/jscore/20210411/1110903207/#more" rel="contents">
-                Read more &raquo;
+                閱讀全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
@@ -1008,22 +1011,22 @@
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">發表於</span>
 
-      <time title="Created: 2021-04-11 19:38:30" itemprop="dateCreated datePublished" datetime="2021-04-11T19:38:30+08:00">2021-04-11</time>
+      <time title="創建時間：2021-04-11 19:38:30" itemprop="dateCreated datePublished" datetime="2021-04-11T19:38:30+08:00">2021-04-11</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-18 20:38:07" itemprop="dateModified" datetime="2021-04-18T20:38:07+08:00">2021-04-18</time>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2021-04-18 20:38:07" itemprop="dateModified" datetime="2021-04-18T20:38:07+08:00">2021-04-18</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分類於</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/jscore/" itemprop="url" rel="index"><span itemprop="name">JS核心五分鐘</span></a>
         </span>
@@ -1043,7 +1046,7 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/jscore/20210411/3360846865/#more" rel="contents">
-                Read more &raquo;
+                閱讀全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
@@ -1066,7 +1069,7 @@
 
 
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
   </nav>
 
 </div>
@@ -1090,13 +1093,15 @@
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 <script src="/js/third-party/search/local-search.js"></script>
 
 
 
+  <script class="next-config" data-name="nprogress" type="application/json">{"enable":true,"spinner":true}</script>
+  <script src="/js/third-party/nprogress.js"></script>
 
   
 

@@ -472,7 +472,10 @@
   <entry>
     <title>執行環境與作用域</title>
     <url>/jscore/20210819/1495754165/</url>
-    <content><![CDATA[<h1 id="執行環境與作用域"><a href="#執行環境與作用域" class="headerlink" title="執行環境與作用域"></a>執行環境與作用域</h1><p>JavaScript 是屬於直譯式語言，它會直接透過直譯器來產生代碼，並且運行代碼。</p>
+    <content><![CDATA[<blockquote>123</blockquote>
+# 執行環境與作用域
+JavaScript 是屬於直譯式語言，它會直接透過直譯器來產生代碼，並且運行代碼。
+
 <span id="more"></span>
 
 <h2 id="執行的錯誤情境"><a href="#執行的錯誤情境" class="headerlink" title="執行的錯誤情境"></a>執行的錯誤情境</h2><ul>
@@ -591,8 +594,8 @@
 如果物件中有 <b>undefined、function</b>，因為無法轉成純值，所以會直接消失，<b>NaN 則會變成 Null</b>
 </div>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> target = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(data))</span><br><span class="line">target.title = <span class="string">&#x27;Second Level&#x27;</span> </span><br><span class="line">target.info.tag = <span class="string">&#x27;copy&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(target, data)</span><br></pre></td></tr></table></figure>
-![Image](https://i.imgur.com/Zi6OaFe.png?55)
 
+<p><img src="https://i.imgur.com/Zi6OaFe.png?55" alt="Image"></p>
 <h3 id="jQuery-extend"><a href="#jQuery-extend" class="headerlink" title="jQuery.extend"></a>jQuery.extend</h3><p>如果要解決 <code>undefined</code>、<code>function</code> 和 <code>NaN</code> 的複製問題，可以用 jQuery 的 <code>$.extend</code> 方法，就能做到完整的深層複製。</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    title: <span class="string">&#x27;First Level&#x27;</span>,</span><br><span class="line">    info: &#123;</span><br><span class="line">        tag: <span class="string">&#x27;js&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;data.func&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    un: <span class="literal">undefined</span>,</span><br><span class="line">    nan: <span class="literal">NaN</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> shallow = $.extend(&#123;&#125;, data) <span class="comment">// 淺層複製</span></span><br><span class="line"><span class="keyword">var</span> deep = $.extend(<span class="literal">true</span>, &#123;&#125;, data) <span class="comment">// 深層複製</span></span><br><span class="line"><span class="built_in">console</span>.log(deep)</span><br></pre></td></tr></table></figure>
 

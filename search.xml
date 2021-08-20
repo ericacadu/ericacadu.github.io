@@ -67,29 +67,62 @@
       </tags>
   </entry>
   <entry>
-    <title>Hoisting</title>
-    <url>/jscore/20210411/4175334150/</url>
-    <content><![CDATA[<p>在 JavaScript 中，把宣告的 <strong>變數</strong> 和 <strong>函式</strong> 拉升到最上層，在被呼叫執行之前先存進記憶體，這個現象就叫做 「提升（hoisting）」。</p>
+    <title>提升 Hoisting</title>
+    <url>/jscore/20210820/4175334150/</url>
+    <content><![CDATA[<p>在 <strong>創造環境</strong> 將記憶體空間準備好的流程，稱為 <strong>提升 (Hoisting)</strong> 。</p>
 <span id="more"></span>
 
+<p>先看以下三段程式碼範例：<br>在正常情況下，我們會先宣告變數，接著再使用或查看變數。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> Ming = <span class="string">&#x27;小明&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(Ming) <span class="comment">// 小明</span></span><br></pre></td></tr></table></figure>
+<p>如果沒有事先宣告的話，就會出現變數尚未被定義的錯誤。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(Ming) <span class="comment">// Ming is not defined</span></span><br></pre></td></tr></table></figure>
+<p>但是以下程式碼在查看 Ming 之後才宣告變數，卻會得到 undefined 的結果。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(Ming) <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> Ming = <span class="string">&#x27;小明&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>這是因為 JavaScript 在執行的時候會分為 <strong>創造</strong> 和 <strong>執行</strong> 兩個階段。</p>
+<div class="alert alert-success">
+在創造階段時，會先把全域環境下的所有變數都先存進記憶體，如果在此時查看，便會出現 undefined 的結果，接著在執行階段時才會將變數賦值。
+</div>
+
+<p>因此第三個範例可以這樣拆解：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 創造階段：先創造記憶體，但尚未賦值</span></span><br><span class="line"><span class="keyword">var</span> Ming</span><br><span class="line"></span><br><span class="line"><span class="comment">// 執行階段：在賦值前就先查看，所以會出現 undefined 的結果</span></span><br><span class="line"><span class="built_in">console</span>.log(Ming)</span><br><span class="line">Ming = <span class="string">&#x27;小明&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="函式的提升"><a href="#函式的提升" class="headerlink" title="函式的提升"></a>函式的提升</h2><p><strong>函式陳述式</strong> 在創造階段就會先準備好記憶體和函式，因此可以在任何地方呼叫函式。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">callName() <span class="comment">// 小明</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callName</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;小明&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>拆解函式：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 創造</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callName</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;小明&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 執行</span></span><br><span class="line">callName()</span><br></pre></td></tr></table></figure>
+
+<h2 id="函式優先"><a href="#函式優先" class="headerlink" title="函式優先"></a>函式優先</h2><div class="alert alert-info">
+在創造階段，函式優先，然後才是變數
+</div>
+
+<h3 id="函式表達式-1"><a href="#函式表達式-1" class="headerlink" title="函式表達式 1"></a>函式表達式 1</h3><p>如果使用 <strong>函式表達式</strong>，因為 <strong>函式優先</strong> 的原則，會有不一樣的結果。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">callName()</span><br><span class="line"><span class="keyword">var</span> callName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;小明&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// callName is not a function</span></span><br></pre></td></tr></table></figure>
+<p>在 <strong>函式表達式</strong> (運算式)中，因為先宣告一個變數，在創造階段會先準備記憶體但還不會先賦值，若在此時執行函式，JavaScript 會判斷變數不是一個函式，直到執行階段時才會把函式指派給變數。</p>
+<p>拆解函式：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 創造</span></span><br><span class="line"><span class="keyword">var</span> callName</span><br><span class="line"></span><br><span class="line"><span class="comment">// 執行：在執行階段，才會把函式內容指派給變數</span></span><br><span class="line">callName()</span><br><span class="line">callName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;小明&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <hr>
-<p>一般來說，我們都會事先宣告變數，接著才會執行。<br>如果沒有宣告就執行的話，會得到 <code>ReferenceError: a is not defined</code> 的錯誤，因為 JavaScript 找不到這個名為 <code>a</code> 的變數。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// &#x27;a is not defined&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>假設一段程式在執行後接著宣告變數，依照上面敘述答案應該是 <code>a is not defined</code>，但是結果卻是 <code>undefined</code> ，Why ?</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a</span><br></pre></td></tr></table></figure>
-<p>JavaScript 的運行分為「創造階段」和「執行階段」。<br>在創造環境時，會將宣告的變數拉升到最上面，這個現象就叫做提升。<br>雖然理解上是移動到最上面，實際上位置並沒有改變，也可以說是靠「想像」把變數移動到最上面，而移動的行為就是把變數存進記憶體裡。<br>要特別注意變數宣告和賦值不同，雖然提升了宣告，但賦值卻會留在原地「依序」等待被執行。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a)</span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 創造階段：</span></span><br><span class="line"><span class="keyword">var</span> a</span><br><span class="line"></span><br><span class="line"><span class="comment">// 執行階段：</span></span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// undefined</span></span><br><span class="line">a = <span class="number">2</span></span><br></pre></td></tr></table></figure>
-<p>除了變數宣告外，「函式陳述式」也會被提升到創造階段，並且優先載入。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;apple&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br></pre></td></tr></table></figure>
-<p>拆解：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 創造階段：函式優先</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;apple&#x27;</span>)</span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 執行階段：</span></span><br><span class="line">fn() <span class="comment">// 第一次執行：orange</span></span><br><span class="line">fn() <span class="comment">// 第二次執行：orange</span></span><br></pre></td></tr></table></figure>
-<p>如果是「函式表達式」又是另外一種狀況：在執行階段，才會把函式內容指派給變數。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;小明&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br></pre></td></tr></table></figure>
-<p>拆解：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 創造階段：函式優先</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;apple&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fn</span><br><span class="line"></span><br><span class="line"><span class="comment">// 執行階段：</span></span><br><span class="line">fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;apple&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn() <span class="comment">// 第一次執行：apple</span></span><br><span class="line">fn() <span class="comment">// 第二次執行：apple</span></span><br></pre></td></tr></table></figure>
+<h3 id="函式表達式-2"><a href="#函式表達式-2" class="headerlink" title="函式表達式 2"></a>函式表達式 2</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> callName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;小明1&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callName</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;小明2&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">callName()</span><br><span class="line"><span class="comment">// 小明1</span></span><br></pre></td></tr></table></figure>
+
+<p>拆解函式：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 創造階段：函式優先於變數</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callName</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;小明2&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> callName</span><br><span class="line"></span><br><span class="line"><span class="comment">// 執行</span></span><br><span class="line">callName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;小明1&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">callName()</span><br></pre></td></tr></table></figure>
+
+<br>
+
 <h2 id="為什麼需要-Hoisting"><a href="#為什麼需要-Hoisting" class="headerlink" title="為什麼需要 Hoisting?"></a>為什麼需要 Hoisting?</h2><p>Hoisting 最初的設計是為了實現函式互相傳遞，畢竟在開發時會不只有一個函式，如果每個函式都要事先宣告的話，不僅繁瑣而且不好使用，如果有 Hoisting 的話就可以在任何地方呼叫函示。</p>
+<br>
+
+<h2 id="undefined-與-not-defined"><a href="#undefined-與-not-defined" class="headerlink" title="undefined 與 not defined"></a>undefined 與 not defined</h2><ul>
+<li>undefined：記憶體已建立，但尚未給予值，屬於不明確狀態</li>
+<li>not defined：尚未定義變數，所以記憶體尚未建立</li>
+</ul>
+<div class="alert alert-danger">
+宣告變數時應避免定義 undefined，若需使用不確定變數，則可使用 null
+</div>
+
 <hr>
 <h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://www.hexschool.com/courses/js-core.html">JavaScript 核心篇</a></li>
 <li><a href="https://blog.techbridge.cc/2018/11/10/javascript-hoisting/">我知道你懂 hoisting，可是你了解到多深？</a></li>
 </ul>
 ]]></content>
@@ -375,45 +408,6 @@
       </tags>
   </entry>
   <entry>
-    <title>函式與作用域</title>
-    <url>/jscore/20210411/1442787642/</url>
-    <content><![CDATA[<p>函式屬於物件的一種，分為「<strong>具名函式</strong>」和「<strong>匿名函式</strong>」，包含程式碼片段，可帶入參數，並可被呼叫。</p>
-<span id="more"></span>
-<hr>
-<h2 id="具名函式-Named-Function"><a href="#具名函式-Named-Function" class="headerlink" title="具名函式 Named Function"></a>具名函式 Named Function</h2><p>具名函式顧名思義必須要有函式名稱。<br>而具名函式能夠在函式內被調用，但是函式中的具名函式無法在函式以外被調用。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;inner&#x27;</span>)</span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callSayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  sayHello() <span class="comment">// 具名函式能夠在函式內被調用</span></span><br><span class="line">&#125;</span><br><span class="line">callSayHello() <span class="comment">// Hello!</span></span><br><span class="line">inner() <span class="comment">// inner is not defined 無法被調用</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="匿名函式-Anonymous-Function"><a href="#匿名函式-Anonymous-Function" class="headerlink" title="匿名函式 Anonymous Function"></a>匿名函式 Anonymous Function</h2><p>函式名稱是可以被忽略的，也就是匿名函式，通常會用表達式來宣告匿名函式，另外立即函式（IIFE）也是屬於匿名函式。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> sayHello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">  ;(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;Hey!&#x27;</span>)</span><br><span class="line">  &#125;)()</span><br><span class="line">&#125;</span><br><span class="line">sayHello()</span><br><span class="line"><span class="comment">// Hello!</span></span><br><span class="line"><span class="comment">// Hey!</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="陳述式與表達式"><a href="#陳述式與表達式" class="headerlink" title="陳述式與表達式"></a>陳述式與表達式</h2><ul>
-<li>陳述式：Statement</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式陳述式、具名函式</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>表達式：Expression（運算式、表示式）</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式表達式、匿名函式</span></span><br><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="函式作用域-Function-Scope"><a href="#函式作用域-Function-Scope" class="headerlink" title="函式作用域 Function Scope"></a>函式作用域 Function Scope</h2><p>函式有屬於自己的作用域，在 ES6 之前，「<strong>JavaScript 切分變數有效範圍的最小單位是 function</strong>」，所以在這個範圍內的變數只屬於這個函式，一旦離開函式範圍，記憶體就會被釋放掉。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">6</span></span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// a = 3</span></span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// b is not defined</span></span><br></pre></td></tr></table></figure>
-<p>如果在函式裡面沒有重新宣告變數，那 function 就會向外一層一層找。<br>function 可以從內層讀取外層宣告的變數，但是外層沒辦法讀取內層宣告的變數，這種行為稱作「<strong>範圍鏈（Scope Chain）</strong>」。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> msg = <span class="string">&#x27;global&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">outer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> msg = <span class="string">&#x27;local&#x27;</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> msg</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> inner</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> innerFunc = outer()</span><br><span class="line"><span class="keyword">var</span> result = innerFunc()</span><br><span class="line"><span class="built_in">console</span>.log(result) <span class="comment">// local</span></span><br></pre></td></tr></table></figure>
-<p>範例中加了一段 <code>var innerFunc = outer()</code> ，呼叫 <code>outer</code> 回傳的 <code>inner</code> 結果，取得原本從外層無法讀取的 <code>inner</code>，看似好像把 <code>inner</code> 獨立出來，msg 向外查找所以結果是的外層 <code>global</code> 。<br>但有個重要觀念：<strong>範圍鏈是在函式被定義當下決定的，不是被呼叫的時候。</strong><br>所以在「<strong>定義函式之後，呼叫函式之前</strong>」範圍鏈就已經被建立，<code>msg</code> 為 <code>inner</code> 外層的 <code>local</code>。</p>
-<hr>
-<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
-<li><a href="https://ithelp.ithome.com.tw/articles/10191549">重新認識 JavaScript: Day 10 函式 Functions 的基本概念</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JS核心五分鐘</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>同步 Sync 與非同步 Async</title>
     <url>/jscore/20210411/3360846865/</url>
     <content><![CDATA[<h2 id="同步與非同步的差異"><a href="#同步與非同步的差異" class="headerlink" title="同步與非同步的差異"></a>同步與非同步的差異</h2><p>在學習同步與非同步的概念時很容易混淆，「<strong>同步</strong>」光看字面上的意思，可能會誤解成「所有動作同時進行」，而其實正好相反。</p>
@@ -471,45 +465,6 @@
       </tags>
   </entry>
   <entry>
-    <title>浮點數相加</title>
-    <url>/note/20210414/981755103/</url>
-    <content><![CDATA[<h2 id="浮點數"><a href="#浮點數" class="headerlink" title="浮點數"></a>浮點數</h2><p>在日常生活中，如果要計算 0.1 + 0.2，我們能夠直覺的答出 0.3 這個答案。<br>但是在 JavaScript 中，計算結果卻不如預期，用 <code>console.log(0.1 + 0.2 === 0.3)</code> 回傳的結果竟會得到 <code>false</code>。<br>其實這和電腦的「<a href="https://www.h-schmidt.net/FloatConverter/IEEE754.html">IEEE754 二進制浮點運算</a>」計算方式有關，當我們宣告一段浮點數陣列，展開後會發現，有些浮點數會有些微誤差，以致於在進行計算時會出錯。<br>所以得到的結果自然是 <code>0.1 + 0.2 !== 0.3</code>。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="built_in">Array</span>.from(<span class="built_in">Array</span>(<span class="number">10</span>).keys())</span><br><span class="line"><span class="keyword">var</span> result = num.map(<span class="function"><span class="params">item</span> =&gt;</span> item * <span class="number">0.1</span>)</span><br><span class="line"><span class="built_in">console</span>.log(result)</span><br><span class="line"><span class="comment">// 0, 0.1, 0.2, 0.30000000000000004, 0.4, 0.5, </span></span><br><span class="line"><span class="comment">// 0.6000000000000001, 0.7000000000000001, 0.8, 0.9</span></span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<hr>
-<p>該如何解決浮點數問題呢？可以使用以下兩種方法：</p>
-<ul>
-<li>Number.toFixed()</li>
-<li>Number.toPrecision()</li>
-</ul>
-<h2 id="Number-toFixed"><a href="#Number-toFixed" class="headerlink" title="Number.toFixed"></a>Number.toFixed</h2><p><code>Number.toFixed()</code> 可以對數字進行四捨五入到指定的第 N 位數。</p>
-<blockquote>
-<p><code>toFixed()</code> 方法回傳的型別是「<strong>字串</strong>」，需要另外再轉換為數字型別。</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">10.12345</span></span><br><span class="line">num.toFixed(<span class="number">2</span>) <span class="comment">// &quot;10.12&quot;</span></span><br><span class="line">num.toFixed(<span class="number">4</span>) <span class="comment">// &quot;10.1235&quot;</span></span><br></pre></td></tr></table></figure>
-<p>同樣方法用在浮點數上可以改成：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="built_in">Array</span>.from(<span class="built_in">Array</span>(<span class="number">10</span>).keys())</span><br><span class="line"><span class="keyword">var</span> result = num.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="built_in">Number</span>((item * <span class="number">0.1</span>).toFixed(<span class="number">1</span>)))</span><br><span class="line"><span class="built_in">console</span>.log(result)</span><br><span class="line"><span class="comment">// [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]</span></span><br></pre></td></tr></table></figure>
-<p>如果想去除小數點後為 0 的尾數，則可以用 <code>parseFloat()</code>。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0.990</span></span><br><span class="line"><span class="built_in">parseFloat</span>(num) <span class="comment">// 0.99</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Number-toPrecision"><a href="#Number-toPrecision" class="headerlink" title="Number.toPrecision"></a>Number.toPrecision</h2><p><code>Number.toPrecision()</code> 方法可以指定想要顯示的浮點數範圍，範圍在 1～21，並且回傳「字串」。<br><code>toPrecision()</code> 方法有以下幾種狀況：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 數字是浮點數，就會補 0</span></span><br><span class="line"><span class="keyword">var</span> num1 = <span class="number">0.12</span></span><br><span class="line">num1.toPrecision(<span class="number">5</span>) <span class="comment">// &quot;0.12000&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 數字是浮點數，但位數不足，一樣會四捨五入</span></span><br><span class="line"><span class="keyword">var</span> num2 = <span class="number">12.345</span></span><br><span class="line">num2.toPrecision(<span class="number">4</span>) <span class="comment">// &quot;12.35&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 數字是整數，但是位數不足，會轉換成指數寫法</span></span><br><span class="line"><span class="keyword">var</span> num3 = <span class="number">1234</span></span><br><span class="line">num3.toPrecision(<span class="number">3</span>) <span class="comment">// &quot;1.23e+3&quot;</span></span><br></pre></td></tr></table></figure>
-<p>所以如果想要解決浮點數相加的問題，可以改成這樣：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">parseFloat</span>((<span class="number">0.1</span> + <span class="number">0.2</span>).toPrecision(<span class="number">12</span>)) <span class="comment">// &quot;0.3&quot;</span></span><br><span class="line"><span class="built_in">parseFloat</span>((<span class="number">0.6</span> + <span class="number">0.7</span>).toPrecision(<span class="number">12</span>)) <span class="comment">// &quot;1.3&quot;</span></span><br></pre></td></tr></table></figure>
-<p>至於為什麼參數要帶 12，因為 12 位數可以避免大部分浮點數的問題。</p>
-<hr>
-<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
-<li><a href="https://tso1158687.github.io/blog/2018/12/17/javascript-float-trap/">javascript浮點數的陷阱</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>筆記</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>執行環境與作用域</title>
     <url>/jscore/20210819/1495754165/</url>
     <content><![CDATA[<h1 id="執行環境與作用域"><a href="#執行環境與作用域" class="headerlink" title="執行環境與作用域"></a>執行環境與作用域</h1><p>JavaScript 是屬於直譯式語言，它會直接透過直譯器來產生代碼，並且運行代碼。</p>
@@ -559,6 +514,189 @@
 ]]></content>
       <categories>
         <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>函式與作用域</title>
+    <url>/jscore/20210411/1442787642/</url>
+    <content><![CDATA[<p>函式屬於物件的一種，分為「<strong>具名函式</strong>」和「<strong>匿名函式</strong>」，包含程式碼片段，可帶入參數，並可被呼叫。</p>
+<span id="more"></span>
+<hr>
+<h2 id="具名函式-Named-Function"><a href="#具名函式-Named-Function" class="headerlink" title="具名函式 Named Function"></a>具名函式 Named Function</h2><p>具名函式顧名思義必須要有函式名稱。<br>而具名函式能夠在函式內被調用，但是函式中的具名函式無法在函式以外被調用。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;inner&#x27;</span>)</span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callSayHello</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  sayHello() <span class="comment">// 具名函式能夠在函式內被調用</span></span><br><span class="line">&#125;</span><br><span class="line">callSayHello() <span class="comment">// Hello!</span></span><br><span class="line">inner() <span class="comment">// inner is not defined 無法被調用</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="匿名函式-Anonymous-Function"><a href="#匿名函式-Anonymous-Function" class="headerlink" title="匿名函式 Anonymous Function"></a>匿名函式 Anonymous Function</h2><p>函式名稱是可以被忽略的，也就是匿名函式，通常會用表達式來宣告匿名函式，另外立即函式（IIFE）也是屬於匿名函式。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> sayHello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Hello!&#x27;</span>)</span><br><span class="line">  ;(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;Hey!&#x27;</span>)</span><br><span class="line">  &#125;)()</span><br><span class="line">&#125;</span><br><span class="line">sayHello()</span><br><span class="line"><span class="comment">// Hello!</span></span><br><span class="line"><span class="comment">// Hey!</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="陳述式與表達式"><a href="#陳述式與表達式" class="headerlink" title="陳述式與表達式"></a>陳述式與表達式</h2><ul>
+<li>陳述式：Statement</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式陳述式、具名函式</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>表達式：Expression（運算式、表示式）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函式表達式、匿名函式</span></span><br><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="函式作用域-Function-Scope"><a href="#函式作用域-Function-Scope" class="headerlink" title="函式作用域 Function Scope"></a>函式作用域 Function Scope</h2><p>函式有屬於自己的作用域，在 ES6 之前，「<strong>JavaScript 切分變數有效範圍的最小單位是 function</strong>」，所以在這個範圍內的變數只屬於這個函式，一旦離開函式範圍，記憶體就會被釋放掉。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">6</span></span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// a = 3</span></span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// b is not defined</span></span><br></pre></td></tr></table></figure>
+<p>如果在函式裡面沒有重新宣告變數，那 function 就會向外一層一層找。<br>function 可以從內層讀取外層宣告的變數，但是外層沒辦法讀取內層宣告的變數，這種行為稱作「<strong>範圍鏈（Scope Chain）</strong>」。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> msg = <span class="string">&#x27;global&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">outer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> msg = <span class="string">&#x27;local&#x27;</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> msg</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> inner</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> innerFunc = outer()</span><br><span class="line"><span class="keyword">var</span> result = innerFunc()</span><br><span class="line"><span class="built_in">console</span>.log(result) <span class="comment">// local</span></span><br></pre></td></tr></table></figure>
+<p>範例中加了一段 <code>var innerFunc = outer()</code> ，呼叫 <code>outer</code> 回傳的 <code>inner</code> 結果，取得原本從外層無法讀取的 <code>inner</code>，看似好像把 <code>inner</code> 獨立出來，msg 向外查找所以結果是的外層 <code>global</code> 。<br>但有個重要觀念：<strong>範圍鏈是在函式被定義當下決定的，不是被呼叫的時候。</strong><br>所以在「<strong>定義函式之後，呼叫函式之前</strong>」範圍鏈就已經被建立，<code>msg</code> 為 <code>inner</code> 外層的 <code>local</code>。</p>
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10191549">重新認識 JavaScript: Day 10 函式 Functions 的基本概念</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>函式與型別</title>
+    <url>/jscore/20210820/3630969749/</url>
+    <content><![CDATA[<h2 id="陳述式與表達式"><a href="#陳述式與表達式" class="headerlink" title="陳述式與表達式"></a>陳述式與表達式</h2><p><strong>陳述式</strong>：用於執行指令的操作，最大的特徵是 <strong>不會回傳結果</strong></p>
+<blockquote>
+陳述式舉例：<br>
+(1) block { ... }<br>
+(2) if...else<br>
+(3) switch<br>
+(4) var let const<br>
+(5) for 迴圈等等
+</blockquote>
+
+<p><strong>表達式</strong>：又稱為運算式，是任何一段可以透過 <strong>運算子</strong> 取得一個值 (<strong>會回傳結果</strong>) 的程式碼</p>
+<blockquote>
+運算式舉例：<br>
+(1) x = 1，使用「=」運算子將 1 的結果賦予給 x 的變數<br>
+(2) 3 + 4，「+」是運算子，雖然沒有指定變數，但是會回傳結果 7<br>
+</blockquote>
+
+<span id="more"></span>
+
+<h3 id="函式陳述式"><a href="#函式陳述式" class="headerlink" title="函式陳述式"></a>函式陳述式</h3><p>函式陳述式又稱為 <strong>具名函式</strong>，直接給予函式名稱而不是另外定義變數。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fnName</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="函式表達式"><a href="#函式表達式" class="headerlink" title="函式表達式"></a>函式表達式</h3><p>函式表達式又稱為 <strong>匿名函式</strong>，先定義變數後，接著透過等號運算子將函式賦予給變數。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> fnName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="原始型別與物件型別"><a href="#原始型別與物件型別" class="headerlink" title="原始型別與物件型別"></a>原始型別與物件型別</h2><p><strong>物件型別</strong>：</p>
+<table>
+<thead>
+<tr>
+<th align="center">Object</th>
+<th align="center">Array</th>
+<th align="center">function</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">物件</td>
+<td align="center">陣列</td>
+<td align="center">函式</td>
+</tr>
+</tbody></table>
+<p><strong>原始型別</strong> 分為以下幾種：</p>
+<table>
+<thead>
+<tr>
+<th align="center">Boolean</th>
+<th align="center">Null</th>
+<th align="center">Undefined</th>
+<th align="center">Number</th>
+<th align="center">String</th>
+<th align="center">BigInt</th>
+<th align="center">Symbol</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">布林</td>
+<td align="center">空</td>
+<td align="center">為定義</td>
+<td align="center">數值</td>
+<td align="center">字串</td>
+<td align="center">整數數值</td>
+<td align="center">Symbol</td>
+</tr>
+</tbody></table>
+<ul>
+<li>NaN 的型別為 Number</li>
+<li>BigInt 是一個內建的 <strong>物件</strong>，提供了表示大於 2 的 53 次方整數的功能</li>
+</ul>
+<div class="alert alert-info">
+null 是原始型別之一，但 typeof null 卻得到 object，而非 null
+這是一個 bug，可是若修正了這個 bug 則可能會導致很多網站壞掉，因此不修正
+<br>
+如果要判斷 typeof null 的話要注意結果為 object
+</div>
+
+
+<p>如果變數是 <code>not defined</code> 尚未定義變數，那型別將會是 <strong>undefined</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// a is not defined</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> a) <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>當我們直接查看一個變數時，可以取用該變數型別可用的一些方法</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">&#x27;ming&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(a.length)</span><br></pre></td></tr></table></figure>
+<p>而這些方法是透過 <strong>包裹物件</strong> 的方式套用到變數上，可以透過 <strong>建構式</strong> 的方式來查看</p>
+<div class="alert alert-danger">
+在宣告原始型別時，如果使用這種方式宣告變數，則會被轉型為 <b>物件型別</b>，在使用上要特別注意
+</div>
+
+<p><img src="https://i.imgur.com/6VWZCMS.png"></p>
+<br>
+
+<hr>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://www.hexschool.com/courses/js-core.html">JavaScript 核心篇</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>浮點數相加</title>
+    <url>/note/20210414/981755103/</url>
+    <content><![CDATA[<h2 id="浮點數"><a href="#浮點數" class="headerlink" title="浮點數"></a>浮點數</h2><p>在日常生活中，如果要計算 0.1 + 0.2，我們能夠直覺的答出 0.3 這個答案。<br>但是在 JavaScript 中，計算結果卻不如預期，用 <code>console.log(0.1 + 0.2 === 0.3)</code> 回傳的結果竟會得到 <code>false</code>。<br>其實這和電腦的「<a href="https://www.h-schmidt.net/FloatConverter/IEEE754.html">IEEE754 二進制浮點運算</a>」計算方式有關，當我們宣告一段浮點數陣列，展開後會發現，有些浮點數會有些微誤差，以致於在進行計算時會出錯。<br>所以得到的結果自然是 <code>0.1 + 0.2 !== 0.3</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="built_in">Array</span>.from(<span class="built_in">Array</span>(<span class="number">10</span>).keys())</span><br><span class="line"><span class="keyword">var</span> result = num.map(<span class="function"><span class="params">item</span> =&gt;</span> item * <span class="number">0.1</span>)</span><br><span class="line"><span class="built_in">console</span>.log(result)</span><br><span class="line"><span class="comment">// 0, 0.1, 0.2, 0.30000000000000004, 0.4, 0.5, </span></span><br><span class="line"><span class="comment">// 0.6000000000000001, 0.7000000000000001, 0.8, 0.9</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<hr>
+<p>該如何解決浮點數問題呢？可以使用以下兩種方法：</p>
+<ul>
+<li>Number.toFixed()</li>
+<li>Number.toPrecision()</li>
+</ul>
+<h2 id="Number-toFixed"><a href="#Number-toFixed" class="headerlink" title="Number.toFixed"></a>Number.toFixed</h2><p><code>Number.toFixed()</code> 可以對數字進行四捨五入到指定的第 N 位數。</p>
+<blockquote>
+<p><code>toFixed()</code> 方法回傳的型別是「<strong>字串</strong>」，需要另外再轉換為數字型別。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">10.12345</span></span><br><span class="line">num.toFixed(<span class="number">2</span>) <span class="comment">// &quot;10.12&quot;</span></span><br><span class="line">num.toFixed(<span class="number">4</span>) <span class="comment">// &quot;10.1235&quot;</span></span><br></pre></td></tr></table></figure>
+<p>同樣方法用在浮點數上可以改成：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="built_in">Array</span>.from(<span class="built_in">Array</span>(<span class="number">10</span>).keys())</span><br><span class="line"><span class="keyword">var</span> result = num.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="built_in">Number</span>((item * <span class="number">0.1</span>).toFixed(<span class="number">1</span>)))</span><br><span class="line"><span class="built_in">console</span>.log(result)</span><br><span class="line"><span class="comment">// [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]</span></span><br></pre></td></tr></table></figure>
+<p>如果想去除小數點後為 0 的尾數，則可以用 <code>parseFloat()</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0.990</span></span><br><span class="line"><span class="built_in">parseFloat</span>(num) <span class="comment">// 0.99</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Number-toPrecision"><a href="#Number-toPrecision" class="headerlink" title="Number.toPrecision"></a>Number.toPrecision</h2><p><code>Number.toPrecision()</code> 方法可以指定想要顯示的浮點數範圍，範圍在 1～21，並且回傳「字串」。<br><code>toPrecision()</code> 方法有以下幾種狀況：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 數字是浮點數，就會補 0</span></span><br><span class="line"><span class="keyword">var</span> num1 = <span class="number">0.12</span></span><br><span class="line">num1.toPrecision(<span class="number">5</span>) <span class="comment">// &quot;0.12000&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 數字是浮點數，但位數不足，一樣會四捨五入</span></span><br><span class="line"><span class="keyword">var</span> num2 = <span class="number">12.345</span></span><br><span class="line">num2.toPrecision(<span class="number">4</span>) <span class="comment">// &quot;12.35&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 數字是整數，但是位數不足，會轉換成指數寫法</span></span><br><span class="line"><span class="keyword">var</span> num3 = <span class="number">1234</span></span><br><span class="line">num3.toPrecision(<span class="number">3</span>) <span class="comment">// &quot;1.23e+3&quot;</span></span><br></pre></td></tr></table></figure>
+<p>所以如果想要解決浮點數相加的問題，可以改成這樣：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">parseFloat</span>((<span class="number">0.1</span> + <span class="number">0.2</span>).toPrecision(<span class="number">12</span>)) <span class="comment">// &quot;0.3&quot;</span></span><br><span class="line"><span class="built_in">parseFloat</span>((<span class="number">0.6</span> + <span class="number">0.7</span>).toPrecision(<span class="number">12</span>)) <span class="comment">// &quot;1.3&quot;</span></span><br></pre></td></tr></table></figure>
+<p>至於為什麼參數要帶 12，因為 12 位數可以避免大部分浮點數的問題。</p>
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://tso1158687.github.io/blog/2018/12/17/javascript-float-trap/">javascript浮點數的陷阱</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>筆記</category>
       </categories>
       <tags>
         <tag>JavaScript</tag>
@@ -659,27 +797,85 @@
       </tags>
   </entry>
   <entry>
-    <title>閉包 Closure</title>
-    <url>/jscore/20210411/1553745186/</url>
-    <content><![CDATA[<p>讓函式擁有自己的變數，使執行環境不會互相干擾。</p>
-<hr>
-<p>我們都知道閉包，但什麼是必包？主要功能是什麼呢？<br>先從字面上拆解，Closure 可以拆成 <code>Close</code> 和 <code>-ure</code> 字尾，<code>-ure</code> 接在動作的字根後面，表示動作本身、動作造成的結果、或是執行動作的人事物。<br>所以閉包本身就是一個關閉的動作，把程式碼片段關閉在一個函式內，限制作用域，建立自己的環境與外界隔絕。</p>
+    <title>相等與隱含轉型</title>
+    <url>/jscore/20210820/1249754331/</url>
+    <content><![CDATA[<h2 id="相等與隱含轉型"><a href="#相等與隱含轉型" class="headerlink" title="相等與隱含轉型"></a>相等與隱含轉型</h2><h3 id="嚴格相等"><a href="#嚴格相等" class="headerlink" title="嚴格相等"></a>嚴格相等</h3><p>嚴格相等會判斷等號兩邊的 <strong>值</strong> 與 <strong>型別</strong> 皆相同<br>以下為特例，NaN 為非數值，所以不管是嚴格或是寬鬆相等都會回傳 false</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="literal">NaN</span> === <span class="literal">NaN</span>)    <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(+<span class="number">0</span> === -<span class="number">0</span>)      <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
 <span id="more"></span>
 
-<h2 id="限制作用域"><a href="#限制作用域" class="headerlink" title="限制作用域"></a>限制作用域</h2><p>用一個錢包範例先來比較一下差異：<br>假設每個錢包都有1000元，大明花了300元，小明花了500元，計算每個人錢包裡的餘額</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> balance = <span class="number">1000</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wallet</span> (<span class="params">cost</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> balance = balance - cost</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> MING = wallet(<span class="number">300</span>)</span><br><span class="line"><span class="keyword">var</span> ming = wallet(<span class="number">500</span>)</span><br><span class="line"><span class="built_in">console</span>.log(MING, ming) <span class="comment">// 700 200</span></span><br></pre></td></tr></table></figure>
-<p>快速計算一下，大明錢包裡應該要有700元，小明應該還剩500元，但是結果小明卻是剩下200元，難道大明偷拿小明錢包裡的錢嗎？<br>一切都是誤會呀！因為現在沒有限制作用域，目前還是兩個人共用同一個錢包的狀態，如果想要讓他們他們各自花各自的錢，就要給他們一人一個錢包。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> balanceA = <span class="number">1000</span></span><br><span class="line"><span class="keyword">var</span> balanceB = <span class="number">1000</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">walletA</span> (<span class="params">cost</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> balanceA = balanceA - cost</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">walletB</span> (<span class="params">cost</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> balanceB = balanceB - cost</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> MING = walletA(<span class="number">300</span>)</span><br><span class="line"><span class="keyword">var</span> ming = walletB(<span class="number">500</span>)</span><br><span class="line"><span class="built_in">console</span>.log(MING, ming) <span class="comment">// 700 500</span></span><br></pre></td></tr></table></figure>
+<p>而 0 代表 false，!0 會轉為 true，因此會變成 <code>Number(1) == Number(!0)</code><br>而 <code>1 == 1</code>，所以結果會是 true</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;1&#x27;</span> == !<span class="number">0</span>)      <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="函式工廠"><a href="#函式工廠" class="headerlink" title="函式工廠"></a>函式工廠</h2><p>如果今天想要再計算別的錢包，就要再重複寫一次，這樣就會變成一樣的事情重複寫，不但看起來很複雜，也很沒有效率。這個時候就可以加入閉包限制作用域，建立一個「<strong>函式工廠</strong>」。<br><strong>讓每個功能相同的 function，對應到每個獨立的環境變數，且互不相干擾。</strong></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wallet</span>(<span class="params">cost</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> balance = <span class="number">1000</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">counter</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    balance = balance - cost</span><br><span class="line">    <span class="built_in">console</span>.log(balance)</span><br><span class="line">  &#125;</span><br><span class="line">  counter()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> userA = wallet(<span class="number">300</span>) <span class="comment">// 700</span></span><br><span class="line"><span class="keyword">var</span> userB = wallet(<span class="number">500</span>) <span class="comment">// 500</span></span><br><span class="line"><span class="keyword">var</span> userC = wallet(<span class="number">200</span>) <span class="comment">// 800</span></span><br></pre></td></tr></table></figure>
-<p>這時候就可以讓每個人都可以獨立計算錢包餘額，也可以加入變數，一開始分別放入不同金額，管理各自的錢包。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wallet</span>(<span class="params">initBalance, cost</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> balance = initBalance</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">counter</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    balance = balance - cost</span><br><span class="line">    <span class="built_in">console</span>.log(balance)</span><br><span class="line">  &#125;</span><br><span class="line">  counter()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> userA = wallet(<span class="number">1000</span>, <span class="number">300</span>) <span class="comment">// 700</span></span><br><span class="line"><span class="keyword">var</span> userB = wallet(<span class="number">2000</span>, <span class="number">500</span>) <span class="comment">// 1500</span></span><br><span class="line"><span class="keyword">var</span> userC = wallet(<span class="number">1500</span>, <span class="number">200</span>) <span class="comment">// 1300</span></span><br></pre></td></tr></table></figure>
+<h3 id="寬鬆相等"><a href="#寬鬆相等" class="headerlink" title="寬鬆相等"></a>寬鬆相等</h3><p>布林、字串在寬鬆相等時會自動轉型為 <strong>數值</strong>，這個行為又稱為 <strong>隱含轉型</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">17</span> == <span class="string">&#x27;0x11&#x27;</span>)   <span class="comment">// true</span></span><br><span class="line"><span class="comment">// 16進位制 0x1 = 16， 0x11 = 16 + 1</span></span><br></pre></td></tr></table></figure>
+
+<p>當 true 字串轉型為數值時，會變成 NaN，因此兩者不相等</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="literal">true</span> == <span class="string">&#x27;true&#x27;</span>) <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">&#x27;true&#x27;</span>)) <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Null、undefined"><a href="#Null、undefined" class="headerlink" title="Null、undefined"></a>Null、undefined</h3><p>Null 和 undefined 在比對上不會被轉為數字型別來做比對<br>但是在寬鬆相等下，Null 和 undefined 會相等</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="literal">null</span>))        <span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="literal">undefined</span>))   <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="literal">null</span> == <span class="number">0</span>)           <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="literal">null</span> == <span class="literal">undefined</span>)   <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="literal">null</span> === <span class="literal">undefined</span>)  <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="物件與非物件"><a href="#物件與非物件" class="headerlink" title="物件與非物件"></a>物件與非物件</h3><p>物件與非物件的比對，會依照 <strong>左邊的型別</strong>，對右邊使用包裹物件進行轉換<br>以下範例來說，左邊是一個字串 10，因此會用 String 包裹物件將兩邊進行轉換</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;10&#x27;</span> == [<span class="number">10</span>]) <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">String</span>(<span class="string">&#x27;10&#x27;</span>) == <span class="built_in">String</span>([<span class="number">10</span>]))</span><br><span class="line"><span class="comment">// &#x27;10&#x27; == &#x27;10&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>純物件會使用 String 包裹物件進行轉換，但通常物件不會這樣進行比對</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">String</span>(&#123;<span class="attr">A</span>: <span class="string">&#x27;A&#x27;</span>&#125;)) <span class="comment">// &#x27;[object Object]&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;[object Object]&#x27;</span> == &#123;<span class="attr">A</span>: <span class="string">&#x27;A&#x27;</span>&#125;) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="物件與物件"><a href="#物件與物件" class="headerlink" title="物件與物件"></a>物件與物件</h3><p>物件與物件的比對是使用傳參考的方式進行比對，因為參考位置不同，所以結果也就不相同，相關觀念可參考 <a href="/DvB-WdoORpSBG5qxQkYxBQ">物件傳參考</a></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(&#123;&#125; == &#123;&#125;) <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log([] == []) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="Truthy-與-Falsy"><a href="#Truthy-與-Falsy" class="headerlink" title="Truthy 與 Falsy"></a>Truthy 與 Falsy</h2><div class="alert alert-info">
+Truthy（真值）指的是布林值轉換後為真的值，反之則為 Falsy（假值）
+</div>
+
+<p>需要特別注意的是 <strong>假值</strong> 的部分：</p>
+<ul>
+<li>undefined、null 屬於 Falsy</li>
+<li><code>&quot;&quot;</code> 屬於假值，但 <code>&quot; &quot;</code> 屬於真值</li>
+<li>NaN 屬於假值，和任何東西比對（包含自己）都是 false</li>
+<li>假值本身如果套用包裹物件後會轉為物件，並為真值</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">new</span> <span class="built_in">Object</span>(<span class="literal">undefined</span>)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;true&#x27;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;false&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+
+<p>關於真值假值的判斷可以參考 <a href="https://dorey.github.io/JavaScript-Equality-Table/">JS Comparison Table</a></p>
+<p><img src="https://i.imgur.com/fGqDtAE.png"></p>
+<br>
+
+<h2 id="邏輯運算子"><a href="#邏輯運算子" class="headerlink" title="邏輯運算子"></a>邏輯運算子</h2><p>邏輯運算子常被運用在布林值的轉換，<strong>當第一個數值轉換為 true</strong></p>
+<ul>
+<li><code>&amp;&amp;</code>：回傳 第 2 個值，否則回傳 第 1 個值</li>
+<li><code>||</code>：回傳 第 1 個值，否則回傳 第 2 個值</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">&#x27;123&#x27;</span>;		<span class="comment">// true</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="number">456</span>;		<span class="comment">// true</span></span><br><span class="line"><span class="keyword">var</span> c = <span class="literal">NaN</span>;		<span class="comment">//false</span></span><br><span class="line"><span class="keyword">var</span> d = <span class="literal">undefined</span>;	<span class="comment">// false</span></span><br><span class="line"><span class="keyword">var</span> e = <span class="string">&quot;&quot;</span>;			<span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log( a &amp;&amp; b ) <span class="comment">// true(2) =&gt; 456</span></span><br><span class="line"><span class="built_in">console</span>.log( a || b ) <span class="comment">// true(1) =&gt; &#x27;123&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log( c &amp;&amp; d ) <span class="comment">// false(1) =&gt; NaN</span></span><br><span class="line"><span class="built_in">console</span>.log( c || d ) <span class="comment">// false(2) =&gt; undefined</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log( e &amp;&amp; a ) <span class="comment">// false(1) =&gt; &quot;&quot;</span></span><br><span class="line"><span class="built_in">console</span>.log( e || a ) <span class="comment">// false(2) =&gt; &#x27;123&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log( e &amp;&amp; b ) <span class="comment">// false(1) =&gt; &quot;&quot;</span></span><br><span class="line"><span class="built_in">console</span>.log( e || b ) <span class="comment">// false(2) =&gt; 456</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="例-1"><a href="#例-1" class="headerlink" title="例(1)"></a>例(1)</h3><p>而因為 &amp;&amp; 優先序高於 ||，所以會先比對完 &amp;&amp; 後，再由左至右比對，因此下列範例的流程會是</p>
+<ol>
+<li><code>c &amp;&amp; c</code> =&gt; 0</li>
+<li><code>c || 0</code> =&gt; 0</li>
+<li><code>0 || a</code> =&gt; 1</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">var</span> c = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">console</span>.log( c || c &amp;&amp; c || a ) <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="例-2"><a href="#例-2" class="headerlink" title="例(2)"></a>例(2)</h3><ol>
+<li><code>a &amp;&amp; b</code> =&gt; b</li>
+<li><code>c &amp;&amp; a</code> =&gt; c</li>
+<li><code>b || c</code> =&gt; b</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">var</span> c = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">console</span>.log( a &amp;&amp; b || c &amp;&amp; a ) <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="例-3"><a href="#例-3" class="headerlink" title="例(3)"></a>例(3)</h3><ol>
+<li>1000 &lt; 10000 =&gt; true</li>
+<li>true 轉型後是 1</li>
+<li>1 &lt; 10 =&gt; true</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">1000</span> &lt; <span class="number">10000</span> &lt; <span class="number">10</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
-<li><a href="https://ithelp.ithome.com.tw/articles/10193009">重新認識 JavaScript: Day 19 閉包 Closure</a></li>
-<li><a href="https://yixuntseng-bruce.medium.com/%E4%BA%94%E5%88%86%E9%90%98%E5%AD%B8%E5%89%8D%E7%AB%AF-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8Bjavascript%E7%9A%84%E9%96%89%E5%8C%85closure-c54321434e9f">快速上手JavaScript的閉包Closure</a></li>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://www.hexschool.com/courses/js-core.html">JavaScript 核心篇</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -726,6 +922,37 @@
       <tags>
         <tag>JavaScript</tag>
         <tag>Todolist</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>閉包 Closure</title>
+    <url>/jscore/20210411/1553745186/</url>
+    <content><![CDATA[<p>讓函式擁有自己的變數，使執行環境不會互相干擾。</p>
+<hr>
+<p>我們都知道閉包，但什麼是必包？主要功能是什麼呢？<br>先從字面上拆解，Closure 可以拆成 <code>Close</code> 和 <code>-ure</code> 字尾，<code>-ure</code> 接在動作的字根後面，表示動作本身、動作造成的結果、或是執行動作的人事物。<br>所以閉包本身就是一個關閉的動作，把程式碼片段關閉在一個函式內，限制作用域，建立自己的環境與外界隔絕。</p>
+<span id="more"></span>
+
+<h2 id="限制作用域"><a href="#限制作用域" class="headerlink" title="限制作用域"></a>限制作用域</h2><p>用一個錢包範例先來比較一下差異：<br>假設每個錢包都有1000元，大明花了300元，小明花了500元，計算每個人錢包裡的餘額</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> balance = <span class="number">1000</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wallet</span> (<span class="params">cost</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> balance = balance - cost</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> MING = wallet(<span class="number">300</span>)</span><br><span class="line"><span class="keyword">var</span> ming = wallet(<span class="number">500</span>)</span><br><span class="line"><span class="built_in">console</span>.log(MING, ming) <span class="comment">// 700 200</span></span><br></pre></td></tr></table></figure>
+<p>快速計算一下，大明錢包裡應該要有700元，小明應該還剩500元，但是結果小明卻是剩下200元，難道大明偷拿小明錢包裡的錢嗎？<br>一切都是誤會呀！因為現在沒有限制作用域，目前還是兩個人共用同一個錢包的狀態，如果想要讓他們他們各自花各自的錢，就要給他們一人一個錢包。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> balanceA = <span class="number">1000</span></span><br><span class="line"><span class="keyword">var</span> balanceB = <span class="number">1000</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">walletA</span> (<span class="params">cost</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> balanceA = balanceA - cost</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">walletB</span> (<span class="params">cost</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> balanceB = balanceB - cost</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> MING = walletA(<span class="number">300</span>)</span><br><span class="line"><span class="keyword">var</span> ming = walletB(<span class="number">500</span>)</span><br><span class="line"><span class="built_in">console</span>.log(MING, ming) <span class="comment">// 700 500</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="函式工廠"><a href="#函式工廠" class="headerlink" title="函式工廠"></a>函式工廠</h2><p>如果今天想要再計算別的錢包，就要再重複寫一次，這樣就會變成一樣的事情重複寫，不但看起來很複雜，也很沒有效率。這個時候就可以加入閉包限制作用域，建立一個「<strong>函式工廠</strong>」。<br><strong>讓每個功能相同的 function，對應到每個獨立的環境變數，且互不相干擾。</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wallet</span>(<span class="params">cost</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> balance = <span class="number">1000</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">counter</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    balance = balance - cost</span><br><span class="line">    <span class="built_in">console</span>.log(balance)</span><br><span class="line">  &#125;</span><br><span class="line">  counter()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> userA = wallet(<span class="number">300</span>) <span class="comment">// 700</span></span><br><span class="line"><span class="keyword">var</span> userB = wallet(<span class="number">500</span>) <span class="comment">// 500</span></span><br><span class="line"><span class="keyword">var</span> userC = wallet(<span class="number">200</span>) <span class="comment">// 800</span></span><br></pre></td></tr></table></figure>
+<p>這時候就可以讓每個人都可以獨立計算錢包餘額，也可以加入變數，一開始分別放入不同金額，管理各自的錢包。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wallet</span>(<span class="params">initBalance, cost</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> balance = initBalance</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">counter</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    balance = balance - cost</span><br><span class="line">    <span class="built_in">console</span>.log(balance)</span><br><span class="line">  &#125;</span><br><span class="line">  counter()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> userA = wallet(<span class="number">1000</span>, <span class="number">300</span>) <span class="comment">// 700</span></span><br><span class="line"><span class="keyword">var</span> userB = wallet(<span class="number">2000</span>, <span class="number">500</span>) <span class="comment">// 1500</span></span><br><span class="line"><span class="keyword">var</span> userC = wallet(<span class="number">1500</span>, <span class="number">200</span>) <span class="comment">// 1300</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10193009">重新認識 JavaScript: Day 19 閉包 Closure</a></li>
+<li><a href="https://yixuntseng-bruce.medium.com/%E4%BA%94%E5%88%86%E9%90%98%E5%AD%B8%E5%89%8D%E7%AB%AF-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8Bjavascript%E7%9A%84%E9%96%89%E5%8C%85closure-c54321434e9f">快速上手JavaScript的閉包Closure</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
       </tags>
   </entry>
 </search>

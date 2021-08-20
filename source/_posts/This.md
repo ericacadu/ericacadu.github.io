@@ -16,8 +16,10 @@ function fn () {
 }
 fn() // window
 ```
-![Image](https://i.imgur.com/kIAxMWk.png)
 <!--more-->
+
+![Image](https://i.imgur.com/kIAxMWk.png)
+
 ---
 ## this 指向
 `this` 的值跟「作用域」或「程式碼位置」在哪裡 <font color="red">完全無關</font>，只跟「<font color="red">**如何呼叫**</font>」有關。

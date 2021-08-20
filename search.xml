@@ -37,36 +37,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Event Loop</title>
-    <url>/jscore/20210416/712608437/</url>
-    <content><![CDATA[<h2 id="執行堆疊-Call-Stack"><a href="#執行堆疊-Call-Stack" class="headerlink" title="執行堆疊 Call Stack"></a>執行堆疊 Call Stack</h2><p>JavaScript 是一種單執行緒的程式語言，也就是一次只能做一件事情，程式碼也是一行一行執行。<br>當呼叫函式時會產生執行環境，如果函式執行環境內還有其他函式被呼叫，就會產生另外一個執行環境，形成「<strong>執行堆疊</strong>」(Call Stack)，在上層執行環境結束之前，下層包含全域的執行環境內的程式碼就會被暫停。</p>
-<span id="more"></span>
-
-<p>而堆疊的函式會以「後進先出」順序執行，當最上層的函式最後被堆疊上去，就會被最先執行，執行完後就會被移出堆疊環境，接著才繼續執行下一層函式。<br><img src="https://i.imgur.com/SORNjlE.png?70" alt="Image"></p>
-<p>因此如果堆疊太多執行環境，或某個堆疊執行過久，就有可能影響整個執行環境的運行，這種狀況稱為「<strong>阻塞</strong>」(Blocking)。<br>以下方範例來說，如果在函式內不斷呼叫自己，就會呈現一個無止盡的 callback hell 波動拳，<code>foo(foo(foo(...))))</code>，這個時候瀏覽器為了避免阻塞太久，就會先暫停執行並且跳出錯誤提示 <code>Uncaught RangeError: Maximum call stack size exceeded</code></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    foo()</span><br><span class="line">&#125;</span><br><span class="line">foo()</span><br></pre></td></tr></table></figure>
-
-<h2 id="事件佇列-Event-Queue"><a href="#事件佇列-Event-Queue" class="headerlink" title="事件佇列 Event Queue"></a>事件佇列 Event Queue</h2><p>JavaScript 一次只能執行一件事情，我們可以同時執行很多件事情，是因為瀏覽器不只提供執行環境，還提供很多「<strong>WebAPI</strong>」可以使用。<br>為了避免阻塞發生，瀏覽器會先把非同步事件透過 WebAPI 先放到「<strong>事件佇列</strong>」中，等到堆疊的程式碼都執行結束後，才會把事件佇列裡的任務再放進 stack 裡執行。</p>
-<ul>
-<li>同步：一次一件事情，依序執行</li>
-<li>非同步：很多件事情同時開始，不同時間結束</li>
-</ul>
-<p><img src="https://i.imgur.com/ECdJoKe.png?70" alt="Image"></p>
-<h2 id="Event-Loop"><a href="#Event-Loop" class="headerlink" title="Event Loop"></a>Event Loop</h2><p>那究竟什麼是 Event Loop 呢？<br>可以把 Event Loop 想像成是運行整個執行環境流程的執行程式，他負責檢查 stack 裡的事件是否被清空，如果是空的，就會到 Event Queue 檢查任務，再放到 Stack 裡去執行。</p>
-<hr>
-<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
-<li><a href="https://medium.com/itsems-frontend/javascript-event-loop-event-queue-call-stack-74a02fed5625">Javascript 的事件循環 (Event Loop)、事件佇列 (Event Queue)、事件堆疊 (Call Stack)：排隊</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10221944">JS 原力覺醒 Day13 - Event Queue &amp; Event Loop 、Event Table</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JS核心五分鐘</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>提升 Hoisting</title>
     <url>/jscore/20210820/4175334150/</url>
     <content><![CDATA[<p>在 <strong>創造環境</strong> 將記憶體空間準備好的流程，稱為 <strong>提升 (Hoisting)</strong> 。</p>
@@ -124,6 +94,36 @@
 <h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
 <li><a href="https://www.hexschool.com/courses/js-core.html">JavaScript 核心篇</a></li>
 <li><a href="https://blog.techbridge.cc/2018/11/10/javascript-hoisting/">我知道你懂 hoisting，可是你了解到多深？</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Event Loop</title>
+    <url>/jscore/20210416/712608437/</url>
+    <content><![CDATA[<h2 id="執行堆疊-Call-Stack"><a href="#執行堆疊-Call-Stack" class="headerlink" title="執行堆疊 Call Stack"></a>執行堆疊 Call Stack</h2><p>JavaScript 是一種單執行緒的程式語言，也就是一次只能做一件事情，程式碼也是一行一行執行。<br>當呼叫函式時會產生執行環境，如果函式執行環境內還有其他函式被呼叫，就會產生另外一個執行環境，形成「<strong>執行堆疊</strong>」(Call Stack)，在上層執行環境結束之前，下層包含全域的執行環境內的程式碼就會被暫停。</p>
+<span id="more"></span>
+
+<p>而堆疊的函式會以「後進先出」順序執行，當最上層的函式最後被堆疊上去，就會被最先執行，執行完後就會被移出堆疊環境，接著才繼續執行下一層函式。<br><img src="https://i.imgur.com/SORNjlE.png?70" alt="Image"></p>
+<p>因此如果堆疊太多執行環境，或某個堆疊執行過久，就有可能影響整個執行環境的運行，這種狀況稱為「<strong>阻塞</strong>」(Blocking)。<br>以下方範例來說，如果在函式內不斷呼叫自己，就會呈現一個無止盡的 callback hell 波動拳，<code>foo(foo(foo(...))))</code>，這個時候瀏覽器為了避免阻塞太久，就會先暫停執行並且跳出錯誤提示 <code>Uncaught RangeError: Maximum call stack size exceeded</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    foo()</span><br><span class="line">&#125;</span><br><span class="line">foo()</span><br></pre></td></tr></table></figure>
+
+<h2 id="事件佇列-Event-Queue"><a href="#事件佇列-Event-Queue" class="headerlink" title="事件佇列 Event Queue"></a>事件佇列 Event Queue</h2><p>JavaScript 一次只能執行一件事情，我們可以同時執行很多件事情，是因為瀏覽器不只提供執行環境，還提供很多「<strong>WebAPI</strong>」可以使用。<br>為了避免阻塞發生，瀏覽器會先把非同步事件透過 WebAPI 先放到「<strong>事件佇列</strong>」中，等到堆疊的程式碼都執行結束後，才會把事件佇列裡的任務再放進 stack 裡執行。</p>
+<ul>
+<li>同步：一次一件事情，依序執行</li>
+<li>非同步：很多件事情同時開始，不同時間結束</li>
+</ul>
+<p><img src="https://i.imgur.com/ECdJoKe.png?70" alt="Image"></p>
+<h2 id="Event-Loop"><a href="#Event-Loop" class="headerlink" title="Event Loop"></a>Event Loop</h2><p>那究竟什麼是 Event Loop 呢？<br>可以把 Event Loop 想像成是運行整個執行環境流程的執行程式，他負責檢查 stack 裡的事件是否被清空，如果是空的，就會到 Event Queue 檢查任務，再放到 Stack 裡去執行。</p>
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://medium.com/itsems-frontend/javascript-event-loop-event-queue-call-stack-74a02fed5625">Javascript 的事件循環 (Event Loop)、事件佇列 (Event Queue)、事件堆疊 (Call Stack)：排隊</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10221944">JS 原力覺醒 Day13 - Event Queue &amp; Event Loop 、Event Table</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -281,58 +281,6 @@
       </tags>
   </entry>
   <entry>
-    <title>事件傳遞機制</title>
-    <url>/note/20210419/2117635506/</url>
-    <content><![CDATA[<h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><p>DOM 全名為 Document Object Model 中文翻譯為 文件物件模型。<br>其實就是把 HTML 文件內的標籤、文字、圖片等等都定義成物件，而這些物件會形成一個樹狀結構，並且可以利用 JavaScript 來對 HTML 文件進操作和互動。<br><img src="https://i.imgur.com/3R0iZSd.png?70" alt="Image"></p>
-<span id="more"></span>
-<hr>
-<h2 id="DOM-節點-node"><a href="#DOM-節點-node" class="headerlink" title="DOM 節點 (node)"></a>DOM 節點 (node)</h2><p>在 DOM 中，節點可以分成四種：<br><strong>Document</strong><br>HTML 檔的開端，所有的一切都會從 Document 開始往下進行<br><strong>Element</strong><br>文件內的各個標籤，像是 <code>&lt;div&gt;</code>、<code>&lt;p&gt;</code> 等等各種 HTML Tag 都是被歸類在 Element 裡面<br><strong>Text</strong><br>各個標籤內的文字內容<br><strong>Attribute</strong><br>各個標籤內的相關屬性，像是 class、href 等等</p>
-<h2 id="捕獲與冒泡"><a href="#捕獲與冒泡" class="headerlink" title="捕獲與冒泡"></a>捕獲與冒泡</h2><p>JavaScript 是事件驅動的程式語言，也就是說，當 user 對網頁做了指定動作，才會觸發程式執行動作。<br>前面提到 DOM 會以物件形式定義 HTML 內的元件，這些物件會連結形成一個樹狀節構，而為了操控這些物件節點，需要透過 DOM 裡面的事件傳遞機制。<br>當我們要獲得一個 DOM 的 click 事件時，會這樣寫：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;.btn&#x27;</span>)</span><br><span class="line">btn.addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e )</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>裡面的 <code>e</code> 包含許多關於這次事件的相關參數，其中一個參數 <code>eventPhase</code> 表示這個事件在哪一個階段（Phase）觸發。<br>事件傳遞機制總共分為三大階段：</p>
-<ul>
-<li><p><strong>捕獲階段 (Capture Phase)</strong><br>在捕獲階段，DOM 的事件會從根節點 (window) 開始往下尋找目標 (target)，這個過程稱為捕獲階段 (CAPTURING_PHASE)。</p>
-</li>
-<li><p><strong>目標階段 (Target Phase)</strong><br>在找到目標的時候，就會是目標階段 (AT_TARGET)。</p>
-</li>
-<li><p><strong>冒泡階段 (Bubbling Phase)</strong><br>從子節點一路回傳到根節點，這個階段就稱作冒泡階段 (BUBBLING_PHASE)。</p>
-</li>
-</ul>
-<blockquote>
-<p>// PhaseType<br>const unsigned short      CAPTURING_PHASE                = 1;<br>const unsigned short      AT_TARGET                      = 2;<br>const unsigned short      BUBBLING_PHASE                 = 3;</p>
-</blockquote>
-<p><img src="https://i.imgur.com/q2XcwDc.png?60" alt="Image"></p>
-<p>用以下範例說明，在一般情況下，當點擊了 <code>a</code> 連結，因為傳遞機制的關係，其實會連同外層的<code>&lt;li&gt;</code>、<code>&lt;ul&gt;</code> 也一起被觸發。<br>從最外層的 <code>&lt;ul&gt;</code> 開始往下捕獲，然後找到目標 <code>&lt;a&gt;</code>，接著再冒泡回到 <code>&lt;ul&gt;</code>。</p>
-<iframe height="500" style="width: 100%;" scrolling="no" title="捕獲與冒泡" src="https://codepen.io/ericadu/embed/oNBPpop?height=463&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href='https://codepen.io/ericadu/pen/oNBPpop'>捕獲與冒泡</a> by Erica
-  (<a href='https://codepen.io/ericadu'>@ericadu</a>) on <a href='https://codepen.io'>CodePen</a>.
-</iframe>
-
-
-<h2 id="停止事件傳遞-stopPropagation"><a href="#停止事件傳遞-stopPropagation" class="headerlink" title="停止事件傳遞 stopPropagation"></a>停止事件傳遞 stopPropagation</h2><p>在開發程式的過程中，可以加上 <code>e.stopPropagation()</code> 來停止冒泡事件。</p>
-<iframe height="500" style="width: 100%;" scrolling="no" title="捕獲與冒泡 stopPropagation" src="https://codepen.io/ericadu/embed/RwKYywj?height=499&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href='https://codepen.io/ericadu/pen/RwKYywj'>捕獲與冒泡 stopPropagation</a> by Erica
-  (<a href='https://codepen.io/ericadu'>@ericadu</a>) on <a href='https://codepen.io'>CodePen</a>.
-</iframe>
-
-<p>用以上範例說明，我在 <code>&lt;a&gt;</code> 連結裡加入 <code>e.stopPropagation()</code>，點擊按鈕後會沒有反應，再對 <code>&lt;li&gt;</code> 點擊時會顯示前一個動作回傳的內容。<br>從回傳結果可以發現，當點擊 <code>&lt;a&gt;</code> 連結時，因為停止冒泡的關係，所以事件傳遞只到找到目標就停止，並沒有繼續回傳事件。而第二次點擊的 <code>&lt;li&gt;</code> 沒有加上 <code>e.stopPropagation()</code>，所以會繼續冒泡，完成整個傳遞過程。<br><img src="https://i.imgur.com/swBsYBT.png?40" alt="Image"></p>
-<h2 id="取消預設行為-preventDefault"><a href="#取消預設行為-preventDefault" class="headerlink" title="取消預設行為 preventDefault"></a>取消預設行為 preventDefault</h2><p><code>stopPropagation()</code> 常和 <code>preventDefault()</code> 搞混，但其實兩者沒什麼關係。<br><code>preventDefault()</code> 也是 <code>e</code> 的點擊事件參數之一，功能是取消瀏覽器的預設行為。<br>舉例來說，如果想要點擊 <code>&lt;a&gt;</code> 連結又不想讓預設的超連結轉跳到別的網頁，就可以加上 <code>e.preventDefault()</code>。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">link.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">  e.preventDefault()</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
-<li><a href="https://ithelp.ithome.com.tw/articles/10202689">Day03-深入理解網頁架構：DOM</a></li>
-<li><a href="https://medium.com/itsems-frontend/javascript-event-bubbling-capturing-794cd2d01e61">Javascript 中的 DOM 事件傳遞機制：捕獲與冒泡 (capturing and bubbling)</a> </li>
-</ul>
-]]></content>
-      <categories>
-        <category>筆記</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>var、let、const</title>
     <url>/jscore/20210411/659913096/</url>
     <content><![CDATA[<h2 id="var"><a href="#var" class="headerlink" title="var"></a>var</h2><p><code>var</code> 的宣告屬於 <strong>全域變數</strong>，代表 <strong>全域物件的屬性</strong>。</p>
@@ -408,6 +356,58 @@
       </tags>
   </entry>
   <entry>
+    <title>事件傳遞機制</title>
+    <url>/note/20210419/2117635506/</url>
+    <content><![CDATA[<h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><p>DOM 全名為 Document Object Model 中文翻譯為 文件物件模型。<br>其實就是把 HTML 文件內的標籤、文字、圖片等等都定義成物件，而這些物件會形成一個樹狀結構，並且可以利用 JavaScript 來對 HTML 文件進操作和互動。<br><img src="https://i.imgur.com/3R0iZSd.png?70" alt="Image"></p>
+<span id="more"></span>
+<hr>
+<h2 id="DOM-節點-node"><a href="#DOM-節點-node" class="headerlink" title="DOM 節點 (node)"></a>DOM 節點 (node)</h2><p>在 DOM 中，節點可以分成四種：<br><strong>Document</strong><br>HTML 檔的開端，所有的一切都會從 Document 開始往下進行<br><strong>Element</strong><br>文件內的各個標籤，像是 <code>&lt;div&gt;</code>、<code>&lt;p&gt;</code> 等等各種 HTML Tag 都是被歸類在 Element 裡面<br><strong>Text</strong><br>各個標籤內的文字內容<br><strong>Attribute</strong><br>各個標籤內的相關屬性，像是 class、href 等等</p>
+<h2 id="捕獲與冒泡"><a href="#捕獲與冒泡" class="headerlink" title="捕獲與冒泡"></a>捕獲與冒泡</h2><p>JavaScript 是事件驅動的程式語言，也就是說，當 user 對網頁做了指定動作，才會觸發程式執行動作。<br>前面提到 DOM 會以物件形式定義 HTML 內的元件，這些物件會連結形成一個樹狀節構，而為了操控這些物件節點，需要透過 DOM 裡面的事件傳遞機制。<br>當我們要獲得一個 DOM 的 click 事件時，會這樣寫：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;.btn&#x27;</span>)</span><br><span class="line">btn.addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e )</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>裡面的 <code>e</code> 包含許多關於這次事件的相關參數，其中一個參數 <code>eventPhase</code> 表示這個事件在哪一個階段（Phase）觸發。<br>事件傳遞機制總共分為三大階段：</p>
+<ul>
+<li><p><strong>捕獲階段 (Capture Phase)</strong><br>在捕獲階段，DOM 的事件會從根節點 (window) 開始往下尋找目標 (target)，這個過程稱為捕獲階段 (CAPTURING_PHASE)。</p>
+</li>
+<li><p><strong>目標階段 (Target Phase)</strong><br>在找到目標的時候，就會是目標階段 (AT_TARGET)。</p>
+</li>
+<li><p><strong>冒泡階段 (Bubbling Phase)</strong><br>從子節點一路回傳到根節點，這個階段就稱作冒泡階段 (BUBBLING_PHASE)。</p>
+</li>
+</ul>
+<blockquote>
+<p>// PhaseType<br>const unsigned short      CAPTURING_PHASE                = 1;<br>const unsigned short      AT_TARGET                      = 2;<br>const unsigned short      BUBBLING_PHASE                 = 3;</p>
+</blockquote>
+<p><img src="https://i.imgur.com/q2XcwDc.png?60" alt="Image"></p>
+<p>用以下範例說明，在一般情況下，當點擊了 <code>a</code> 連結，因為傳遞機制的關係，其實會連同外層的<code>&lt;li&gt;</code>、<code>&lt;ul&gt;</code> 也一起被觸發。<br>從最外層的 <code>&lt;ul&gt;</code> 開始往下捕獲，然後找到目標 <code>&lt;a&gt;</code>，接著再冒泡回到 <code>&lt;ul&gt;</code>。</p>
+<iframe height="500" style="width: 100%;" scrolling="no" title="捕獲與冒泡" src="https://codepen.io/ericadu/embed/oNBPpop?height=463&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/ericadu/pen/oNBPpop'>捕獲與冒泡</a> by Erica
+  (<a href='https://codepen.io/ericadu'>@ericadu</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+
+<h2 id="停止事件傳遞-stopPropagation"><a href="#停止事件傳遞-stopPropagation" class="headerlink" title="停止事件傳遞 stopPropagation"></a>停止事件傳遞 stopPropagation</h2><p>在開發程式的過程中，可以加上 <code>e.stopPropagation()</code> 來停止冒泡事件。</p>
+<iframe height="500" style="width: 100%;" scrolling="no" title="捕獲與冒泡 stopPropagation" src="https://codepen.io/ericadu/embed/RwKYywj?height=499&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/ericadu/pen/RwKYywj'>捕獲與冒泡 stopPropagation</a> by Erica
+  (<a href='https://codepen.io/ericadu'>@ericadu</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+<p>用以上範例說明，我在 <code>&lt;a&gt;</code> 連結裡加入 <code>e.stopPropagation()</code>，點擊按鈕後會沒有反應，再對 <code>&lt;li&gt;</code> 點擊時會顯示前一個動作回傳的內容。<br>從回傳結果可以發現，當點擊 <code>&lt;a&gt;</code> 連結時，因為停止冒泡的關係，所以事件傳遞只到找到目標就停止，並沒有繼續回傳事件。而第二次點擊的 <code>&lt;li&gt;</code> 沒有加上 <code>e.stopPropagation()</code>，所以會繼續冒泡，完成整個傳遞過程。<br><img src="https://i.imgur.com/swBsYBT.png?40" alt="Image"></p>
+<h2 id="取消預設行為-preventDefault"><a href="#取消預設行為-preventDefault" class="headerlink" title="取消預設行為 preventDefault"></a>取消預設行為 preventDefault</h2><p><code>stopPropagation()</code> 常和 <code>preventDefault()</code> 搞混，但其實兩者沒什麼關係。<br><code>preventDefault()</code> 也是 <code>e</code> 的點擊事件參數之一，功能是取消瀏覽器的預設行為。<br>舉例來說，如果想要點擊 <code>&lt;a&gt;</code> 連結又不想讓預設的超連結轉跳到別的網頁，就可以加上 <code>e.preventDefault()</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">link.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">  e.preventDefault()</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10202689">Day03-深入理解網頁架構：DOM</a></li>
+<li><a href="https://medium.com/itsems-frontend/javascript-event-bubbling-capturing-794cd2d01e61">Javascript 中的 DOM 事件傳遞機制：捕獲與冒泡 (capturing and bubbling)</a> </li>
+</ul>
+]]></content>
+      <categories>
+        <category>筆記</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>函式與作用域</title>
     <url>/jscore/20210411/1442787642/</url>
     <content><![CDATA[<p>函式屬於物件的一種，分為「<strong>具名函式</strong>」和「<strong>匿名函式</strong>」，包含程式碼片段，可帶入參數，並可被呼叫。</p>
@@ -437,6 +437,63 @@
 <hr>
 <h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
 <li><a href="https://ithelp.ithome.com.tw/articles/10191549">重新認識 JavaScript: Day 10 函式 Functions 的基本概念</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS核心五分鐘</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>同步 Sync 與非同步 Async</title>
+    <url>/jscore/20210411/3360846865/</url>
+    <content><![CDATA[<h2 id="同步與非同步的差異"><a href="#同步與非同步的差異" class="headerlink" title="同步與非同步的差異"></a>同步與非同步的差異</h2><p>在學習同步與非同步的概念時很容易混淆，「<strong>同步</strong>」光看字面上的意思，可能會誤解成「所有動作同時進行」，而其實正好相反。</p>
+<span id="more"></span>
+<p>就以去夜市點餐來說明，如果今天想買的東西有：雞排、QQ球、珍奶。</p>
+<ul>
+<li><p>同步 (sync)：先去買雞排 -&gt; 再去買QQ球 -&gt; 然後再買珍奶。<br>像這樣「先完成 A 才能做 B、C、D …」的運作方式我們就會把它稱作「<strong>同步</strong>」。</p>
+</li>
+<li><p>非同步 (async)：再找兩個朋友幫忙，每人去一個攤位買一樣東西，就可以同時買好雞排、QQ球、珍奶。</p>
+</li>
+</ul>
+<p>所以同步的概念其實比較像是「<strong>一步一步來處理</strong>」的意思。<br>非同步則是，我不用等待 A 做完才做 B、C，而是這三個事情可以同時發送出去。</p>
+<h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p><strong>Promise</strong>  是 ES6 新增的建構函式，用來優化非同步的語法，增加可讀性。<br>Promise 字面上翻譯就是「約定、承諾」，可以想像成 A 和 B 約定要做某件事情，接著回報處理結果，而這個結果只能是「<strong>完成</strong>」或「<strong>拒絕</strong>」。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">asyncFunction</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, rejecte</span>) =&gt;</span> &#123;</span><br><span class="line">        value ? resolve(<span class="string">&#x27;處理完成的結果&#x27;</span>) : reject(<span class="string">&#x27;被拒絕的原因&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="為什麼需要-Promise？"><a href="#為什麼需要-Promise？" class="headerlink" title="為什麼需要 Promise？"></a>為什麼需要 Promise？</h3><p>JavaScript 是單執行緒（同步）的程式語言，一次只能處理一件事情，所以遇到非同步的事件時，就會先把程式碼放到「<strong>事件佇列</strong>」，等到所有事件處理完後才會執行非同步事件。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;開始&#x27;</span>) <span class="comment">// 執行順序 1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;非同步事件&#x27;</span>) <span class="comment">// 執行順序 3</span></span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;程式碼結束&#x27;</span>) <span class="comment">// 執行順序 2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="狀態"><a href="#狀態" class="headerlink" title="狀態"></a>狀態</h3><p>Promise 在處理非同步的事件的過程中，包含不同的進度狀態</p>
+<ul>
+<li>Pending：尚未得到結果</li>
+<li>Resolved：事件已經執行完畢且成功操作，回傳 <code>resolve</code> 的結果</li>
+<li>Rejected：事件已經執行完畢但操作失敗，回傳 <code>reject</code> 的結果<br><img src="https://i.imgur.com/I79SHF4.png" alt="Image"></li>
+</ul>
+<h3 id="接收回傳"><a href="#接收回傳" class="headerlink" title="接收回傳"></a>接收回傳</h3><p>Promise 可以用 <code>then</code> 和 <code>catch</code> 來接收並回傳結果：<br><code>then</code> 可以同時接收成功、失敗結果，而 <code>catch</code> 只接收失敗結果</p>
+<ul>
+<li><strong>使用 catch 接收失敗：</strong><br>在任何階段遇到 <code>reject</code> 時，都會直接跳到 <code>catch</code>，之後的 <code>then</code> 都不會執行<br>雖然 <code>catch</code> 依然可以使用 <code>return</code> 繼續串接，但很少這樣使用</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">promise(<span class="number">1</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success) <span class="comment">// resolve 接收成功 // &#x27;1&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">0</span>)    <span class="comment">// return promise(0) -&gt; reject 跳到 catch</span></span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;       <span class="comment">// 因為上面出現 reject 所以跳過</span></span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">3</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    .catch( <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)    <span class="comment">// reject 接收失敗 // &#x27;失敗&#x27;</span></span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>使用 then 接收失敗：</strong><br><code>then</code> 中的兩個函式必定執行其中一個，可以用此方式確保所有的鏈接都能夠被執行</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">promise(<span class="number">0</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">1</span>)</span><br><span class="line">    &#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)     <span class="comment">// reject 接收失敗 // &#x27;失敗&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">2</span>)     <span class="comment">// return promise(2)</span></span><br><span class="line">    &#125;)</span><br><span class="line"> </span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success) <span class="comment">// resolve 接收成功 // &#x27;2&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">0</span>)    <span class="comment">// return promise(0)</span></span><br><span class="line">    &#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)</span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">4</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">    &#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)     <span class="comment">// reject 接收失敗 // &#x27;失敗&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h3><ul>
+<li>最後可以使用 <code>finally</code> 來確認工作結束</li>
+<li><code>finally</code> 不帶有任何參數，適合用來確認 Ajax 已經讀取完成</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">promise(<span class="number">1</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">    &#125;).finally(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;done&#x27;</span>)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10194569/">重新認識 JavaScript: Day 26 同步與非同步</a></li>
+<li><a href="https://www.oxxostudio.tw/articles/201706/javascript-promise-settimeout.html">JavaScript 同步延遲 ( Promise + setTimeout )</a></li>
+<li><a href="https://wcc723.github.io/development/2020/02/16/all-new-promise/">JavaScript Promise 全介紹</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -588,63 +645,6 @@ null 是原始型別之一，但 typeof null 卻得到 object，而非 null
 <hr>
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
 <li><a href="https://www.hexschool.com/courses/js-core.html">JavaScript 核心篇</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JS核心五分鐘</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>同步 Sync 與非同步 Async</title>
-    <url>/jscore/20210411/3360846865/</url>
-    <content><![CDATA[<h2 id="同步與非同步的差異"><a href="#同步與非同步的差異" class="headerlink" title="同步與非同步的差異"></a>同步與非同步的差異</h2><p>在學習同步與非同步的概念時很容易混淆，「<strong>同步</strong>」光看字面上的意思，可能會誤解成「所有動作同時進行」，而其實正好相反。</p>
-<span id="more"></span>
-<p>就以去夜市點餐來說明，如果今天想買的東西有：雞排、QQ球、珍奶。</p>
-<ul>
-<li><p>同步 (sync)：先去買雞排 -&gt; 再去買QQ球 -&gt; 然後再買珍奶。<br>像這樣「先完成 A 才能做 B、C、D …」的運作方式我們就會把它稱作「<strong>同步</strong>」。</p>
-</li>
-<li><p>非同步 (async)：再找兩個朋友幫忙，每人去一個攤位買一樣東西，就可以同時買好雞排、QQ球、珍奶。</p>
-</li>
-</ul>
-<p>所以同步的概念其實比較像是「<strong>一步一步來處理</strong>」的意思。<br>非同步則是，我不用等待 A 做完才做 B、C，而是這三個事情可以同時發送出去。</p>
-<h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p><strong>Promise</strong>  是 ES6 新增的建構函式，用來優化非同步的語法，增加可讀性。<br>Promise 字面上翻譯就是「約定、承諾」，可以想像成 A 和 B 約定要做某件事情，接著回報處理結果，而這個結果只能是「<strong>完成</strong>」或「<strong>拒絕</strong>」。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">asyncFunction</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, rejecte</span>) =&gt;</span> &#123;</span><br><span class="line">        value ? resolve(<span class="string">&#x27;處理完成的結果&#x27;</span>) : reject(<span class="string">&#x27;被拒絕的原因&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="為什麼需要-Promise？"><a href="#為什麼需要-Promise？" class="headerlink" title="為什麼需要 Promise？"></a>為什麼需要 Promise？</h3><p>JavaScript 是單執行緒（同步）的程式語言，一次只能處理一件事情，所以遇到非同步的事件時，就會先把程式碼放到「<strong>事件佇列</strong>」，等到所有事件處理完後才會執行非同步事件。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;開始&#x27;</span>) <span class="comment">// 執行順序 1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;非同步事件&#x27;</span>) <span class="comment">// 執行順序 3</span></span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;程式碼結束&#x27;</span>) <span class="comment">// 執行順序 2</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="狀態"><a href="#狀態" class="headerlink" title="狀態"></a>狀態</h3><p>Promise 在處理非同步的事件的過程中，包含不同的進度狀態</p>
-<ul>
-<li>Pending：尚未得到結果</li>
-<li>Resolved：事件已經執行完畢且成功操作，回傳 <code>resolve</code> 的結果</li>
-<li>Rejected：事件已經執行完畢但操作失敗，回傳 <code>reject</code> 的結果<br><img src="https://i.imgur.com/I79SHF4.png" alt="Image"></li>
-</ul>
-<h3 id="接收回傳"><a href="#接收回傳" class="headerlink" title="接收回傳"></a>接收回傳</h3><p>Promise 可以用 <code>then</code> 和 <code>catch</code> 來接收並回傳結果：<br><code>then</code> 可以同時接收成功、失敗結果，而 <code>catch</code> 只接收失敗結果</p>
-<ul>
-<li><strong>使用 catch 接收失敗：</strong><br>在任何階段遇到 <code>reject</code> 時，都會直接跳到 <code>catch</code>，之後的 <code>then</code> 都不會執行<br>雖然 <code>catch</code> 依然可以使用 <code>return</code> 繼續串接，但很少這樣使用</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">promise(<span class="number">1</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success) <span class="comment">// resolve 接收成功 // &#x27;1&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">0</span>)    <span class="comment">// return promise(0) -&gt; reject 跳到 catch</span></span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;       <span class="comment">// 因為上面出現 reject 所以跳過</span></span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">3</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    .catch( <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)    <span class="comment">// reject 接收失敗 // &#x27;失敗&#x27;</span></span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>使用 then 接收失敗：</strong><br><code>then</code> 中的兩個函式必定執行其中一個，可以用此方式確保所有的鏈接都能夠被執行</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">promise(<span class="number">0</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">1</span>)</span><br><span class="line">    &#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)     <span class="comment">// reject 接收失敗 // &#x27;失敗&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">2</span>)     <span class="comment">// return promise(2)</span></span><br><span class="line">    &#125;)</span><br><span class="line"> </span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success) <span class="comment">// resolve 接收成功 // &#x27;2&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">0</span>)    <span class="comment">// return promise(0)</span></span><br><span class="line">    &#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)</span><br><span class="line">        <span class="keyword">return</span> promise(<span class="number">4</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">    &#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(fail)     <span class="comment">// reject 接收失敗 // &#x27;失敗&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h3><ul>
-<li>最後可以使用 <code>finally</code> 來確認工作結束</li>
-<li><code>finally</code> 不帶有任何參數，適合用來確認 Ajax 已經讀取完成</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">promise(<span class="number">1</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(success)</span><br><span class="line">    &#125;).finally(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;done&#x27;</span>)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
-
-
-<hr>
-<h2 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h2><ul>
-<li><a href="https://ithelp.ithome.com.tw/articles/10194569/">重新認識 JavaScript: Day 26 同步與非同步</a></li>
-<li><a href="https://www.oxxostudio.tw/articles/201706/javascript-promise-settimeout.html">JavaScript 同步延遲 ( Promise + setTimeout )</a></li>
-<li><a href="https://wcc723.github.io/development/2020/02/16/all-new-promise/">JavaScript Promise 全介紹</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -882,7 +882,12 @@ Truthy（真值）指的是布林值轉換後為真的值，反之則為 Falsy�
     <content><![CDATA[<h2 id="遞迴"><a href="#遞迴" class="headerlink" title="遞迴"></a>遞迴</h2><p>函式呼叫函式自己的行為，稱為 <strong>遞迴</strong>、或是 <strong>遞歸</strong> 。</p>
 <span id="more"></span>
 
-<p>先來看一下在 <strong>MDN</strong> 上的說明：<br>函式呼叫函式自己的行為，稱為遞迴、或是遞歸。它主要用於解決含有子問題的問題。<br>遞迴函式會收到兩個輸入：結束遞迴的基本情況（base case）或是延續遞迴的遞迴情況（recursive case）。</p>
+<p>先來看一下在 <strong>MDN</strong> 上的說明</p>
+<div class="alert alert-info">
+函式呼叫函式自己的行為，稱為遞迴、或是遞歸。它主要用於解決含有子問題的問題。<br>
+遞迴函式會收到兩個輸入：結束遞迴的基本情況（base case）或是延續遞迴的遞迴情況（recursive case）。
+</div>
+
 <p>也就是說，函式透過呼叫自己的行為，在有限的條件下，透過判斷 <code>if...else</code> 執行循環的運算或程式碼。</p>
 <h3 id="改寫九九乘法表"><a href="#改寫九九乘法表" class="headerlink" title="改寫九九乘法表"></a>改寫九九乘法表</h3><p>通常要寫一個簡單的九九乘法表，最直覺的是會想到使用 <code>for</code> 迴圈，我們先來看一下原本的寫法</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> k = <span class="number">1</span>; k &lt; <span class="number">10</span>; k++) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;i&#125;</span> x <span class="subst">$&#123;k&#125;</span> = <span class="subst">$&#123;i * k&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

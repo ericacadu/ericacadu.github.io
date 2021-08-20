@@ -29,7 +29,7 @@
 <meta property="og:description" content="遞迴函式呼叫函式自己的行為，稱為 遞迴、或是 遞歸 。">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-08-20T11:44:42.000Z">
-<meta property="article:modified_time" content="2021-08-20T12:55:47.297Z">
+<meta property="article:modified_time" content="2021-08-20T13:14:07.365Z">
 <meta property="article:author" content="Erica">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -271,7 +271,12 @@
         <h2 id="遞迴"><a href="#遞迴" class="headerlink" title="遞迴"></a>遞迴</h2><p>函式呼叫函式自己的行為，稱為 <strong>遞迴</strong>、或是 <strong>遞歸</strong> 。</p>
 <span id="more"></span>
 
-<p>先來看一下在 <strong>MDN</strong> 上的說明：<br>函式呼叫函式自己的行為，稱為遞迴、或是遞歸。它主要用於解決含有子問題的問題。<br>遞迴函式會收到兩個輸入：結束遞迴的基本情況（base case）或是延續遞迴的遞迴情況（recursive case）。</p>
+<p>先來看一下在 <strong>MDN</strong> 上的說明</p>
+<div class="alert alert-info">
+函式呼叫函式自己的行為，稱為遞迴、或是遞歸。它主要用於解決含有子問題的問題。<br>
+遞迴函式會收到兩個輸入：結束遞迴的基本情況（base case）或是延續遞迴的遞迴情況（recursive case）。
+</div>
+
 <p>也就是說，函式透過呼叫自己的行為，在有限的條件下，透過判斷 <code>if...else</code> 執行循環的運算或程式碼。</p>
 <h3 id="改寫九九乘法表"><a href="#改寫九九乘法表" class="headerlink" title="改寫九九乘法表"></a>改寫九九乘法表</h3><p>通常要寫一個簡單的九九乘法表，最直覺的是會想到使用 <code>for</code> 迴圈，我們先來看一下原本的寫法</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> k = <span class="number">1</span>; k &lt; <span class="number">10</span>; k++) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;i&#125;</span> x <span class="subst">$&#123;k&#125;</span> = <span class="subst">$&#123;i * k&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
